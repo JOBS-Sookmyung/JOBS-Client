@@ -60,8 +60,8 @@
 
 /* 공고 요약 버튼 */
 .summarize-button {
-    background-color: #f5a5a5;
-    color: #fff;
+    background-color: #f5a5a5 !important;
+    color: #fff !important;
     font-size: 16px;
     font-weight: bold;
     border-radius: 8px;
@@ -75,8 +75,8 @@
 
 /* 예상 질문 생성 버튼 */
 .generate-button {
-    background-color: #ffd9c9;
-    color: #333;
+    background-color: #ffd9c9 !important;
+    color: #333 !important;
     font-size: 18px;
     font-weight: bold;
     border-radius: 8px;
