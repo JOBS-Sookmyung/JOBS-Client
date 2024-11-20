@@ -1,0 +1,79 @@
+/* 페이지 전체 스타일 */
+.question-list-page {
+    background-color: #fff4e6;
+    min-height: 100vh;
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 헤더 */
+  .app-header {
+    background-color: #f5a5a5;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* 컨테이너 */
+  .question-list-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+  
+  /* 제목 */
+  .question-list-title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* 질문 카드 */
+  .question-card {
+    background-color: #ffffff; /* 배경색을 흰색으로 변경 */
+    border: 2px solid #f5a5a5; /* 테두리를 더 선명하게 설정 */
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .question-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15); /* 그림자 효과 강조 */
+  }
+  
+  /* 질문 텍스트 */
+  .question-text {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    flex: 1;
+  }
+  
+  /* 답변하기 버튼 */
+  .answer-button {
+    background-color: #f5a5a5;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    margin-left: 20px;
+  }
+  
+  .answer-button:hover {
+    background-color: #ff7f7f;
+  }
+  

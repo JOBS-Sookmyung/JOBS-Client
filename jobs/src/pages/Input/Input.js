@@ -8,13 +8,15 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // useNavigate 추가
 import "./Input.css";
 
 const Input = () => {
   const [jobPostingUrl, setJobPostingUrl] = useState("");
   const [summary, setSummary] = useState("");
   const [customSummary, setCustomSummary] = useState("");
+
+  const navigate = useNavigate(); // useNavigate 훅 초기화
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
@@ -32,7 +34,8 @@ const Input = () => {
   };
 
   const handleProceedToInterview = () => {
-    alert("예상 질문 생성하기 버튼이 클릭되었습니다!");
+    // QuestionList 페이지로 이동
+    navigate("/questions");
   };
 
   return (
@@ -117,7 +120,7 @@ const Input = () => {
         <Button
           variant="contained"
           className="generate-button"
-          onClick={handleProceedToInterview}
+          onClick={handleProceedToInterview} // 클릭 시 페이지 전환
         >
           예상 질문 생성하기
         </Button>
