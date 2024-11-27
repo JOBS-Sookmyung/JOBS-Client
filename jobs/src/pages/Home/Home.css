@@ -1,6 +1,6 @@
 /* 전체 배경 */
 body {
-    background-color: #fff4e6;
+    background-color: #FFF7F5;
     margin: 0;
     font-family: 'Arial', sans-serif;
 }
@@ -19,8 +19,8 @@ body {
 
 /* 메인 콘텐츠 */
 .main-content {
-    margin-top: 50px;
-    background-color: #fff4e6;
+    margin-top: 20px;
+    background-color: #FFF7F5;
     padding-top: 40px;
     padding-bottom: 10px;
     padding-left: 20px;
@@ -30,7 +30,7 @@ body {
 /* 버튼 */
 .start-button {
     font-size: 20px;
-    padding: 10px 20px;
+    padding: 10px 24px;
     border-radius: 8px;
 }
 
@@ -40,7 +40,7 @@ body {
 }
 
 .scroll-section {
-    background-color: #ffe5e5;
+    background-color: white;
     border-radius: 8px;
     transition: transform 0.3s ease-in-out;
 }
@@ -52,5 +52,5 @@ body {
 .scroll-title {
     font-weight: bold;
     margin-bottom: 10px;
-    color: #f5a5a5;
+    color: #626a55;
 }
