@@ -43,11 +43,11 @@ const Input = () => {
       {/* 상단 헤더 (메인 페이지와 동일) */}
       <AppBar
         position="sticky"
-        style={{ backgroundColor: "#f5a5a5", height: "100px" }}
+        style={{ backgroundColor: "#EEEDEC", height: "88px" }}
       >
         <Toolbar
           style={{
-            minHeight: "100px",
+            minHeight: "88px",
             display: "flex",
             justifyContent: "space-between",
           }}
@@ -57,8 +57,8 @@ const Input = () => {
             component="div"
             style={{ fontWeight: "bold", fontSize: "28px" }}
           >
-            <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-              면JOBS
+            <Link to="/" style={{ textDecoration: "none", color: "#1A1918" }}>
+              JOB問JOB答
             </Link>
           </Typography>
         </Toolbar>
