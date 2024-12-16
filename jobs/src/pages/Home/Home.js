@@ -18,7 +18,7 @@ const Home = () => { // Home 컴포넌트를 정의
       {/* 네비게이션 바 */}
       <AppBar
         position="sticky" // 네비게이션 바를 스크롤 시에도 고정되도록 설정
-        style={{ backgroundColor: "white", height: "88px" }} // 네비게이션 바 스타일 정의
+        style={{ backgroundColor: "#EEEDEC", height: "88px" }} // 네비게이션 바 스타일 정의
       >
         <Toolbar
           style={{
@@ -33,7 +33,7 @@ const Home = () => { // Home 컴포넌트를 정의
             component="div" // HTML div 태그로 렌더링
             style={{ fontWeight: "bold", fontSize: "28px" }} // 텍스트의 두께와 크기 설정
           >
-            <Link to="/" style={{ textDecoration: "none", color: "black" }}> {/* 로고를 클릭하면 홈(/)으로 이동 */}
+            <Link to="/" style={{ textDecoration: "none", color: "#1A1918" }}> {/* 로고를 클릭하면 홈(/)으로 이동 */}
               JOB問JOB答 {/* 서비스 이름 표시 */}
             </Link>
           </Typography>
@@ -71,15 +71,19 @@ const Home = () => { // Home 컴포넌트를 정의
         </Typography>
         <Button
           variant="contained" // 버튼 스타일을 Material UI의 Contained 버튼으로 설정
-          style={{
+          size="large" // 버튼 크기를 크게 설정
+          sx={{
             backgroundColor: "#626a55", // 버튼 배경색 설정
             color: "#fff", // 버튼 텍스트 색상 설정
             padding: "10px 24px", // 버튼 안쪽 여백 설정
             fontSize: "25px", // 버튼 텍스트 크기 설정
             fontWeight: "bold", // 버튼 텍스트 굵기 설정
             borderRadius: "8px", // 버튼 모서리를 둥글게 설정
+            "&:hover": {
+              backgroundColor: "#fff", // 호버 시 배경색
+              color: "#4F5645", // 호버 시 텍스트 색상
+            },
           }}
-          size="large" // 버튼 크기를 크게 설정
           className="start-button" // CSS 클래스 추가
           onClick={() => (window.location.href = "/input")} // 버튼 클릭 시 '/input' 페이지로 이동
         >

@@ -1,13 +1,13 @@
 /* 전체 배경 */
 body {
-    background-color: #FFF7F5;
+    background-color: #1A1918;
     margin: 0;
     font-family: 'Arial', sans-serif;
 }
 
 .home {
     text-align: center;
-    color: #333;
+    color: #EEEDEC;
 }
 
 /* 네비게이션 바 */
@@ -20,7 +20,7 @@ body {
 /* 메인 콘텐츠 */
 .main-content {
     margin-top: 20px;
-    background-color: #FFF7F5;
+    background-color: #1A1918;
     padding-top: 40px;
     padding-bottom: 10px;
     padding-left: 20px;
@@ -40,7 +40,7 @@ body {
 }
 
 .scroll-section {
-    background-color: white;
+    background-color: #4F5645;
     border-radius: 8px;
     transition: transform 0.3s ease-in-out;
 }
@@ -52,5 +52,5 @@ body {
 .scroll-title {
     font-weight: bold;
     margin-bottom: 10px;
-    color: #626a55;
+    color: #EEEDEC;
 }
