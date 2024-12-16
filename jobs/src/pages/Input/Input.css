@@ -1,8 +1,8 @@
 /* 전체 페이지 */
 .input-page {
-    background-color: #fff4e6;
+    background-color: #4F5645;
     text-align: center;
-    color: #333;
+    color: #EEEDEC;
     min-height: 100vh;
 }
 
@@ -10,14 +10,14 @@
 .input-container {
     margin-top: 30px;
     padding: 20px;
-    background-color: #fff4e6;
+    background-color: #4F5645;
     border-radius: 8px;
 }
 
 /* 섹션 제목 */
-.section-title {
+.input-container .section-title {
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: 10px;
     text-align: left;
 }
 
@@ -26,65 +26,70 @@
     margin-top: 5px;
     margin-bottom: 10px;
     text-align: left;
-    color: #888;
+    color: #EEEDEC;
 }
 
 /* 파일 업로드 박스 */
-.file-upload-container {
-    border: 2px dashed #f5a5a5;
+.input-container .file-upload-container {
+    border: 2px dashed #1A1918;
     padding: 20px;
     text-align: center;
-    background-color: #fdf7f5;
+    background-color: #EEEDEC;
     border-radius: 8px;
+    margin-top: 5px;
     margin-bottom: 20px;
 }
 
 .file-upload {
+    color: #1A1918;
     margin-top: 10px;
 }
 
 /* URL 입력 */
-.url-input {
-    margin-bottom: 20px;
-    background-color: #fdf7f5;
+.input-container .url-input {
+    margin-top: 5px;
+    background-color: #EEEDEC;
     border-color: #f5a5a5 !important;
 }
 
 /* 요약 텍스트 필드 */
-.summary-textarea {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: #fdf7f5;
+.input-container .summary-textarea {
+    margin-top: 5px;
+    background-color: #EEEDEC;
     border-color: #f5a5a5 !important;
 }
 
 /* 공고 요약 버튼 */
-.summarize-button {
-    background-color: #f5a5a5 !important;
-    color: #fff !important;
+.input-container .summarize-button {
+    background-color: #EEEDEC;
+    color: #1A1918;
     font-size: 16px;
     font-weight: bold;
-    border-radius: 8px;
-    margin-top: 10px;
-    padding: 10px 20px;
+    border-radius: 6px;
+    margin-top: 5px;
+    padding: 5px 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease; /* 부드러운 전환 효과 */
 }
 
-.summarize-button:hover {
-    background-color: #e58e8e;
+.input-container .summarize-button:hover {
+    transform: scale(1.05); /* 버튼을 5% 확대 */
 }
 
 /* 예상 질문 생성 버튼 */
-.generate-button {
-    background-color: #ffd9c9 !important;
-    color: #333 !important;
+.input-container .generate-button {
+    background-color: #EEEDEC;
+    color: #1A1918;
     font-size: 18px;
     font-weight: bold;
-    border-radius: 8px;
+    border-radius: 6px;
     display: block;
-    margin: 20px auto 0 auto;
-    padding: 15px 30px;
+    margin: 25px auto 0 auto;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease; /* 부드러운 전환 효과 */
 }
 
-.generate-button:hover {
-    background-color: #ffc4b2;
+.input-container .generate-button:hover {
+    transform: scale(1.1); /* 버튼을 10% 확대 */
 }

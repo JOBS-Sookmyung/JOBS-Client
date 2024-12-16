@@ -67,7 +67,7 @@ const Input = () => {
       {/* 메인 콘텐츠 */}
       <Container maxWidth="md" className="input-container">
         {/* 자기소개서 파일 첨부 */}
-        <Typography variant="h6" className="section-title">
+        <Typography variant="h5" className="section-title">
           자소서 파일첨부
         </Typography>
         <Typography variant="body2" className="file-hint">
@@ -83,7 +83,7 @@ const Input = () => {
         </Box>
 
         {/* 공고 URL 첨부 */}
-        <Typography variant="h6" className="section-title">
+        <Typography variant="h5" className="section-title">
           공고 url 첨부
         </Typography>
         <TextField
@@ -103,7 +103,7 @@ const Input = () => {
         </Button>
 
         {/* 포지션 요약 */}
-        <Typography variant="h6" className="section-title">
+        <Typography variant="h5" className="section-title">
           포지션 요약
         </Typography>
         <TextField

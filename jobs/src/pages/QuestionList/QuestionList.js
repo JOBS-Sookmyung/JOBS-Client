@@ -56,7 +56,8 @@ const QuestionList = () => {
       <Container maxWidth="md" className="question-list-container">
         <Typography
           variant="h5"
-          style={{ fontWeight: "bold", margin: "20px 0", color: "#333" }}
+          style={{ fontWeight: "bold", fontSize: "28px", 
+            margin: "25px 0", color: "#EEEDEC" }}
         >
           예상 질문
         </Typography>
@@ -72,23 +73,23 @@ const QuestionList = () => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 padding: "20px",
-                marginBottom: "10px",
-                backgroundColor: "#fff4e6",
+                marginBottom: "15px",
+                backgroundColor: "#EEEDEC",
                 borderRadius: "8px",
               }}
             >
               <Typography
-                variant="body1"
-                style={{ fontSize: "16px", color: "#333" }}
+                variant="body2"
+                style={{ fontSize: "18px", color: "#1A1918" }}
               >
                 {question}
               </Typography>
               <Button
                 variant="contained"
                 style={{
-                  backgroundColor: "#f5a5a5",
-                  color: "#fff",
-                  fontWeight: "bold",
+                  backgroundColor: "#4F5645",
+                  color: "#EEEDEC",
+                  fontSize: "16px"
                 }}
                 onClick={() => handleAnswer(question)}
               >
