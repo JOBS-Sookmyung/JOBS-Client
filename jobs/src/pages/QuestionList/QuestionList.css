@@ -1,20 +1,10 @@
 /* 페이지 전체 스타일 */
 .question-list-page {
-    background-color: #fff4e6;
+    background-color: #1A1918;
     min-height: 100vh;
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-  }
-  
-  /* 헤더 */
-  .app-header {
-    background-color: #f5a5a5;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
   }
   
   /* 컨테이너 */
@@ -28,7 +18,7 @@
   .question-list-title {
     font-size: 28px;
     font-weight: bold;
-    color: #333;
+    color: #EEEDEC;
     margin-bottom: 20px;
     text-align: center;
   }
