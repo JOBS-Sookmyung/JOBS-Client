@@ -90,7 +90,7 @@ const Home = () => {
           variant="contained" // 버튼 스타일을 Material UI의 Contained 버튼으로 설정
           size="large" // 버튼 크기를 크게 설정
           sx={{
-            backgroundColor: "#626a55", // 버튼 배경색 설정
+            backgroundColor: "#084032", // 버튼 배경색 설정
             color: "#fff", // 버튼 텍스트 색상 설정
             padding: "10px 24px", // 버튼 안쪽 여백 설정
             fontSize: "25px", // 버튼 텍스트 크기 설정
@@ -98,7 +98,7 @@ const Home = () => {
             borderRadius: "8px", // 버튼 모서리를 둥글게 설정
             "&:hover": {
               backgroundColor: "#fff", // 호버 시 배경색
-              color: "#4F5645", // 호버 시 텍스트 색상
+              color: "#084032", // 호버 시 텍스트 색상
             },
           }}
           className="start-button" // CSS 클래스 추가

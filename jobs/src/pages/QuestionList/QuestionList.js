@@ -31,7 +31,7 @@
 //       {/* 상단 헤더 */}
 //       <AppBar
 //         position="sticky"
-//         style={{ backgroundColor: "#EEEDEC", height: "88px" }}
+//         style={{ backgroundColor: "#fff", height: "88px" }}
 //       >
 //         <Toolbar
 //           style={{
@@ -45,8 +45,12 @@
 //             component="div"
 //             style={{ fontWeight: "bold", fontSize: "28px" }}
 //           >
-//             <Link to="/" style={{ textDecoration: "none", color: "#1A1918" }}>
-//               JOB問JOB答
+//             <Link to="/" style={{ textDecoration: "none" }}>
+//               <img
+//                 src="/logo.png" // public 폴더의 logo.png 파일 경로
+//                 alt="JOB問JOB答 로고" // 이미지 대체 텍스트
+//                 style={{ height: "70px" }} // 원하는 이미지 크기로 설정
+//               />
 //             </Link>
 //           </Typography>
 //         </Toolbar>
@@ -56,8 +60,12 @@
 //       <Container maxWidth="md" className="question-list-container">
 //         <Typography
 //           variant="h5"
-//           style={{ fontWeight: "bold", fontSize: "28px",
-//             margin: "25px 0", color: "#EEEDEC" }}
+//           style={{
+//             fontWeight: "bold",
+//             fontSize: "28px",
+//             margin: "25px 0",
+//             color: "#000",
+//           }}
 //         >
 //           예상 질문
 //         </Typography>
@@ -74,22 +82,22 @@
 //                 alignItems: "center",
 //                 padding: "20px",
 //                 marginBottom: "15px",
-//                 backgroundColor: "#EEEDEC",
+//                 backgroundColor: "#EFF0EE",
 //                 borderRadius: "8px",
 //               }}
 //             >
 //               <Typography
 //                 variant="body2"
-//                 style={{ fontSize: "18px", color: "#1A1918" }}
+//                 style={{ fontSize: "18px", color: "#000" }}
 //               >
 //                 {question}
 //               </Typography>
 //               <Button
 //                 variant="contained"
 //                 style={{
-//                   backgroundColor: "#4F5645",
-//                   color: "#EEEDEC",
-//                   fontSize: "16px"
+//                   backgroundColor: "#084032",
+//                   color: "#fff",
+//                   fontSize: "16px",
 //                 }}
 //                 onClick={() => handleAnswer(question)}
 //               >
@@ -162,7 +170,7 @@ const Questions = () => {
       {/* 상단 헤더 */}
       <AppBar
         position="sticky"
-        style={{ backgroundColor: "#EEEDEC", height: "88px" }}
+        style={{ backgroundColor: "#fff", height: "88px" }}
       >
         <Toolbar
           style={{
@@ -195,7 +203,7 @@ const Questions = () => {
             fontWeight: "bold",
             fontSize: "28px",
             margin: "25px 0",
-            color: "#EEEDEC",
+            color: "#000",
           }}
         >
           예상 질문
@@ -213,21 +221,21 @@ const Questions = () => {
                 alignItems: "center",
                 padding: "20px",
                 marginBottom: "15px",
-                backgroundColor: "#EEEDEC",
+                backgroundColor: "#EFF0EE",
                 borderRadius: "8px",
               }}
             >
               <Typography
                 variant="body2"
-                style={{ fontSize: "18px", color: "#1A1918" }}
+                style={{ fontSize: "18px", color: "#000" }}
               >
                 {question}
               </Typography>
               <Button
                 variant="contained"
                 style={{
-                  backgroundColor: "#4F5645",
-                  color: "#EEEDEC",
+                  backgroundColor: "#084032",
+                  color: "#fff",
                   fontSize: "16px",
                 }}
                 onClick={() => handleAnswer(question)}

@@ -1,9 +1,9 @@
 /* Home.css */
 
 body {
-    background-color: #FFFFFF;
+    background-color: #FFF;
     margin: 0;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Pretendard', sans-serif;
   }
   
   .home {
@@ -21,7 +21,7 @@ body {
   .main-content {
     margin-top: 20px;
     padding: 40px 20px 10px 20px;
-    background-color: #FFFFFF;
+    background-color: #FFF;
   }
   
   .main-title {
@@ -36,7 +36,7 @@ body {
   }
   
   .start-button {
-    background-color: #626a55;
+    background-color: #084032;
     color: #fff;
     padding: 10px 24px;
     font-size: 25px;
@@ -47,7 +47,7 @@ body {
   
   .start-button:hover {
     background-color: #fff;
-    color: #4F5645;
+    color: #084032;
   }
   
   /* 스크롤 섹션 */
@@ -60,7 +60,7 @@ body {
   }
   
   .scroll-section {
-    background-color: #4F5645;
+    background-color: #EFF0EE;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -74,12 +74,12 @@ body {
   .scroll-title {
     font-weight: bold;
     margin-bottom: 10px;
-    color: #EEEDEC;
+    color: #000;
   }
   
   .scroll-description {
     font-size: 18px;
     margin-top: 15px;
-    color: #EEEDEC;
+    color: #000;
   }
   

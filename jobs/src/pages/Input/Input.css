@@ -1,8 +1,8 @@
 /* 전체 페이지 */
 .input-page {
-    background-color: #4F5645;
+    background-color: #fff;
     text-align: center;
-    color: #EEEDEC;
+    color: #000;
     min-height: 100vh;
 }
 
@@ -10,7 +10,7 @@
 .input-container {
     margin-top: 30px;
     padding: 20px;
-    background-color: #4F5645;
+    background-color: #fff;
     border-radius: 8px;
 }
 
@@ -26,43 +26,41 @@
     margin-top: 5px;
     margin-bottom: 10px;
     text-align: left;
-    color: #EEEDEC;
+    color: #000;
 }
 
 /* 파일 업로드 박스 */
 .input-container .file-upload-container {
-    border: 2px dashed #1A1918;
+    border: 2px dashed #084032;
     padding: 20px;
     text-align: center;
-    background-color: #EEEDEC;
+    background-color: #EFF0EE;
     border-radius: 8px;
     margin-top: 5px;
     margin-bottom: 20px;
 }
 
 .file-upload {
-    color: #1A1918;
+    color: #000;
     margin-top: 10px;
 }
 
 /* URL 입력 */
 .input-container .url-input {
     margin-top: 5px;
-    background-color: #EEEDEC;
-    border-color: #f5a5a5 !important;
+    background-color: #EFF0EE;
 }
 
 /* 요약 텍스트 필드 */
 .input-container .summary-textarea {
     margin-top: 5px;
-    background-color: #EEEDEC;
-    border-color: #f5a5a5 !important;
+    background-color: #EFF0EE;
 }
 
 /* 공고 요약 버튼 */
 .input-container .summarize-button {
-    background-color: #EEEDEC;
-    color: #1A1918;
+    background-color: #084032;
+    color: #fff;
     font-size: 16px;
     font-weight: bold;
     border-radius: 6px;
@@ -78,8 +76,8 @@
 
 /* 예상 질문 생성 버튼 */
 .input-container .generate-button {
-    background-color: #EEEDEC;
-    color: #1A1918;
+    background-color: #084032;
+    color: #fff;
     font-size: 18px;
     font-weight: bold;
     border-radius: 6px;

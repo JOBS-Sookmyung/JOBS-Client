@@ -262,7 +262,7 @@ const Input = () => {
       {/* 상단 헤더 (메인 페이지와 동일) */}
       <AppBar
         position="sticky"
-        style={{ backgroundColor: "#EEEDEC", height: "88px" }}
+        style={{ backgroundColor: "#fff", height: "88px" }}
       >
         <Toolbar
           style={{
