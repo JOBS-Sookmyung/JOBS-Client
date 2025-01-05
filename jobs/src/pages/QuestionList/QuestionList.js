@@ -56,7 +56,7 @@
 //       <Container maxWidth="md" className="question-list-container">
 //         <Typography
 //           variant="h5"
-//           style={{ fontWeight: "bold", fontSize: "28px", 
+//           style={{ fontWeight: "bold", fontSize: "28px",
 //             margin: "25px 0", color: "#EEEDEC" }}
 //         >
 //           예상 질문
@@ -117,7 +117,7 @@ import {
   Paper,
 } from "@mui/material";
 import "./QuestionList.css";
-import axios from 'axios';
+import axios from "axios";
 // import Cookies from 'js-cookie';
 
 const Questions = () => {
@@ -141,7 +141,7 @@ const Questions = () => {
   //코드 추가 : fastapi연동
   const reloadQuestions = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/questions/', {
+      const res = await axios.get("http://localhost:8080/questions/", {
         withCredentials: true,
       });
       const result = res.data;
@@ -176,8 +176,12 @@ const Questions = () => {
             component="div"
             style={{ fontWeight: "bold", fontSize: "28px" }}
           >
-            <Link to="/" style={{ textDecoration: "none", color: "#1A1918" }}>
-              JOB問JOB答
+            <Link to="/" style={{ textDecoration: "none" }}>
+              <img
+                src="/logo.png" // public 폴더의 logo.png 파일 경로
+                alt="JOB問JOB答 로고" // 이미지 대체 텍스트
+                style={{ height: "70px" }} // 원하는 이미지 크기로 설정
+              />
             </Link>
           </Typography>
         </Toolbar>
@@ -187,12 +191,15 @@ const Questions = () => {
       <Container maxWidth="md" className="question-list-container">
         <Typography
           variant="h5"
-          style={{ fontWeight: "bold", fontSize: "28px", 
-            margin: "25px 0", color: "#EEEDEC" }}
+          style={{
+            fontWeight: "bold",
+            fontSize: "28px",
+            margin: "25px 0",
+            color: "#EEEDEC",
+          }}
         >
           예상 질문
         </Typography>
-
 
         {/* 질문 카드 반복 */}
         <Box>
@@ -221,7 +228,7 @@ const Questions = () => {
                 style={{
                   backgroundColor: "#4F5645",
                   color: "#EEEDEC",
-                  fontSize: "16px"
+                  fontSize: "16px",
                 }}
                 onClick={() => handleAnswer(question)}
               >

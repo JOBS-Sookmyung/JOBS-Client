@@ -1,56 +1,85 @@
-/* 전체 배경 */
+/* Home.css */
+
 body {
-    background-color: #1A1918;
+    background-color: #FFFFFF;
     margin: 0;
     font-family: 'Arial', sans-serif;
-}
-
-.home {
+  }
+  
+  .home {
     text-align: center;
-    color: #EEEDEC;
-}
-
-/* 네비게이션 바 */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* 메인 콘텐츠 */
-.main-content {
+    color: #000000;
+  }
+  
+  /* 서비스 이름 스타일 */
+  .service-name {
+    font-weight: bold;
+    margin-top: 8rem;
+  }
+  
+  /* 메인 콘텐츠 */
+  .main-content {
     margin-top: 20px;
-    background-color: #1A1918;
-    padding-top: 40px;
-    padding-bottom: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
-}
-
-/* 버튼 */
-.start-button {
-    font-size: 20px;
+    padding: 40px 20px 10px 20px;
+    background-color: #FFFFFF;
+  }
+  
+  .main-title {
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .main-description {
+    font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  .start-button {
+    background-color: #626a55;
+    color: #fff;
     padding: 10px 24px;
+    font-size: 25px;
+    font-weight: bold;
     border-radius: 8px;
-}
-
-/* 스크롤 섹션 */
-.scroll-sections {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .start-button:hover {
+    background-color: #fff;
+    color: #4F5645;
+  }
+  
+  /* 스크롤 섹션 */
+  .scroll-sections {
     margin-top: 10px;
-}
-
-.scroll-section {
+  }
+  
+  .scroll-grid {
+    margin-top: 2rem;
+  }
+  
+  .scroll-section {
     background-color: #4F5645;
     border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
-}
-
-.scroll-section:hover {
+  }
+  
+  .scroll-section:hover {
     transform: translateY(-5px);
-}
-
-.scroll-title {
+  }
+  
+  .scroll-title {
     font-weight: bold;
     margin-bottom: 10px;
     color: #EEEDEC;
-}
+  }
+  
+  .scroll-description {
+    font-size: 18px;
+    margin-top: 15px;
+    color: #EEEDEC;
+  }
+  
