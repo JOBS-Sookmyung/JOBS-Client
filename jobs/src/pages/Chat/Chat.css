@@ -1,71 +1,76 @@
-.question-ui {
-    font-family: 'Arial, sans-serif';
-    padding: 20px;
-  }
-  
-  .question-item {
-    margin-bottom: 30px;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 20px;
-  }
-  
-  .question-item h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
-  .question-item p {
-    margin: 5px 0;
-  }
-  
-  .answer-section {
-    margin-top: 10px;
-    background: #f9f9f9;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .button-group button {
-    margin-right: 10px;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-  }
-  
-  .hint-button {
-    background-color: #d9f7be;
-  }
-  
-  .feedback-button {
-    background-color: #bae7ff;
-  }
-  
-  .follow-up-button {
-    background-color: #ffe58f;
-  }
-  
-  .input-section {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
-  }
-  
-  .input-section textarea {
-    width: calc(100% - 120px);
-    height: 40px;
-    margin-right: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .submit-button {
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  
+.chat-container {
+  display: flex;
+  height: 100vh;
+}
+
+.chat-sidebar {
+  width: 300px;
+  background-color: #f9f9f9;
+  border-right: 1px solid #ddd;
+  overflow-y: auto;
+}
+
+.section {
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.question-list,
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.question-list li,
+.history-list li {
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.question-list li:hover,
+.history-list li:hover {
+  background-color: #e0e0e0;
+}
+
+.chat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+}
+
+.chat-content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #888;
+}
