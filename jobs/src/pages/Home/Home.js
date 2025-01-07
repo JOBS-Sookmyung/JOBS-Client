@@ -1,51 +1,16 @@
-import React from "react"; // React를 사용하여 컴포넌트를 정의하고 관리하기 위해 import
-import {
-  Button,
-  AppBar,
-  Toolbar,
-  Typography,
-  Box,
-  Container,
-  Grid,
-} from "@mui/material"; // Material UI의 다양한 컴포넌트를 사용하기 위해 import
-import "bootstrap/dist/css/bootstrap.min.css"; // Bootstrap 스타일을 적용하기 위해 import
-import { Link } from "react-router-dom"; // React Router를 사용하여 페이지 이동을 처리하기 위해 import
-import "./Home.css"; // 커스텀 스타일을 적용하기 위해 Home.css 파일 import
+import React from "react";
+import { Button, Typography, Box, Container, Grid } from "@mui/material";
+import { Link } from "react-router-dom"; // React Router를 사용하여 페이지 이동을 처리
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./Home.css";
+import Header from "../../component/Header"; // Header 컴포넌트
 
 const Home = () => {
   // Home 컴포넌트를 정의
   return (
     <div className="home">
-      {" "}
+      <Header /> {/* Header 컴포넌트 추가 */}{" "}
       {/* 전체 페이지를 감싸는 div, CSS 클래스 "home" 적용 */}
-      {/* 네비게이션 바 */}
-      <AppBar
-        position="sticky" // 네비게이션 바를 스크롤 시에도 고정되도록 설정
-        style={{ backgroundColor: "#FFF", height: "88px" }} // 네비게이션 바 스타일 정의
-      >
-        <Toolbar
-          style={{
-            minHeight: "88px", // 툴바의 최소 높이 설정
-            display: "flex", // 툴바 내 아이템을 Flexbox로 배치
-            justifyContent: "space-between", // 좌우 아이템 간 간격을 균등하게 분리
-          }}
-        >
-          {/* 클릭 가능한 로고 */}
-          <Typography
-            variant="h4" // 제목의 크기와 스타일을 Material UI의 h4로 설정
-            component="div" // HTML div 태그로 렌더링
-            style={{ fontWeight: "bold", fontSize: "28px" }} // 텍스트의 두께와 크기 설정
-          >
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <img
-                src="/logo.png" // public 폴더의 logo.png 파일 경로
-                alt="JOB問JOB答 로고" // 이미지 대체 텍스트
-                style={{ height: "70px" }} // 원하는 이미지 크기로 설정
-              />
-            </Link>
-          </Typography>
-        </Toolbar>
-      </AppBar>
       {/* 서비스 이름 추가 */}
       <Grid container spacing={2} justifyContent="center" alignItems="center">
         {" "}

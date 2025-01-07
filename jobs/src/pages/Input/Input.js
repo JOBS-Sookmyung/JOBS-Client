@@ -132,18 +132,10 @@
 // export default Input;
 
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Container,
-  TextField,
-  Button,
-  Box,
-} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Container, TextField, Button, Box, Typography } from "@mui/material";
+import Header from "../../component/Header";
 import "./Input.css";
-
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -259,34 +251,7 @@ const Input = () => {
   //여기서부터 디자인
   return (
     <div className="input-page">
-      {/* 상단 헤더 (메인 페이지와 동일) */}
-      <AppBar
-        position="sticky"
-        style={{ backgroundColor: "#fff", height: "88px" }}
-      >
-        <Toolbar
-          style={{
-            minHeight: "88px",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography
-            variant="h4"
-            component="div"
-            style={{ fontWeight: "bold", fontSize: "28px" }}
-          >
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <img
-                src="/logo.png" // public 폴더의 logo.png 파일 경로
-                alt="JOB問JOB答 로고" // 이미지 대체 텍스트
-                style={{ height: "70px" }} // 원하는 이미지 크기로 설정
-              />
-            </Link>
-          </Typography>
-        </Toolbar>
-      </AppBar>
-
+      <Header />
       {/* 메인 콘텐츠 */}
       <Container maxWidth="md" className="input-container">
         {/* 자기소개서 파일 첨부 */}

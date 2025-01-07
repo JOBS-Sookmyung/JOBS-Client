@@ -4,9 +4,22 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
-    <AppBar position="sticky" className="header">
-      <Toolbar className="toolbar">
-        <Typography variant="h4" component="div" className="logo">
+    <AppBar
+      position="sticky"
+      style={{ backgroundColor: "#fff", height: "88px" }}
+    >
+      <Toolbar
+        style={{
+          minHeight: "88px",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography
+          variant="h4"
+          component="div"
+          style={{ fontWeight: "bold", fontSize: "28px" }}
+        >
           <Link to="/" style={{ textDecoration: "none" }}>
             <img
               src="/logo.png" // public 폴더의 logo.png 파일 경로

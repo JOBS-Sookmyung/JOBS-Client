@@ -115,18 +115,11 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Container,
-  Button,
-  Box,
-  Paper,
-} from "@mui/material";
+import { Container, Typography, Button, Box, Paper } from "@mui/material";
+import Header from "../../component/Header";
 import "./QuestionList.css";
 import axios from "axios";
-// import Cookies from 'js-cookie';
+// import Cookies from "js-cookie";
 
 const Questions = () => {
   const [questions, setQuestions] = useState([]);
@@ -167,34 +160,7 @@ const Questions = () => {
 
   return (
     <div className="question-list-page">
-      {/* 상단 헤더 */}
-      <AppBar
-        position="sticky"
-        style={{ backgroundColor: "#fff", height: "88px" }}
-      >
-        <Toolbar
-          style={{
-            minHeight: "88px",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography
-            variant="h4"
-            component="div"
-            style={{ fontWeight: "bold", fontSize: "28px" }}
-          >
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <img
-                src="/logo.png" // public 폴더의 logo.png 파일 경로
-                alt="JOB問JOB答 로고" // 이미지 대체 텍스트
-                style={{ height: "70px" }} // 원하는 이미지 크기로 설정
-              />
-            </Link>
-          </Typography>
-        </Toolbar>
-      </AppBar>
-
+      <Header />
       {/* 질문 리스트 */}
       <Container maxWidth="md" className="question-list-container">
         <Typography
