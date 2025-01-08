@@ -1,8 +1,8 @@
 /* 페이지 전체 스타일 */
 .question-list-page {
-    background-color: #41453A;
+    background-color: #fff;
     min-height: 100vh;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Pretendard', sans-serif;
     margin: 0;
     padding: 0;
   }
@@ -18,15 +18,14 @@
   .question-list-title {
     font-size: 28px;
     font-weight: bold;
-    color: #EEEDEC;
+    color: #000;
     margin-bottom: 20px;
     text-align: center;
   }
   
   /* 질문 카드 */
   .question-card {
-    background-color: #ffffff; /* 배경색을 흰색으로 변경 */
-    border: 2px solid #f5a5a5; /* 테두리를 더 선명하게 설정 */
+    background-color: #EFF0EE; 
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 16px;
@@ -44,14 +43,14 @@
   /* 질문 텍스트 */
   .question-text {
     font-size: 16px;
-    color: #333;
+    color: #000;
     margin: 0;
     flex: 1;
   }
   
   /* 답변하기 버튼 */
   .answer-button {
-    background-color: #f5a5a5;
+    background-color: #084032;
     color: white;
     font-size: 14px;
     font-weight: bold;
@@ -64,6 +63,7 @@
   }
   
   .answer-button:hover {
-    background-color: #ff7f7f;
+    background-color: #fff;
+    color: #084032;
   }
   

@@ -131,21 +131,13 @@
 
 // export default Input;
 
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Container,
-  TextField,
-  Button,
-  Box,
-} from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Container, TextField, Button, Box, Typography } from "@mui/material";
+import Header from "../../component/Header";
 import "./Input.css";
-
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import axios from "axios";
+import Cookies from "js-cookie";
 
 const MB = 1024 * 1024;
 const MAX_FSIZE = 50 * MB;
@@ -153,13 +145,13 @@ const MAX_FSIZE = 50 * MB;
 const Input = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
-  const [recruitUrl, setRecruitUrl] = useState('');
-  const [summaryText, setSummaryText] = useState('');
-  const [recentDate, setRecentDate] = useState('');
-  const [token, setToken] = useState(Cookies.get('token') || null);
+  const [recruitUrl, setRecruitUrl] = useState("");
+  const [summaryText, setSummaryText] = useState("");
+  const [recentDate, setRecentDate] = useState("");
+  const [token, setToken] = useState(Cookies.get("token") || null);
 
   const updateToken = () => {
-    const newToken = Cookies.get('token');
+    const newToken = Cookies.get("token");
     if (newToken && !token) {
       setToken(newToken);
     }
@@ -168,8 +160,8 @@ const Input = () => {
 
   const handleFileChange = (e) => {
     const f = e.target.files[0];
-    if (!f) return alert('알려지지 않은 오류: 파일 없음.');
-    if (f.size > MAX_FSIZE) return alert('파일 용량 제한을 초과하였습니다.');
+    if (!f) return alert("알려지지 않은 오류: 파일 없음.");
+    if (f.size > MAX_FSIZE) return alert("파일 용량 제한을 초과하였습니다.");
     setFile(f);
   };
 
@@ -182,12 +174,12 @@ const Input = () => {
   };
 
   const handleSummarize = async () => {
-    if (!file) return console.warn('400 (File Empty)');
+    if (!file) return console.warn("400 (File Empty)");
 
-    console.log('자소서 첨부:', file);
-    console.log('채용공고 링크:', recruitUrl);
+    console.log("자소서 첨부:", file);
+    console.log("채용공고 링크:", recruitUrl);
     // console.log('포지션 요약:', summaryText);
-    console.log('마지막 수정:', await updateDate());
+    console.log("마지막 수정:", await updateDate());
 
     // TODO: 포지션 요약 로직을 추가
   };
@@ -205,7 +197,7 @@ const Input = () => {
 
   const reloadForm = async () => {
     try {
-      const res = await axios.get('http://localhost:8080/input/', {
+      const res = await axios.get("http://localhost:8080/input/", {
         withCredentials: true,
       });
       const result = res.data;
@@ -227,18 +219,18 @@ const Input = () => {
   const uploadFile = async () => {
     if (!file) return;
 
-    const ep = 'http://localhost:8080/input/uploadfile/';
+    const ep = "http://localhost:8080/input/uploadfile/";
 
     const body = new FormData();
-    body.set('file', file);
+    body.set("file", file);
 
-    const tail = { recruitUrl, /*summaryText, */recentDate };
+    const tail = { recruitUrl, /*summaryText, */ recentDate };
     for (let [k, v] of Object.entries(tail)) {
       body.set(k, v);
     }
 
     const config = {
-      headers: { 'Content-Type': 'multipart/form-data' },
+      headers: { "Content-Type": "multipart/form-data" },
       withCredentials: true,
     };
 
@@ -250,41 +242,16 @@ const Input = () => {
       alert(e);
       result = e;
     }
-    console.log('업로드 결과:', result);
+    console.log("업로드 결과:", result);
   };
   useEffect(() => {
     uploadFile();
   }, [recentDate]);
 
-
   //여기서부터 디자인
   return (
     <div className="input-page">
-      {/* 상단 헤더 (메인 페이지와 동일) */}
-      <AppBar
-        position="sticky"
-        style={{ backgroundColor: "#EEEDEC", height: "88px" }}
-      >
-        <Toolbar
-          style={{
-            minHeight: "88px",
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography
-            variant="h4"
-            component="div"
-            style={{ fontWeight: "bold", fontSize: "28px" }}
-          >
-            <Link to="/" style={{ textDecoration: "none", color: "#1A1918" }}>
-              JOB問JOB答
-            </Link>
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      
-
+      <Header />
       {/* 메인 콘텐츠 */}
       <Container maxWidth="md" className="input-container">
         {/* 자기소개서 파일 첨부 */}
@@ -301,15 +268,13 @@ const Input = () => {
             onChange={handleFileChange}
           />
         </Box>
-        
-
 
         {/* 공고 URL 첨부 */}
         <Typography variant="h6" className="section-title">
           공고 url 첨부
         </Typography>
         <Typography variant="body2" className="recent-date">
-          {recentDate === '' ? '' : `마지막 수정: ${recentDate}`}
+          {recentDate === "" ? "" : `마지막 수정: ${recentDate}`}
         </Typography>
 
         <TextField
@@ -328,8 +293,8 @@ const Input = () => {
           공고 요약하기
         </Button>
 
-       {/* 포지션 요약 */}
-       <Typography variant="h5" className="section-title">
+        {/* 포지션 요약 */}
+        <Typography variant="h5" className="section-title">
           포지션 요약
         </Typography>
         <TextField
