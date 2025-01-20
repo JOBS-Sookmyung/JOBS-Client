@@ -3,19 +3,77 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 const Chat = () => {
   const location = useLocation();
-  const question = location.state?.question || "질문을 선택하세요."; // 기본 질문 설정
+  const navigate = useNavigate();
+  const questionId = [1, 2, 3, 4, 5];
+  const question = location.state?.question || "질문을 선택하세요.";
   const [showQuestions, setShowQuestions] = useState(true);
   const [showHistory, setShowHistory] = useState(true);
-  const [messages, setMessages] = useState([
-    {
-      type: "question",
-      text: "프로젝트에서 협업 경험이 있다면, 어떤 역할을 맡았고 어떻게 팀워크를 이끌었나요?",
-    },
-    {
-      type: "ai-response",
-      text: "이 프로젝트는 팀원들 각각의 강점을 최대한 활용하는 게 중요했던 작업이었는데요...",
-    },
-  ]);
+  const [messages, setMessages] = useState(() => {
+    // 각 질문 ID에 따른 초기 메시지 설정
+    const initialMessages = {
+      1: [
+        {
+          type: "question",
+          text: "프로젝트에서 협업 경험이 있다면, 어떤 역할을 맡았고 어떻게 팀워크를 이끌었나요?",
+        },
+        {
+          type: "ai-response",
+          text: "이 프로젝트는 팀원들 각각의 강점을 최대한 활용하는 게 중요했던 작업이었는데요...",
+        },
+      ],
+      2: [
+        {
+          type: "question",
+          text: "본인의 강점과 약점은 무엇이며, 약점을 극복하기 위해 어떤 노력을 하고 있나요?",
+        },
+        {
+          type: "ai-response",
+          text: "저의 가장 큰 강점은 끈기 있게 목표를 향해 나아가는 것입니다...",
+        },
+      ],
+      3: [
+        {
+          type: "question",
+          text: "입사 후 5년 뒤, 본인이 회사에서 어떤 모습으로 성장해 있을 것 같나요?",
+        },
+        {
+          type: "ai-response",
+          text: "5년 후에는 회사의 핵심 인재로 성장하여...",
+        },
+      ],
+      4: [
+        {
+          type: "question",
+          text: "팀 프로젝트나 조직 생활에서 갈등 상황을 성공적으로 해결한 경험이 있나요?",
+        },
+        {
+          type: "ai-response",
+          text: "프로젝트 진행 중 팀원들과의 의견 충돌이 있었지만...",
+        },
+      ],
+      5: [
+        {
+          type: "question",
+          text: "본인이 생각하는 이 회사의 가장 큰 장점은 무엇인가요?",
+        },
+        {
+          type: "ai-response",
+          text: "귀사의 가장 큰 장점은 혁신적인 기술력과 함께...",
+        },
+      ],
+    };
+    // URL에서 questionId 파라미터 추출
+    const pathSegments = window.location.pathname.split("/");
+    const questionId = parseInt(pathSegments[pathSegments.length - 1]) || 1;
+
+    // questionId에 해당하는 메시지만 초기값으로 설정
+    if (initialMessages[questionId]) {
+      return initialMessages[questionId];
+    }
+    // URL의 questionId에 따라 해당하는 메시지 반환
+    const currentId = parseInt(window.location.pathname.split("/")[2]) || 1;
+    return initialMessages[currentId] || initialMessages[1];
+  });
   const [userInput, setUserInput] = useState("");
   const [hints, setHints] = useState({});
 
@@ -62,12 +120,55 @@ const Chat = () => {
           </div>
           {showQuestions && (
             <ul className="list-unstyled mt-3">
-              <li className="p-2 rounded hover-bg-light">프로젝트 협업 경험</li>
-              <li className="p-2 rounded hover-bg-light">본인의 강점과 약점</li>
-              <li className="p-2 rounded hover-bg-light">입사 후 5년 뒤</li>
-              <li className="p-2 rounded hover-bg-light">갈등 상황 해결</li>
-              <li className="p-2 rounded hover-bg-light">
-                본인이 생각하는 곳 장점이란?
+              <li
+                className="p-2 rounded hover-bg-light"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/chat/1/1");
+                  window.location.reload();
+                }}
+              >
+                <div>프로젝트 협업 경험</div>
+              </li>
+              <li
+                className="p-2 rounded hover-bg-light"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/chat/1/2");
+                  window.location.reload();
+                }}
+              >
+                <div>본인의 강점과 약점</div>
+              </li>
+              <li
+                className="p-2 rounded hover-bg-light"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/chat/1/3");
+                  window.location.reload();
+                }}
+              >
+                <div>입사 후 5년 뒤</div>
+              </li>
+              <li
+                className="p-2 rounded hover-bg-light"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/chat/1/4");
+                  window.location.reload();
+                }}
+              >
+                <div>갈등 상황 해결</div>
+              </li>
+              <li
+                className="p-2 rounded hover-bg-light"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/chat/1/5");
+                  window.location.reload();
+                }}
+              >
+                <div>본인이 생각하는 곳 장점이란?</div>
               </li>
             </ul>
           )}
@@ -126,7 +227,37 @@ const Chat = () => {
         {/* 상단 내보내기 버튼 */}
         <div className="p-3 border-bottom d-flex justify-content-between align-items-center">
           <h5 className="mb-0">당근마켓 모의 면접</h5>
-          <button className="btn btn-success" onClick={handleExportPDF}>
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              const content = document.querySelector(
+                ".flex-grow-1.p-3.bg-white"
+              );
+              const printWindow = window.open("", "", "width=800,height=600");
+              printWindow.document.write(`
+                <html>
+                  <head>
+                    <title>면접 기록</title>
+                    <style>
+                      body { padding: 20px; }
+                      .message { margin-bottom: 15px; }
+                      .question { background: #007bff; color: white; padding: 10px; border-radius: 5px; }
+                      .response { background: #f8f9fa; padding: 10px; border-radius: 5px; }
+                      .user { text-align: right; background: #28a745; color: white; padding: 10px; border-radius: 5px; }
+                    </style>
+                  </head>
+                  <body>
+                    <h2>면접 기록</h2>
+                    ${content.innerHTML}
+                  </body>
+                </html>
+              `);
+              printWindow.document.close();
+              printWindow.focus();
+              printWindow.print();
+              printWindow.close();
+            }}
+          >
             내보내기
           </button>
         </div>
