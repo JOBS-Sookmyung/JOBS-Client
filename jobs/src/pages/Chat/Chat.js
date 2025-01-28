@@ -217,25 +217,28 @@ const Chat = () => {
           <button
             className="export-button"
             onClick={() => {
-              const content = document.querySelector(
-                ".flex-grow-1.p-3.bg-white"
-              );
+              const content = document.querySelector(".chat-body");
+              if (!content) {
+                alert("내보낼 콘텐츠를 찾을 수 없습니다."); //요소가 없으면 경고창 표시
+                return;
+              }
+
               const printWindow = window.open("", "", "width=800,height=600");
               printWindow.document.write(`
                 <html>
                   <head>
                     <title>면접 기록</title>
                     <style>
-                      body { padding: 20px; }
-                      .message { margin-bottom: 15px; }
-                      .question { background: #007bff; color: white; padding: 10px; border-radius: 5px; }
-                      .response { background: #f8f9fa; padding: 10px; border-radius: 5px; }
-                      .user { text-align: right; background: #28a745; color: white; padding: 10px; border-radius: 5px; }
+                      body { padding: 20px; font-family: Arial, sans-serif; }
+                      .message { margin-bottom: 15px; padding: 10px; border-radius: 5px; }
+                      .question { background: #007bff; color: white; }
+                      .ai-response { background: #d1fae5; }
+                      .user { text-align: right; background: #28a745; color: white; }
                     </style>
                   </head>
                   <body>
                     <h2>면접 기록</h2>
-                    ${content.innerHTML}
+                    ${content.innerHTML} <!-- content가 null이 아닐 때만 실행 -->
                   </body>
                 </html>
               `);
