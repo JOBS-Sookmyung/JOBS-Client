@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import "./Chat.css";
 
 const Chat = () => {
   const location = useLocation();
@@ -84,9 +85,11 @@ const Chat = () => {
 
   // 힌트 버튼 클릭 처리
   const handleHint = (index) => {
-    const hintResponse =
-      "이 질문에 대한 답변은 경험 중심으로 구체적으로 작성하는 것이 좋습니다.";
-    setHints({ ...hints, [index]: hintResponse });
+    setHints({
+      ...hints,
+      [index]:
+        "이 질문에 대한 답변은 경험 중심으로 구체적으로 작성하는 것이 좋습니다.",
+    });
   };
 
   // 사용자 입력 처리
@@ -98,17 +101,17 @@ const Chat = () => {
   };
 
   return (
-    <div className="d-flex vh-100">
+    <div className="chat-container">
       {/* 왼쪽 사이드바 */}
-      <div className="col-3 border-end bg-light">
+      <div className="sidebar">
         {/* 대표 질문 영역 */}
-        <div className="p-3 border-bottom">
+        <div className="section">
           <div
-            className="d-flex justify-content-between align-items-center"
+            className="section-header"
             style={{ cursor: "pointer" }}
             onClick={() => setShowQuestions(!showQuestions)}
           >
-            <h5 className="mb-0">
+            <h5 className="section-title">
               대표 질문들{" "}
               <span className="text-muted small">
                 ({showQuestions ? "5개" : ""})
@@ -119,9 +122,9 @@ const Chat = () => {
             </button>
           </div>
           {showQuestions && (
-            <ul className="list-unstyled mt-3">
+            <ul className="question-list">
               <li
-                className="p-2 rounded hover-bg-light"
+                className="question-item"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   navigate("/chat/1/1");
@@ -131,7 +134,7 @@ const Chat = () => {
                 <div>프로젝트 협업 경험</div>
               </li>
               <li
-                className="p-2 rounded hover-bg-light"
+                className="question-item"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   navigate("/chat/1/2");
@@ -141,7 +144,7 @@ const Chat = () => {
                 <div>본인의 강점과 약점</div>
               </li>
               <li
-                className="p-2 rounded hover-bg-light"
+                className="question-item"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   navigate("/chat/1/3");
@@ -151,7 +154,7 @@ const Chat = () => {
                 <div>입사 후 5년 뒤</div>
               </li>
               <li
-                className="p-2 rounded hover-bg-light"
+                className="question-item"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   navigate("/chat/1/4");
@@ -161,7 +164,7 @@ const Chat = () => {
                 <div>갈등 상황 해결</div>
               </li>
               <li
-                className="p-2 rounded hover-bg-light"
+                className="question-item"
                 style={{ cursor: "pointer" }}
                 onClick={() => {
                   navigate("/chat/1/5");
@@ -175,13 +178,13 @@ const Chat = () => {
         </div>
 
         {/* 이전 기록 영역 */}
-        <div className="p-3">
+        <div className="section">
           <div
-            className="d-flex justify-content-between align-items-center"
+            className="section-header"
             style={{ cursor: "pointer" }}
             onClick={() => setShowHistory(!showHistory)}
           >
-            <h5 className="mb-0">
+            <h5 className="section-title">
               이전 기록들{" "}
               <span className="text-muted small">
                 ({showHistory ? "8개" : ""})
@@ -192,43 +195,27 @@ const Chat = () => {
             </button>
           </div>
           {showHistory && (
-            <ul className="list-unstyled mt-3">
-              <li className="p-2 rounded hover-bg-light">
-                현대 모비스 모의 면접 기록
-              </li>
-              <li className="p-2 rounded hover-bg-light">
-                네이버 클라우드 모의 면접 기록
-              </li>
-              <li className="p-2 rounded hover-bg-light">
-                넥슨 모의 면접 기록
-              </li>
-              <li className="p-2 rounded hover-bg-light">
-                구글 코리아 모의 면접 기록
-              </li>
-              <li className="p-2 rounded hover-bg-light">
-                애플 코리아 모의 면접 기록
-              </li>
-              <li className="p-2 rounded hover-bg-light">
-                마이크로소프트 모의 면접 기록
-              </li>
-              <li className="p-2 rounded hover-bg-light">
-                하나은행 모의 면접 기록
-              </li>
-              <li className="p-2 rounded hover-bg-light">
-                실리콘밸리 모의 면접 기록
-              </li>
+            <ul className="history-list">
+              <li className="history-item">현대 모비스 모의 면접 기록</li>
+              <li className="history-item">네이버 클라우드 모의 면접 기록</li>
+              <li className="history-item">넥슨 모의 면접 기록</li>
+              <li className="history-item">구글 코리아 모의 면접 기록</li>
+              <li className="history-item">애플 코리아 모의 면접 기록</li>
+              <li className="history-item">마이크로소프트 모의 면접 기록</li>
+              <li className="history-item">하나은행 모의 면접 기록</li>
+              <li className="history-item">실리콘밸리 모의 면접 기록</li>
             </ul>
           )}
         </div>
       </div>
 
       {/* 오른쪽 채팅 영역 */}
-      <div className="col-9 d-flex flex-column">
+      <div className="chat-section">
         {/* 상단 내보내기 버튼 */}
-        <div className="p-3 border-bottom d-flex justify-content-between align-items-center">
-          <h5 className="mb-0">당근마켓 모의 면접</h5>
+        <div className="chat-header">
+          <h5 className="chat-title">당근마켓 모의 면접</h5>
           <button
-            className="btn btn-success"
+            className="export-button"
             onClick={() => {
               const content = document.querySelector(
                 ".flex-grow-1.p-3.bg-white"
@@ -263,49 +250,40 @@ const Chat = () => {
         </div>
 
         {/* 채팅 메시지 출력 영역 */}
-        <div className="flex-grow-1 p-3 bg-white overflow-auto">
+        <div className="chat-body">
           {messages.map((message, index) => (
-            <div
-              key={index}
-              className={`mb-3 ${message.type === "user" ? "text-end" : ""}`}
-            >
-              <p
-                className={`p-3 rounded ${
-                  message.type === "user"
-                    ? "bg-success text-white"
-                    : message.type === "ai-response"
-                      ? "bg-light"
-                      : "bg-primary text-white"
-                }`}
-              >
-                {message.text}
-              </p>
+            <div key={index} className={`message ${message.type}`}>
               {message.type === "question" && (
                 <button
-                  className="btn btn-sm btn-outline-secondary mt-2"
+                  className="hint-button"
                   onClick={() => handleHint(index)}
                 >
                   힌트
                 </button>
               )}
-              {hints[index] && (
-                <p className="mt-2 text-muted small">{hints[index]}</p>
+              <p>{message.text}</p>
+              {hints[index] && <p className="hint-text">{hints[index]}</p>}
+              {message.type === "user" && (
+                <div className="user-actions">
+                  <button className="action-button">꼬리질문</button>
+                  <button className="action-button">피드백</button>
+                </div>
               )}
             </div>
           ))}
         </div>
 
         {/* 하단 입력창 */}
-        <div className="p-3 border-top d-flex align-items-center">
+        <div className="chat-input">
           <input
             type="text"
-            className="form-control me-3"
+            className="input-field"
             placeholder="답변을 입력하세요..."
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
           />
-          <button className="btn btn-primary" onClick={handleSendMessage}>
-            <i className="bi bi-arrow-right"></i>
+          <button className="send-button" onClick={handleSendMessage}>
+            ➡
           </button>
         </div>
       </div>
