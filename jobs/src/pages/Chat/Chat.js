@@ -80,7 +80,35 @@ const Chat = () => {
 
   // PDF 내보내기 함수
   const handleExportPDF = () => {
-    alert("PDF로 변환하는 기능이 구현됩니다.");
+    const content = document.querySelector(".chat-body");
+    if (!content) {
+      alert("내보낼 콘텐츠를 찾을 수 없습니다."); // 요소가 없으면 경고창 표시
+      return;
+    }
+
+    const printWindow = window.open("", "", "width=800,height=600");
+    printWindow.document.write(`
+    <html>
+      <head>
+        <title>면접 기록</title>
+        <style>
+          body { padding: 20px; font-family: Arial, sans-serif; }
+          .message { margin-bottom: 15px; padding: 10px; border-radius: 5px; }
+          .question { background: #007bff; color: white; }
+          .ai-response { background: #d1fae5; }
+          .user { text-align: right; background: #28a745; color: white; }
+        </style>
+      </head>
+      <body>
+        <h2>면접 기록</h2>
+        ${content.innerHTML} <!-- content가 null이 아닐 때만 실행 -->
+      </body>
+    </html>
+  `);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
   };
 
   // 힌트 버튼 클릭 처리
@@ -214,40 +242,7 @@ const Chat = () => {
         {/* 상단 내보내기 버튼 */}
         <div className="chat-header">
           <h5 className="chat-title">당근마켓 모의 면접</h5>
-          <button
-            className="export-button"
-            onClick={() => {
-              const content = document.querySelector(".chat-body");
-              if (!content) {
-                alert("내보낼 콘텐츠를 찾을 수 없습니다."); //요소가 없으면 경고창 표시
-                return;
-              }
-
-              const printWindow = window.open("", "", "width=800,height=600");
-              printWindow.document.write(`
-                <html>
-                  <head>
-                    <title>면접 기록</title>
-                    <style>
-                      body { padding: 20px; font-family: Arial, sans-serif; }
-                      .message { margin-bottom: 15px; padding: 10px; border-radius: 5px; }
-                      .question { background: #007bff; color: white; }
-                      .ai-response { background: #d1fae5; }
-                      .user { text-align: right; background: #28a745; color: white; }
-                    </style>
-                  </head>
-                  <body>
-                    <h2>면접 기록</h2>
-                    ${content.innerHTML} <!-- content가 null이 아닐 때만 실행 -->
-                  </body>
-                </html>
-              `);
-              printWindow.document.close();
-              printWindow.focus();
-              printWindow.print();
-              printWindow.close();
-            }}
-          >
+          <button className="export-button" onClick={handleExportPDF}>
             내보내기
           </button>
         </div>
@@ -284,9 +279,14 @@ const Chat = () => {
             placeholder="답변을 입력하세요..."
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                handleSendMessage();
+              }
+            }}
           />
           <button className="send-button" onClick={handleSendMessage}>
-            ➡
+            ⬆
           </button>
         </div>
       </div>
