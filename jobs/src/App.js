@@ -13,7 +13,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/input" element={<Input />} />
         <Route path="/questions" element={<QuestionList />} />
-        <Route path="/chat" element={<AnswerDetailPage />} />
+        <Route path="/chat/1/:questionId" element={<AnswerDetailPage />} />
         <Route path="*" element={<NotFound />} /> {/* 404 페이지 라우트 추가 */}
       </Routes>
     </Router>

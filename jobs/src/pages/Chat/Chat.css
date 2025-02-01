@@ -3,6 +3,7 @@
 .chat-container {
   display: flex;
   height: 100vh;
+  background-color: #f9fafb;
 }
 
 .sidebar {
@@ -24,19 +25,7 @@
 
 .section-title {
   font-size: 18px;
-  font-weight: 600;
-}
-
-.toggle-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.icon {
-  height: 20px;
-  width: 20px;
-  color: #6b7280;
+  font-weight: bold;
 }
 
 .question-list,
@@ -48,49 +37,43 @@
 
 .question-item,
 .history-item {
-  padding: 8px;
+  padding: 10px;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: background 0.2s;
 }
 
 .question-item:hover,
 .history-item:hover {
-  color: #2563eb;
+  background-color: #eef2ff;
 }
 
 .chat-section {
   flex: 1;
-  padding: 24px;
   display: flex;
   flex-direction: column;
+  padding: 24px;
 }
 
 .chat-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 2px solid #e5e7eb;
   padding-bottom: 8px;
   margin-bottom: 16px;
 }
 
 .chat-title {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: bold;
 }
 
 .export-button {
   background-color: #3b82f6;
-  color: #ffffff;
+  color: white;
   padding: 8px 16px;
-  border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.export-button:hover {
-  background-color: #2563eb;
 }
 
 .chat-body {
@@ -102,8 +85,73 @@
 }
 
 .message {
-  background-color: #f3f4f6;
-  padding: 16px;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  max-width: 60%;
+  padding: 14px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.question {
+  background-color: #e0f2fe;
+  align-self: flex-start;
+}
+
+.ai-response {
+  background-color: #d1fae5;
+  align-self: flex-start;
+}
+
+.user {
+  background-color: #93c5fd;
+  align-self: flex-end;
+  color: white;
+}
+
+.hint-button {
+  position: absolute;
+  top: 0;
+  right: -60px;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.hint-text {
+  font-size: 14px;
+  color: gray;
+  margin-top: 5px;
+}
+
+.user-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.action-button {
+  background-color: #4b5563;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.chat-input {
+  display: flex;
+  padding: 12px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.input-field {
+  flex: 1;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+.send-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
 }

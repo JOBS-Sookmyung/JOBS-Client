@@ -227,6 +227,13 @@ import { Container, Typography, Button, Box, Paper } from "@mui/material";
 import Header from "../../component/Header";
 import "./QuestionList.css";
 import axios from "axios";
+const questionIds = {
+  "이 직무를 지원하게 된 동기는 무엇인가요?": 1,
+  "본인의 강점과 약점은 무엇인가요?": 2,
+  "입사 후 5년 뒤 본인의 모습을 상상해본다면?": 3,
+  "팀 프로젝트에서 갈등 상황을 해결한 경험이 있다면?": 4,
+  "이 회사에 지원하기 위해 어떤 준비를 했나요?": 5,
+};
 
 const Questions = () => {
   const navigate = useNavigate();
@@ -239,7 +246,8 @@ const Questions = () => {
   ]); // tempQuestions를 기본값으로 설정
 
   const handleAnswer = (question) => {
-    navigate("/chat", { state: { question } });
+    const id = questionIds[question];
+    navigate(`/chat/1/${id}`, { state: { question } });
   };
 
   const reloadQuestions = async () => {
