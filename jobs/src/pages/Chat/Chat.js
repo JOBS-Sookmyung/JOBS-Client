@@ -78,6 +78,40 @@ const Chat = () => {
     }
   };
 
+  // PDF 내보내기 함수
+  const handleExportPDF = () => {
+    const content = document.querySelector(".chat-body");
+    if (!content) {
+      alert("내보낼 콘텐츠를 찾을 수 없습니다."); // 요소가 없으면 경고창 표시
+      return;
+    }
+
+    const printWindow = window.open("", "", "width=800,height=600");
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>면접 기록</title>
+          <style>
+            body { padding: 20px; font-family: Arial, sans-serif; }
+            .message { margin-bottom: 15px; padding: 10px; border-radius: 5px; }
+            .question { background: #007bff; color: white; padding: 10px; }
+            .ai-response { background: #d1fae5; padding: 10px; }
+            .user { text-align: right; background: #28a745; color: white; padding: 10px; border-radius: 8px; }
+          </style>
+        </head>
+        <body>
+          <h2>면접 기록</h2>
+          ${content.innerHTML} <!-- ✅ HTML 콘텐츠 추가 -->
+        </body>
+      </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+  };
+
   return (
     <div className="chat-container">
       {/* 왼쪽 사이드바 */}
@@ -147,7 +181,9 @@ const Chat = () => {
               ? questions[selectedQuestionIndex]
               : "예상 질문을 선택해주세요!"}
           </h5>
-          <button className="export-button">내보내기</button>
+          <button className="export-button" onClick={handleExportPDF}>
+            내보내기
+          </button>
         </div>
 
         {/* 질문이 선택되지 않은 경우 */}
