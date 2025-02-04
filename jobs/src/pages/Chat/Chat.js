@@ -1,21 +1,37 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import "./Chat.css";
 
 const Chat = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { questionId } = useParams(); // ✅ URL에서 questionId 가져오기
 
-  // 예상 질문 리스트 (Input.js에서 받아옴)
-  const questions = location.state?.questions || [];
+  // ✅ 실제 API 응답을 받아올 경우 (현재는 주석 처리)
+  // const questions = location.state?.questions || [];
 
-  // 상태 관리
-  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(null); // 사용자가 선택한 질문 (기본값: 선택되지 않음)
-  const [showQuestions, setShowQuestions] = useState(true); // 질문 리스트 토글
-  const [showHistory, setShowHistory] = useState(true); // 이전 기록 토글
-  const [messages, setMessages] = useState([]); // 채팅 메시지
-  const [userInput, setUserInput] = useState(""); // 사용자 입력값
-  const [hints, setHints] = useState({}); // 힌트 저장
+  // ✅ 임시 데이터로 설정 (테스트용)
+  const questions = ["질문1", "질문2", "질문3", "질문4", "질문5"];
+
+  // 선택한 질문의 인덱스 가져오기
+  const selectedIndex = questionId ? parseInt(questionId) - 1 : null;
+
+  // ✅ 상태 설정
+  const [selectedQuestionIndex, setSelectedQuestionIndex] =
+    useState(selectedIndex);
+  const [showQuestions, setShowQuestions] = useState(true);
+  const [showHistory, setShowHistory] = useState(true);
+  const [messages, setMessages] = useState(
+    selectedIndex !== null
+      ? [
+          { type: "question", text: questions[selectedIndex] },
+          { type: "ai-response", text: "AI가 답변을 생성 중입니다..." },
+        ]
+      : []
+  );
+  const [userInput, setUserInput] = useState("");
+  const [hints, setHints] = useState({});
+  const [loadingHints, setLoadingHints] = useState({}); // 힌트 로딩 상태
 
   // 질문 선택 처리
   const handleSelectQuestion = (index) => {
@@ -24,57 +40,42 @@ const Chat = () => {
       { type: "question", text: questions[index] },
       { type: "ai-response", text: "AI가 답변을 생성 중입니다..." },
     ]);
-    navigate(`/chat/1/${index + 1}`, { state: { question: questions[index] } });
+    navigate(`/chat/1/${index + 1}`, { state: { questions } });
   };
 
   // 메시지 전송
   const handleSendMessage = () => {
     if (userInput.trim() === "") return;
-
     setMessages([...messages, { type: "user", text: userInput }]);
     setUserInput("");
   };
 
-  // 힌트 버튼 클릭 처리
-  const handleHint = (index) => {
-    setHints({
-      ...hints,
-      [index]:
-        "이 질문에 대한 답변은 경험 중심으로 구체적으로 작성하는 것이 좋습니다.",
-    });
-  };
+  // ✅ 힌트 요청 (AI에 질문 전달 후 가이드 받기)
+  const handleHint = async (index) => {
+    if (hints[index]) return; // 이미 힌트가 있다면 중복 요청 방지
 
-  // PDF 내보내기 함수
-  const handleExportPDF = () => {
-    const content = document.querySelector(".chat-body");
-    if (!content) {
-      alert("내보낼 콘텐츠를 찾을 수 없습니다."); // 요소가 없으면 경고창 표시
-      return;
+    setLoadingHints((prev) => ({ ...prev, [index]: true })); // 로딩 상태 업데이트
+
+    try {
+      const response = await fetch("http://localhost:8080/generate-hint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: questions[index] }),
+      });
+
+      if (!response.ok) throw new Error("서버 응답 오류");
+
+      const data = await response.json();
+      setHints((prev) => ({ ...prev, [index]: data.hint })); // AI가 반환한 힌트 저장
+    } catch (error) {
+      console.error("힌트 요청 실패:", error);
+      setHints((prev) => ({
+        ...prev,
+        [index]: "힌트를 가져오는 데 실패했습니다.",
+      })); // 에러 처리
+    } finally {
+      setLoadingHints((prev) => ({ ...prev, [index]: false })); // 로딩 종료
     }
-
-    const printWindow = window.open("", "", "width=800,height=600");
-    printWindow.document.write(`
-    <html>
-      <head>
-        <title>면접 기록</title>
-        <style>
-          body { padding: 20px; font-family: Arial, sans-serif; }
-          .message { margin-bottom: 15px; padding: 10px; border-radius: 5px; }
-          .question { background: #007bff; color: white; }
-          .ai-response { background: #d1fae5; }
-          .user { text-align: right; background: #28a745; color: white; }
-        </style>
-      </head>
-      <body>
-        <h2>면접 기록</h2>
-        ${content.innerHTML} <!-- content가 null이 아닐 때만 실행 -->
-      </body>
-    </html>
-  `);
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-    printWindow.close();
   };
 
   return (
@@ -146,13 +147,11 @@ const Chat = () => {
               ? questions[selectedQuestionIndex]
               : "예상 질문을 선택해주세요!"}
           </h5>
-          <button className="export-button" onClick={handleExportPDF}>
-            내보내기
-          </button>
+          <button className="export-button">내보내기</button>
         </div>
 
         {/* 질문이 선택되지 않은 경우 */}
-        {!selectedQuestionIndex && (
+        {selectedQuestionIndex === null && (
           <div className="chat-placeholder">
             <h3>예상 질문을 통해 면접 준비를 시작해보세요!</h3>
           </div>
@@ -168,8 +167,9 @@ const Chat = () => {
                     <button
                       className="hint-button"
                       onClick={() => handleHint(index)}
+                      disabled={loadingHints[index]}
                     >
-                      힌트
+                      {loadingHints[index] ? "로딩 중..." : "힌트"}
                     </button>
                   )}
                   <p>{message.text}</p>
