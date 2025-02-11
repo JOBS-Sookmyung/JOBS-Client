@@ -5,13 +5,12 @@ import {
   IconButton,
   TextField,
   Button,
-  Typography,
   Box,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import logo from "../assets/logo.svg";
 
-const LoginModal = ({ open, handleClose }) => {
+const LoginModal = ({ open, handleClose, openSignup }) => {
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
       <DialogContent
@@ -30,16 +29,9 @@ const LoginModal = ({ open, handleClose }) => {
           <CloseIcon />
         </IconButton>
 
-        {/* 타이틀: 로고 & 설명 */}
-        <Box display="flex" flexDirection="column" alignItems="center" mb={3}>
+        {/* 로고 */}
+        <Box display="flex" flexDirection="column" alignItems="center">
           <img src={logo} alt="JOBIS 로고" style={{ height: "40px" }} />
-          <Typography
-            variant="h6"
-            color="textSecondary"
-            sx={{ mt: 2 }} // 로고와 간격 추가
-          >
-            나의 면접을 준비하는 방법
-          </Typography>
         </Box>
 
         {/* 아이디 & 비밀번호 입력 필드 */}
@@ -60,7 +52,7 @@ const LoginModal = ({ open, handleClose }) => {
           </Button>
         </Box>
 
-        {/* ✅ 로그인/회원가입 버튼 - 높이 증가 */}
+        {/* 로그인/회원가입 버튼 */}
         <Box mt={3} display="flex" flexDirection="column" gap={2}>
           <Button
             variant="contained"
@@ -83,6 +75,7 @@ const LoginModal = ({ open, handleClose }) => {
               fontWeight: "bold",
               height: "56px",
             }}
+            onClick={openSignup} // 회원가입 모달 열기
           >
             회원가입
           </Button>

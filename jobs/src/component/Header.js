@@ -9,6 +9,12 @@ const Header = () => {
   const [loginOpen, setLoginOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
 
+  // 로그인 모달에서 회원가입 버튼 클릭 시 회원가입 모달 열기
+  const handleOpenSignup = () => {
+    setLoginOpen(false); // 로그인 모달 닫기
+    setSignupOpen(true); // 회원가입 모달 열기
+  };
+
   return (
     <>
       <AppBar
@@ -57,7 +63,11 @@ const Header = () => {
       </AppBar>
 
       {/* 로그인 모달 */}
-      <LoginModal open={loginOpen} handleClose={() => setLoginOpen(false)} />
+      <LoginModal
+        open={loginOpen}
+        handleClose={() => setLoginOpen(false)}
+        openSignup={handleOpenSignup}
+      />
 
       {/* 회원가입 모달 */}
       <SignupModal open={signupOpen} handleClose={() => setSignupOpen(false)} />
