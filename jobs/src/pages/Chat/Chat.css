@@ -1,52 +1,73 @@
-/* Chat.css */
-
+/* 전체 채팅 레이아웃 */
 .chat-container {
   display: flex;
   height: 100vh;
   background-color: #f9fafb;
 }
 
+/* 왼쪽 사이드바 (질문 리스트 영역) */
 .sidebar {
   width: 25%;
   border-right: 1px solid #e5e7eb;
   padding: 16px;
+  background-color: white;
 }
 
+/* 예상 질문 및 기록 섹션 */
 .section {
   margin-bottom: 24px;
 }
 
+/* 섹션 헤더 */
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  cursor: pointer;
 }
 
 .section-title {
   font-size: 18px;
   font-weight: bold;
+  color: #1f2937;
 }
 
-.question-list,
-.history-list {
+/* 질문 리스트 */
+.question-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.question-item,
-.history-item {
-  padding: 10px;
+/* 개별 질문 항목 */
+.question-item {
+  padding: 12px;
+  font-size: 16px;
+  color: #374151;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 4px;
 }
 
-.question-item:hover,
-.history-item:hover {
+/* 마우스 호버 시 */
+.question-item:hover {
   background-color: #eef2ff;
 }
 
+/* 선택된 질문 스타일 */
+.question-item.selected {
+  background-color: #dbe3e5;
+}
+
+/* 토글 버튼 스타일 */
+.toggle-button {
+  font-size: 14px;
+  font-weight: bold;
+  color: #374151;
+}
+
+/* 오른쪽 채팅 영역 */
 .chat-section {
   flex: 1;
   display: flex;
@@ -54,6 +75,7 @@
   padding: 24px;
 }
 
+/* 채팅 헤더 */
 .chat-header {
   display: flex;
   justify-content: space-between;
@@ -66,16 +88,24 @@
 .chat-title {
   font-size: 22px;
   font-weight: bold;
+  color: #1f2937;
 }
 
+/* 내보내기 버튼 */
 .export-button {
   background-color: #3b82f6;
   color: white;
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 
+.export-button:hover {
+  background-color: #2563eb;
+}
+
+/* 채팅 본문 */
 .chat-body {
   flex: 1;
   overflow-y: auto;
@@ -84,29 +114,45 @@
   gap: 16px;
 }
 
+/* 질문이 없을 때 표시되는 문구 */
+.chat-placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 18px;
+  color: #6b7280;
+}
+
+/* 메시지 스타일 */
 .message {
   max-width: 60%;
   padding: 14px;
   border-radius: 12px;
   position: relative;
+  font-size: 16px;
 }
 
+/* AI 질문 스타일 */
 .question {
   background-color: #e0f2fe;
   align-self: flex-start;
 }
 
+/* AI 응답 스타일 */
 .ai-response {
   background-color: #d1fae5;
   align-self: flex-start;
 }
 
+/* 사용자 메시지 */
 .user {
   background-color: #93c5fd;
   align-self: flex-end;
   color: white;
 }
 
+/* 힌트 버튼 */
 .hint-button {
   position: absolute;
   top: 0;
@@ -116,12 +162,14 @@
   cursor: pointer;
 }
 
+/* 힌트 텍스트 */
 .hint-text {
   font-size: 14px;
   color: gray;
   margin-top: 5px;
 }
 
+/* 사용자 액션 버튼 (꼬리 질문, 피드백) */
 .user-actions {
   display: flex;
   gap: 8px;
@@ -134,24 +182,39 @@
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
 }
 
+.action-button:hover {
+  background-color: #1f2937;
+}
+
+/* 입력창 */
 .chat-input {
   display: flex;
   padding: 12px;
   border-top: 1px solid #e5e7eb;
+  background-color: white;
 }
 
+/* 입력 필드 */
 .input-field {
   flex: 1;
   padding: 8px;
   border-radius: 4px;
+  border: 1px solid #d1d5db;
 }
 
+/* 전송 버튼 */
 .send-button {
   background-color: #3b82f6;
   color: white;
   padding: 8px 16px;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.send-button:hover {
+  background-color: #2563eb;
 }

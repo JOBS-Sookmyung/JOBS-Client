@@ -1,322 +1,123 @@
-// import React, { useState } from "react";
-// import {
-//   AppBar,
-//   Toolbar,
-//   Typography,
-//   Container,
-//   TextField,
-//   Button,
-//   Box,
-// } from "@mui/material";
-// import { Link, useNavigate } from "react-router-dom"; // useNavigate 추가
-// import "./Input.css";
-
-// const Input = () => {
-//   const [jobPostingUrl, setJobPostingUrl] = useState("");
-//   const [summary, setSummary] = useState("");
-//   const [customSummary, setCustomSummary] = useState("");
-
-//   const navigate = useNavigate(); // useNavigate 훅 초기화
-
-//   const handleFileUpload = (event) => {
-//     const file = event.target.files[0];
-//     if (file) {
-//       alert(`${file.name} 파일이 업로드되었습니다.`);
-//     }
-//   };
-
-//   const handleSummarize = () => {
-//     // AI로 요약된 내용을 기본값으로 설정
-//     const aiGeneratedSummary =
-//       "공고 내용 요약해서 보여주기\nex) 소개, 회사 위치, 요구하는 직무 능력";
-//     setSummary(aiGeneratedSummary);
-//     setCustomSummary(aiGeneratedSummary);
-//   };
-
-//   const handleProceedToInterview = () => {
-//     // QuestionList 페이지로 이동
-//     navigate("/questions");
-//   };
-
-//   return (
-//     <div className="input-page">
-//       {/* 상단 헤더 (메인 페이지와 동일) */}
-//       <AppBar
-//         position="sticky"
-//         style={{ backgroundColor: "#EEEDEC", height: "88px" }}
-//       >
-//         <Toolbar
-//           style={{
-//             minHeight: "88px",
-//             display: "flex",
-//             justifyContent: "space-between",
-//           }}
-//         >
-//           <Typography
-//             variant="h4"
-//             component="div"
-//             style={{ fontWeight: "bold", fontSize: "28px" }}
-//           >
-//             <Link to="/" style={{ textDecoration: "none", color: "#1A1918" }}>
-//               JOB問JOB答
-//             </Link>
-//           </Typography>
-//         </Toolbar>
-//       </AppBar>
-
-//       {/* 메인 콘텐츠 */}
-//       <Container maxWidth="md" className="input-container">
-//         {/* 자기소개서 파일 첨부 */}
-//         <Typography variant="h5" className="section-title">
-//           자소서 파일첨부
-//         </Typography>
-//         <Typography variant="body2" className="file-hint">
-//           500MB 이하의 pdf파일 업로드 가능
-//         </Typography>
-//         <Box className="file-upload-container">
-//           <input
-//             type="file"
-//             className="file-upload"
-//             accept=".doc,.docx,.pdf"
-//             onChange={handleFileUpload}
-//           />
-//         </Box>
-
-//         {/* 공고 URL 첨부 */}
-//         <Typography variant="h5" className="section-title">
-//           공고 url 첨부
-//         </Typography>
-//         <TextField
-//           variant="outlined"
-//           fullWidth
-//           placeholder="채용공고 url을 입력하세요"
-//           value={jobPostingUrl}
-//           onChange={(e) => setJobPostingUrl(e.target.value)}
-//           className="url-input"
-//         />
-//         <Button
-//           variant="contained"
-//           className="summarize-button"
-//           onClick={handleSummarize}
-//         >
-//           공고 요약하기
-//         </Button>
-
-//         {/* 포지션 요약 */}
-//         <Typography variant="h5" className="section-title">
-//           포지션 요약
-//         </Typography>
-//         <TextField
-//           variant="outlined"
-//           multiline
-//           rows={6}
-//           fullWidth
-//           value={customSummary}
-//           onChange={(e) => setCustomSummary(e.target.value)}
-//           className="summary-textarea"
-//         />
-
-//         {/* 예상 질문 생성 버튼 */}
-//         <Button
-//           variant="contained"
-//           className="generate-button"
-//           onClick={handleProceedToInterview} // 클릭 시 페이지 전환
-//         >
-//           예상 질문 생성하기
-//         </Button>
-//       </Container>
-//     </div>
-//   );
-// };
-
-// export default Input;
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, TextField, Button, Box, Typography } from "@mui/material";
+import {
+  Container,
+  TextField,
+  Button,
+  Box,
+  Typography,
+  CircularProgress,
+} from "@mui/material";
 import Header from "../../component/Header";
 import "./Input.css";
-import axios from "axios";
-import Cookies from "js-cookie";
-
-const MB = 1024 * 1024;
-const MAX_FSIZE = 50 * MB;
 
 const Input = () => {
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [recruitUrl, setRecruitUrl] = useState("");
-  const [summaryText, setSummaryText] = useState("");
-  const [recentDate, setRecentDate] = useState("");
-  const [token, setToken] = useState(Cookies.get("token") || null);
+  const [feedback, setFeedback] = useState(""); // AI 피드백 저장
+  const [questions, setQuestions] = useState([]); // AI 예상 질문 저장
+  const [isLoadingFeedback, setIsLoadingFeedback] = useState(false);
+  const [isLoadingQuestions, setIsLoadingQuestions] = useState(false);
 
-  const updateToken = () => {
-    const newToken = Cookies.get("token");
-    if (newToken && !token) {
-      setToken(newToken);
-    }
-  };
-  useEffect(updateToken, [token]);
-
+  // 파일 선택
   const handleFileChange = (e) => {
     const f = e.target.files[0];
-    if (!f) return alert("알려지지 않은 오류: 파일 없음.");
-    if (f.size > MAX_FSIZE) return alert("파일 용량 제한을 초과하였습니다.");
+    if (!f) return alert("파일이 선택되지 않았습니다.");
     setFile(f);
   };
 
+  // 채용공고 URL 입력
   const handleRecruitUrlChange = (e) => {
     setRecruitUrl(e.target.value);
   };
 
-  const handleSummaryTextChange = (e) => {
-    setSummaryText(e.target.value);
+  // 임시 피드백 표시
+  const handleGetFeedback = () => {
+    if (!file) return alert("파일을 업로드해주세요.");
+    setIsLoadingFeedback(true);
+
+    setTimeout(() => {
+      setFeedback("이력서에 대한 피드백");
+      setIsLoadingFeedback(false);
+    }, 1000); // 1초 후 표시
   };
 
-  const handleSummarize = async () => {
-    if (!file) return console.warn("400 (File Empty)");
+  // 임시 예상 질문 생성
+  const handleGenerateQuestions = () => {
+    if (!file) return alert("파일을 업로드해주세요.");
+    if (!recruitUrl) return alert("채용공고 URL을 입력해주세요.");
 
-    console.log("자소서 첨부:", file);
-    console.log("채용공고 링크:", recruitUrl);
-    // console.log('포지션 요약:', summaryText);
-    console.log("마지막 수정:", await updateDate());
+    setIsLoadingQuestions(true);
 
-    // TODO: 포지션 요약 로직을 추가
+    setTimeout(() => {
+      const mockQuestions = ["질문1", "질문2", "질문3", "질문4", "질문5"];
+      setQuestions(mockQuestions);
+      navigate("/chat", { state: { questions: mockQuestions } });
+      setIsLoadingQuestions(false);
+    }, 1000); // 1초 후 질문 표시
   };
 
-  //questions 라우터로 이동
-  const handleProceedToInterview = () => {
-    navigate("/questions");
-  };
-
-  const updateDate = async () => {
-    const nowDate = new Date(Date.now()).toUTCString();
-    setRecentDate(nowDate);
-    return Promise.resolve(nowDate);
-  };
-
-  const reloadForm = async () => {
-    try {
-      const res = await axios.get("http://localhost:8080/input/", {
-        withCredentials: true,
-      });
-      const result = res.data;
-      if (result) {
-        console.log(result);
-        // setFile(result.fileDirname); 지우지 마세요!!!!!!!!!!!!
-        setRecruitUrl(result.recruitUrl);
-        // setSummaryText(result.summaryText);
-        setRecentDate(result.recentDate);
-      }
-    } catch (e) {
-      // alert(e)
-    }
-  };
-  useEffect(() => {
-    reloadForm();
-  }, []);
-
-  const uploadFile = async () => {
-    if (!file) return;
-
-    const ep = "http://localhost:8080/input/uploadfile/";
-
-    const body = new FormData();
-    body.set("file", file);
-
-    const tail = { recruitUrl, /*summaryText, */ recentDate };
-    for (let [k, v] of Object.entries(tail)) {
-      body.set(k, v);
-    }
-
-    const config = {
-      headers: { "Content-Type": "multipart/form-data" },
-      withCredentials: true,
-    };
-
-    let result = null;
-    try {
-      const res = await axios.post(ep, body, config);
-      result = res.data;
-    } catch (e) {
-      alert(e);
-      result = e;
-    }
-    console.log("업로드 결과:", result);
-  };
-  useEffect(() => {
-    uploadFile();
-  }, [recentDate]);
-
-  //여기서부터 디자인
   return (
     <div className="input-page">
       <Header />
-      {/* 메인 콘텐츠 */}
       <Container maxWidth="md" className="input-container">
-        {/* 자기소개서 파일 첨부 */}
-        <Typography variant="h5" className="section-title">
-          자소서 파일첨부
-        </Typography>
-        <Typography variant="body2" className="file-hint">
-          500MB 이하의 Word, PDF 파일 업로드 가능
-        </Typography>
-        <Box className="file-upload-container">
+        {/* 왼쪽 - 이력서 업로드 & 피드백 */}
+        <Box className="left-section">
+          <Typography variant="h5" className="section-title">
+            이력서 파일 첨부
+          </Typography>
           <input
             type="file"
             accept=".doc,.docx,.pdf"
             onChange={handleFileChange}
           />
+          <Button
+            variant="contained"
+            className="feedback-button"
+            onClick={handleGetFeedback}
+            disabled={isLoadingFeedback}
+          >
+            {isLoadingFeedback ? <CircularProgress size={24} /> : "피드백 받기"}
+          </Button>
+        </Box>
+
+        {/* 오른쪽 - 피드백 출력 */}
+        <Box className="right-section">
+          <Typography variant="body1" className="feedback-text">
+            {feedback || "업로드한 이력서에 대한 피드백을 받아보세요!"}
+          </Typography>
         </Box>
 
         {/* 공고 URL 첨부 */}
-        <Typography variant="h6" className="section-title">
-          공고 url 첨부
-        </Typography>
-        <Typography variant="body2" className="recent-date">
-          {recentDate === "" ? "" : `마지막 수정: ${recentDate}`}
-        </Typography>
+        <Box className="job-section">
+          <Typography variant="h6" className="section-title">
+            공고 URL 첨부
+          </Typography>
+          <TextField
+            variant="outlined"
+            fullWidth
+            placeholder="채용공고 URL을 입력하세요."
+            value={recruitUrl}
+            onChange={handleRecruitUrlChange}
+          />
+        </Box>
 
-        <TextField
-          variant="outlined"
-          fullWidth
-          placeholder="채용공고 url을 입력하세요."
-          value={recruitUrl}
-          onChange={handleRecruitUrlChange}
-          className="url-input"
-        />
-        <Button
-          variant="contained"
-          className="summarize-button"
-          onClick={handleSummarize}
-        >
-          공고 요약하기
-        </Button>
-
-        {/* 포지션 요약 */}
-        <Typography variant="h5" className="section-title">
-          포지션 요약
-        </Typography>
-        <TextField
-          variant="outlined"
-          multiline
-          rows={6}
-          fullWidth
-          placeholder="공고 내용을 요약해서 보여주기
-          ex) 소개, 회사위치, 요구하는 직무능력"
-          value={summaryText}
-          onChange={handleSummaryTextChange}
-          className="summary-textarea"
-        />
-
-        {/* 예상 질문 생성 버튼 */}
-        <Button
-          variant="contained"
-          className="generate-button"
-          onClick={handleProceedToInterview} // 클릭 시 페이지 전환
-        >
-          예상 질문 생성하기
-        </Button>
+        {/* 모의면접 시작하기 버튼 */}
+        <Box className="interview-section">
+          <Button
+            variant="contained"
+            className="interview-button"
+            onClick={handleGenerateQuestions}
+            disabled={isLoadingQuestions}
+          >
+            {isLoadingQuestions ? (
+              <CircularProgress size={24} />
+            ) : (
+              "모의면접 시작하기"
+            )}
+          </Button>
+        </Box>
       </Container>
     </div>
   );

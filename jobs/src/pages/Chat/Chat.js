@@ -1,82 +1,82 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import "./Chat.css";
 
 const Chat = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const questionId = [1, 2, 3, 4, 5];
-  const question = location.state?.question || "질문을 선택하세요.";
+  const { questionId } = useParams(); // ✅ URL에서 questionId 가져오기
+
+  // ✅ 실제 API 응답을 받아올 경우 (현재는 주석 처리)
+  // const questions = location.state?.questions || [];
+
+  // ✅ 임시 데이터로 설정 (테스트용)
+  const questions = ["질문1", "질문2", "질문3", "질문4", "질문5"];
+
+  // 선택한 질문의 인덱스 가져오기
+  const selectedIndex = questionId ? parseInt(questionId) - 1 : null;
+
+  // ✅ 상태 설정
+  const [selectedQuestionIndex, setSelectedQuestionIndex] =
+    useState(selectedIndex);
   const [showQuestions, setShowQuestions] = useState(true);
   const [showHistory, setShowHistory] = useState(true);
-  const [messages, setMessages] = useState(() => {
-    // 각 질문 ID에 따른 초기 메시지 설정
-    const initialMessages = {
-      1: [
-        {
-          type: "question",
-          text: "프로젝트에서 협업 경험이 있다면, 어떤 역할을 맡았고 어떻게 팀워크를 이끌었나요?",
-        },
-        {
-          type: "ai-response",
-          text: "이 프로젝트는 팀원들 각각의 강점을 최대한 활용하는 게 중요했던 작업이었는데요...",
-        },
-      ],
-      2: [
-        {
-          type: "question",
-          text: "본인의 강점과 약점은 무엇이며, 약점을 극복하기 위해 어떤 노력을 하고 있나요?",
-        },
-        {
-          type: "ai-response",
-          text: "저의 가장 큰 강점은 끈기 있게 목표를 향해 나아가는 것입니다...",
-        },
-      ],
-      3: [
-        {
-          type: "question",
-          text: "입사 후 5년 뒤, 본인이 회사에서 어떤 모습으로 성장해 있을 것 같나요?",
-        },
-        {
-          type: "ai-response",
-          text: "5년 후에는 회사의 핵심 인재로 성장하여...",
-        },
-      ],
-      4: [
-        {
-          type: "question",
-          text: "팀 프로젝트나 조직 생활에서 갈등 상황을 성공적으로 해결한 경험이 있나요?",
-        },
-        {
-          type: "ai-response",
-          text: "프로젝트 진행 중 팀원들과의 의견 충돌이 있었지만...",
-        },
-      ],
-      5: [
-        {
-          type: "question",
-          text: "본인이 생각하는 이 회사의 가장 큰 장점은 무엇인가요?",
-        },
-        {
-          type: "ai-response",
-          text: "귀사의 가장 큰 장점은 혁신적인 기술력과 함께...",
-        },
-      ],
-    };
-    // URL에서 questionId 파라미터 추출
-    const pathSegments = window.location.pathname.split("/");
-    const questionId = parseInt(pathSegments[pathSegments.length - 1]) || 1;
-
-    // questionId에 해당하는 메시지만 초기값으로 설정
-    if (initialMessages[questionId]) {
-      return initialMessages[questionId];
-    }
-    // URL의 questionId에 따라 해당하는 메시지 반환
-    const currentId = parseInt(window.location.pathname.split("/")[2]) || 1;
-    return initialMessages[currentId] || initialMessages[1];
-  });
+  const [messages, setMessages] = useState(
+    selectedIndex !== null
+      ? [
+          { type: "question", text: questions[selectedIndex] },
+          { type: "ai-response", text: "AI가 답변을 생성 중입니다..." },
+        ]
+      : []
+  );
   const [userInput, setUserInput] = useState("");
   const [hints, setHints] = useState({});
+  const [loadingHints, setLoadingHints] = useState({}); // 힌트 로딩 상태
+
+  // 질문 선택 처리
+  const handleSelectQuestion = (index) => {
+    setSelectedQuestionIndex(index);
+    setMessages([
+      { type: "question", text: questions[index] },
+      { type: "ai-response", text: "AI가 답변을 생성 중입니다..." },
+    ]);
+    navigate(`/chat/1/${index + 1}`, { state: { questions } });
+  };
+
+  // 메시지 전송
+  const handleSendMessage = () => {
+    if (userInput.trim() === "") return;
+    setMessages([...messages, { type: "user", text: userInput }]);
+    setUserInput("");
+  };
+
+  // ✅ 힌트 요청 (AI에 질문 전달 후 가이드 받기)
+  const handleHint = async (index) => {
+    if (hints[index]) return; // 이미 힌트가 있다면 중복 요청 방지
+
+    setLoadingHints((prev) => ({ ...prev, [index]: true })); // 로딩 상태 업데이트
+
+    try {
+      const response = await fetch("http://localhost:8080/generate-hint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question: questions[index] }),
+      });
+
+      if (!response.ok) throw new Error("서버 응답 오류");
+
+      const data = await response.json();
+      setHints((prev) => ({ ...prev, [index]: data.hint })); // AI가 반환한 힌트 저장
+    } catch (error) {
+      console.error("힌트 요청 실패:", error);
+      setHints((prev) => ({
+        ...prev,
+        [index]: "힌트를 가져오는 데 실패했습니다.",
+      })); // 에러 처리
+    } finally {
+      setLoadingHints((prev) => ({ ...prev, [index]: false })); // 로딩 종료
+    }
+  };
 
   // PDF 내보내기 함수
   const handleExportPDF = () => {
@@ -88,119 +88,61 @@ const Chat = () => {
 
     const printWindow = window.open("", "", "width=800,height=600");
     printWindow.document.write(`
-    <html>
-      <head>
-        <title>면접 기록</title>
-        <style>
-          body { padding: 20px; font-family: Arial, sans-serif; }
-          .message { margin-bottom: 15px; padding: 10px; border-radius: 5px; }
-          .question { background: #007bff; color: white; }
-          .ai-response { background: #d1fae5; }
-          .user { text-align: right; background: #28a745; color: white; }
-        </style>
-      </head>
-      <body>
-        <h2>면접 기록</h2>
-        ${content.innerHTML} <!-- content가 null이 아닐 때만 실행 -->
-      </body>
-    </html>
-  `);
+      <html>
+        <head>
+          <title>면접 기록</title>
+          <style>
+            body { padding: 20px; font-family: Arial, sans-serif; }
+            .message { margin-bottom: 15px; padding: 10px; border-radius: 5px; }
+            .question { background: #007bff; color: white; padding: 10px; }
+            .ai-response { background: #d1fae5; padding: 10px; }
+            .user { text-align: right; background: #28a745; color: white; padding: 10px; border-radius: 8px; }
+          </style>
+        </head>
+        <body>
+          <h2>면접 기록</h2>
+          ${content.innerHTML} <!-- ✅ HTML 콘텐츠 추가 -->
+        </body>
+      </html>
+    `);
+
     printWindow.document.close();
     printWindow.focus();
     printWindow.print();
     printWindow.close();
   };
 
-  // 힌트 버튼 클릭 처리
-  const handleHint = (index) => {
-    setHints({
-      ...hints,
-      [index]:
-        "이 질문에 대한 답변은 경험 중심으로 구체적으로 작성하는 것이 좋습니다.",
-    });
-  };
-
-  // 사용자 입력 처리
-  const handleSendMessage = () => {
-    if (userInput.trim() !== "") {
-      setMessages([...messages, { type: "user", text: userInput }]);
-      setUserInput("");
-    }
-  };
-
   return (
     <div className="chat-container">
       {/* 왼쪽 사이드바 */}
       <div className="sidebar">
-        {/* 대표 질문 영역 */}
+        {/* 예상 질문 영역 */}
         <div className="section">
           <div
             className="section-header"
-            style={{ cursor: "pointer" }}
+            style={{
+              cursor: "pointer",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
             onClick={() => setShowQuestions(!showQuestions)}
           >
-            <h5 className="section-title">
-              대표 질문들{" "}
-              <span className="text-muted small">
-                ({showQuestions ? "5개" : ""})
-              </span>
-            </h5>
-            <button className="btn btn-sm btn-outline-secondary">
-              {showQuestions ? "▼" : "▶"}
-            </button>
+            <h5 className="section-title">예상 질문</h5>
+            <span className="toggle-button">{showQuestions ? "▼" : "▶"}</span>
           </div>
+
           {showQuestions && (
             <ul className="question-list">
-              <li
-                className="question-item"
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  navigate("/chat/1/1");
-                  window.location.reload();
-                }}
-              >
-                <div>프로젝트 협업 경험</div>
-              </li>
-              <li
-                className="question-item"
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  navigate("/chat/1/2");
-                  window.location.reload();
-                }}
-              >
-                <div>본인의 강점과 약점</div>
-              </li>
-              <li
-                className="question-item"
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  navigate("/chat/1/3");
-                  window.location.reload();
-                }}
-              >
-                <div>입사 후 5년 뒤</div>
-              </li>
-              <li
-                className="question-item"
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  navigate("/chat/1/4");
-                  window.location.reload();
-                }}
-              >
-                <div>갈등 상황 해결</div>
-              </li>
-              <li
-                className="question-item"
-                style={{ cursor: "pointer" }}
-                onClick={() => {
-                  navigate("/chat/1/5");
-                  window.location.reload();
-                }}
-              >
-                <div>본인이 생각하는 곳 장점이란?</div>
-              </li>
+              {questions.map((q, index) => (
+                <li
+                  key={index}
+                  className={`question-item ${selectedQuestionIndex === index ? "selected" : ""}`}
+                  onClick={() => handleSelectQuestion(index)}
+                >
+                  {q}
+                </li>
+              ))}
             </ul>
           )}
         </div>
@@ -212,15 +154,8 @@ const Chat = () => {
             style={{ cursor: "pointer" }}
             onClick={() => setShowHistory(!showHistory)}
           >
-            <h5 className="section-title">
-              이전 기록들{" "}
-              <span className="text-muted small">
-                ({showHistory ? "8개" : ""})
-              </span>
-            </h5>
-            <button className="btn btn-sm btn-outline-secondary">
-              {showHistory ? "▼" : "▶"}
-            </button>
+            <h5 className="section-title">이전 기록</h5>
+            <span className="toggle-button">{showHistory ? "▼" : "▶"}</span>
           </div>
           {showHistory && (
             <ul className="history-list">
@@ -241,54 +176,68 @@ const Chat = () => {
       <div className="chat-section">
         {/* 상단 내보내기 버튼 */}
         <div className="chat-header">
-          <h5 className="chat-title">당근마켓 모의 면접</h5>
+          <h5 className="chat-title">
+            {selectedQuestionIndex !== null
+              ? questions[selectedQuestionIndex]
+              : "예상 질문을 선택해주세요!"}
+          </h5>
           <button className="export-button" onClick={handleExportPDF}>
             내보내기
           </button>
         </div>
 
-        {/* 채팅 메시지 출력 영역 */}
-        <div className="chat-body">
-          {messages.map((message, index) => (
-            <div key={index} className={`message ${message.type}`}>
-              {message.type === "question" && (
-                <button
-                  className="hint-button"
-                  onClick={() => handleHint(index)}
-                >
-                  힌트
-                </button>
-              )}
-              <p>{message.text}</p>
-              {hints[index] && <p className="hint-text">{hints[index]}</p>}
-              {message.type === "user" && (
-                <div className="user-actions">
-                  <button className="action-button">꼬리질문</button>
-                  <button className="action-button">피드백</button>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+        {/* 질문이 선택되지 않은 경우 */}
+        {selectedQuestionIndex === null && (
+          <div className="chat-placeholder">
+            <h3>예상 질문을 통해 면접 준비를 시작해보세요!</h3>
+          </div>
+        )}
 
-        {/* 하단 입력창 */}
-        <div className="chat-input">
-          <input
-            type="text"
-            className="input-field"
-            placeholder="답변을 입력하세요..."
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                handleSendMessage();
-              }
-            }}
-          />
-          <button className="send-button" onClick={handleSendMessage}>
-            ⬆
-          </button>
-        </div>
+        {/* 질문이 선택된 경우 채팅 진행 */}
+        {selectedQuestionIndex !== null && (
+          <>
+            <div className="chat-body">
+              {messages.map((message, index) => (
+                <div key={index} className={`message ${message.type}`}>
+                  {message.type === "question" && (
+                    <button
+                      className="hint-button"
+                      onClick={() => handleHint(index)}
+                      disabled={loadingHints[index]}
+                    >
+                      {loadingHints[index] ? "로딩 중..." : "힌트"}
+                    </button>
+                  )}
+                  <p>{message.text}</p>
+                  {hints[index] && <p className="hint-text">{hints[index]}</p>}
+                  {message.type === "user" && (
+                    <div className="user-actions">
+                      <button className="action-button">꼬리질문</button>
+                      <button className="action-button">피드백</button>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* 입력창 */}
+            <div className="chat-input">
+              <input
+                type="text"
+                className="input-field"
+                placeholder="답변을 입력하세요..."
+                value={userInput}
+                onChange={(e) => setUserInput(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") handleSendMessage();
+                }}
+              />
+              <button className="send-button" onClick={handleSendMessage}>
+                ⬆
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
