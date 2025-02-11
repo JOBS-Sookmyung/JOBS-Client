@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme"; // MUI 테마 가져오기
+import theme from "./theme";
 import Home from "./pages/Home/Home";
 import Input from "./pages/Input/Input";
 import Chat from "./pages/Chat/Chat";
