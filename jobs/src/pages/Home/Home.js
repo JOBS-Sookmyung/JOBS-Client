@@ -155,9 +155,9 @@
 
 import React from "react";
 import { Box, Button, Typography } from "@mui/material";
-import Header from "../../component/Header"; // ✅ 올바른 헤더 경로
-import logo from "../../assets/logo.svg"; // ✅ 올바른 로고 경로
-import mainImage from "../../assets/main-image.png"; // ✅ 올바른 이미지 경로
+import Header from "../../component/Header"; // ✅ 헤더 추가
+import logo from "../../assets/logo.svg"; // ✅ 로고 이미지
+import mainImage from "../../assets/main-image.png"; // ✅ 메인 이미지
 
 const Home = () => {
   return (
@@ -168,69 +168,74 @@ const Home = () => {
       <Box
         sx={{
           display: "flex",
-          flexDirection: "column",
+          flexDirection: { xs: "column", md: "row" }, // ✅ 반응형: 모바일에서는 세로 정렬, 데스크탑에서는 가로 정렬
           alignItems: "center",
-          textAlign: "center",
-          padding: "50px 20px",
+          justifyContent: "center",
+          padding: "80px 10%",
+          gap: "50px",
         }}
       >
-        {/* 로고 */}
-        <img
-          src={logo}
-          alt="JOBIS 로고"
-          style={{ height: "40px", marginBottom: "30px" }}
-        />
-
-        {/* 메인 텍스트 */}
-        <Typography
-          variant="h3"
-          fontWeight="bold"
+        {/* 왼쪽 텍스트 */}
+        <Box
           sx={{
-            marginBottom: "10px",
-            fontSize: "36px", // ✅ 피그마 스타일 반영
-          }}
-        >
-          JOB!S, <br />
-          간편하고 확실하게 <br />
-          나의 면접을 준비하는 방법
-        </Typography>
-
-        {/* 서브 텍스트 */}
-        <Typography
-          variant="body1"
-          color="textSecondary"
-          sx={{
+            flex: 1,
+            textAlign: "left", // ✅ 왼쪽 정렬
             maxWidth: "600px",
-            marginBottom: "20px",
-            fontSize: "18px", // ✅ 피그마 스타일 반영
           }}
         >
-          언제 어디서든 이력서를 검토하고 면접을 준비하세요. <br />
-          쉽고 간편하게 본인의 면접 준비 기록과 회사별 맞춤 이력서를 확인할 수
-          있습니다.
-        </Typography>
+          <img
+            src={logo}
+            alt="JOBIS 로고"
+            style={{ height: "40px", marginBottom: "20px" }}
+          />
 
-        {/* CTA 버튼 */}
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#D32F2F",
-            color: "white",
-            fontWeight: "bold",
-            padding: "14px 28px",
-            borderRadius: "8px",
-            fontSize: "18px", // ✅ 버튼 텍스트 크기 조정
-          }}
-        >
-          지금 시작하기
-        </Button>
+          <Typography
+            variant="h3"
+            fontWeight="bold"
+            sx={{
+              marginBottom: "10px",
+              fontSize: "36px",
+            }}
+          >
+            간편하고 확실하게 <br />
+            나의 면접을 준비하는 방법
+          </Typography>
 
-        {/* 이미지 */}
-        <Box sx={{ marginTop: "50px" }}>
+          <Typography
+            variant="body1"
+            color="textSecondary"
+            sx={{
+              maxWidth: "500px",
+              marginBottom: "20px",
+              fontSize: "18px",
+            }}
+          >
+            언제 어디서든 이력서를 검토하고 면접을 준비하세요. <br />
+            쉽고 간편하게 본인의 면접 준비 기록과 회사별 맞춤 이력서를 <br />
+            확인할 수 있습니다.
+          </Typography>
+
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: "#AA2217",
+              color: "white",
+              fontWeight: "bold",
+              padding: "12px 20px",
+              borderRadius: "8px",
+              fontSize: "20px",
+            }}
+          >
+            지금 시작하기
+          </Button>
+        </Box>
+
+        {/* 오른쪽 이미지 */}
+        <Box sx={{ flex: 1, display: "flex", justifyContent: "center" }}>
           <img
             src={mainImage}
             alt="메인 이미지"
-            style={{ width: "100%", maxWidth: "500px" }}
+            style={{ width: "100%", maxWidth: "500px", height: "auto" }}
           />
         </Box>
       </Box>
