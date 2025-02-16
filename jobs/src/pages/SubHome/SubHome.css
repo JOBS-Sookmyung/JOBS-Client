@@ -1,0 +1,75 @@
+.subhome-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.subhome-header {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.user-profile {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.profile-card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.start-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.process-section {
+    margin-top: 20px;
+}
+
+.process-steps {
+    display: flex;
+    gap: 20px;
+}
+
+.step {
+    text-align: center;
+}
+
+.step-icon {
+    font-size: 30px;
+}
+
+.recommended-videos {
+    margin-top: 20px;
+}
+
+.video-list {
+    display: flex;
+    gap: 10px;
+}
+
+.video-card {
+    width: 150px;
+    height: 100px;
+    background-color: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.go-back {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
