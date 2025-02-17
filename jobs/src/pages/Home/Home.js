@@ -4,9 +4,9 @@ import Header from "../../component/Header";
 import LoginModal from "../../component/LoginModal";
 import logo from "../../assets/logo.svg";
 import mainImage from "../../assets/main-image.png";
-import unemployedImg from "../../assets/unemployed.png"; // 무직 이미지
-import workerImg from "../../assets/worker.png"; // 직장인 이미지
-import studentImg from "../../assets/student.png"; // 학생 이미지
+import unemployedImg from "../../assets/unemployed.png";
+import workerImg from "../../assets/worker.png";
+import studentImg from "../../assets/student.png";
 
 const Home = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
