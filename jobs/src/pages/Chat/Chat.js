@@ -237,10 +237,11 @@ const Chat = () => {
 
             {/* 입력창 */}
             <div className="chat-input">
+              
               <input
                 type="text"
                 className="input-field"
-                placeholder="답변을 입력하세요..."
+                placeholder=" 🧠   당황하지 말고, 침착하게 답해주세요."
                 value={userInput}
                 onChange={(e) => setUserInput(e.target.value)}
                 onKeyPress={(e) => {

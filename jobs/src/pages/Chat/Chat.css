@@ -42,7 +42,7 @@
 
 /* 개별 질문 항목 */
 .question-item {
-  padding: 12px;
+  padding: 15px;
   font-size: 16px;
   color: #374151;
   cursor: pointer;
@@ -93,12 +93,13 @@
 
 /* 내보내기 버튼 */
 .export-button {
-  background-color: #3b82f6;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  display: flex;
+  padding: 10px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 1234px;
+  border: 1px solid var(--30, #B5C6C1);
 }
 
 .export-button:hover {
@@ -145,11 +146,12 @@
   align-self: flex-start;
 }
 
-/* 사용자 메시지 */
+/* 내가 입력한 사용자 메시지 */
 .user {
   background-color: #93c5fd;
   align-self: flex-end;
   color: white;
+  border-radius: 16px;
 }
 
 /* 힌트 버튼 */
@@ -193,16 +195,26 @@
 .chat-input {
   display: flex;
   padding: 12px;
-  border-top: 1px solid #e5e7eb;
-  background-color: white;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
+  border-radius: var(--border-radius-radius-full, 9999px);
+  border: 1px solid var(--30, #B5C6C1);
+  background: var(--gray-0-white, #FFF);
+  
+  /* Shadow/md */
+  box-shadow: 0px 4px 8px -2px rgba(23, 23, 23, 0.10), 0px 2px 4px -2px rgba(23, 23, 23, 0.06);
 }
 
 /* 입력 필드 */
 .input-field {
   flex: 1;
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #d1d5db;
+  padding: 12px;
+  border: none;
+  outline: none;
+  background: transparent;
+  /*border-radius: 4px;
+  border: 1px solid #d1d5db;*/
 }
 
 /* 전송 버튼 */
