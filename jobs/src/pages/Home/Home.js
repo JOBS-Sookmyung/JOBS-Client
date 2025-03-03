@@ -255,6 +255,7 @@ const Home = () => {
     justifyContent: "center",
     alignItems: "center",
     position: "relative", // ✅ 패딩 추가
+    marginTop: '100px',
   }}
 >
   <Box
