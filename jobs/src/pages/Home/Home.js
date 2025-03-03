@@ -4,9 +4,12 @@ import Header from "../../component/Header";
 import LoginModal from "../../component/LoginModal";
 import logo from "../../assets/logo.svg";
 import mainImage from "../../assets/main-image.png";
-import unemployedImg from "../../assets/unemployed.png";
-import workerImg from "../../assets/worker.png";
-import studentImg from "../../assets/student.png";
+
+import unemployedImg from "../../assets/unemployed.png"; // 무직 이미지
+import workerImg from "../../assets/worker.png"; // 직장인 이미지
+import studentImg from "../../assets/student.png"; // 학생 이미지
+import goodImg from "../../assets/image.png";
+import chatImg from "../../assets/image copy.png";
 
 const Home = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -114,12 +117,39 @@ const Home = () => {
       >
         {/* 상단 설명 (왼쪽 정렬) */}
         <Box sx={{ textAlign: "left", maxWidth: "600px" }}>
-          <Typography variant="h3" fontWeight="bold">
-            Job is <span style={{ color: "#AA2217" }}>...</span>
-          </Typography>
-          <Typography variant="h6" color="textSecondary">
-            JOBIS, 어떤 사람들에게 더 유용한가요?
-          </Typography>
+          <Typography
+  variant="h3"
+  fontWeight="bold"
+  sx={{
+    color: "var(--reflow-work-cod-gray, var(--color-grey-8, #151514))",
+    fontFamily: "var(--font-family-Font-1, Inter)",
+    fontSize: "var(--font-size-48, 48px)",
+    fontStyle: "normal",
+    fontWeight: "var(--font-weight-800, 800)",
+    lineHeight: "var(--line-height-66, 66px)", // 137.5%
+  }}
+>
+  Job is <span style={{ color: "#AA2217" }}>...</span>
+</Typography>
+
+          <Typography
+  variant="h6"
+  color="textSecondary"
+  sx={{
+    color: "var(--www-figma-com-black, var(--color-black-solid, #000))",
+    textAlign: "center",
+    fontFamily: "var(--font-family-Font-1, Menlo)",
+    fontSize: "var(--font-size-18, 18px)",
+    fontStyle: "normal",
+    fontWeight: "var(--font-weight-400, 400)",
+    lineHeight: "var(--line-height-23_4, 23.4px)", // 130%
+    letterSpacing: "var(--letter-spacing-0_54, 0.54px)",
+    textTransform: "uppercase",
+  }}
+>
+  JOBIS, 어떤 사람들에게 더 유용한가요?
+</Typography>
+
         </Box>
 
         {/* 카드 리스트 (정렬 수정) */}
@@ -213,6 +243,93 @@ const Home = () => {
             </Typography>
           </Box>
         </Box>
+
+{/* ✅ AI 피드백 섹션 추가 */}
+<Box
+  sx={{
+    display: "flex",
+    flexDirection: { xs: "column", md: "row" },
+    width: "100%",
+    minHeight: "767.2px", // ✅ 피그마 height 반영
+    background: "#FADCA2",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative", // ✅ 패딩 추가
+  }}
+>
+  <Box
+    sx={{
+      display: "flex",
+      flexDirection: { xs: "column", md: "row" },
+      alignItems: "center",
+      gap: "70px",
+    }}
+  >
+    {/* 왼쪽 텍스트 섹션 */}
+    <Box
+      sx={{
+        width: "480px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "24px",
+      }}
+    >
+      <Typography
+        variant="h3"
+        fontWeight="800"
+        sx={{
+          color: "#151514",
+          fontSize: "48px",
+          fontFamily: "Inter",
+          fontWeight: '800',
+          lineHeight: "66px",
+        }}
+      >
+        보다 자세한 AI 피드백을 <br /> 손쉽게 매일 받아보세요.
+      </Typography>
+
+      <Typography
+        variant="body1"
+        sx={{
+          width: "446px",
+          color: "#697485",
+          fontSize: "16px",
+          fontWeight: "400",
+          fontFamily: "Inter",
+          lineHeight: "24px",
+        }}
+      >
+        대표 질문에 대해 최대 5개의 꼬리 질문을 제공하고, 면접 상황을 <br />
+        현실감 있게 구현하여 답변에 대한 상세 피드백을 받을 수 있습니다.
+      </Typography>
+    </Box>
+
+    {/* 오른쪽 채팅방 캡쳐 이미지 */}
+    <img
+      src={chatImg}
+      alt="AI 피드백"
+      style={{
+        width: "500px",
+        height: "512px",
+      }}
+    />
+  </Box>
+
+  {/* 하단 따봉 */}
+  <img
+    src={goodImg}
+    alt="작은 아이콘"
+    style={{
+      width: "200px",
+      height: "200px",
+      position: "absolute",
+      left: "50%",
+      bottom: "50px",
+      transform: "translateX(-50%)", // ✅ 가운데 정렬
+    }}
+  />
+</Box>
+
       </Box>
     </>
   );
