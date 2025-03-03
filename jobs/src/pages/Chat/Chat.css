@@ -99,11 +99,12 @@
   align-items: center;
   gap: 8px;
   border-radius: 1234px;
+  background-color: #FFF;
   border: 1px solid var(--30, #B5C6C1);
 }
 
 .export-button:hover {
-  background-color: #d2d2d2;
+  background-color: #eeeeee;
 }
 
 /* 채팅 본문 */
@@ -138,7 +139,7 @@
   padding: 14px;
   border-radius: 12px;
   position: relative;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 /* AI 질문 스타일 */
@@ -202,13 +203,13 @@
 }
 
 .action-button {
-  background-color: #4b5563;
+  border: 1;
+  background: transparent;
   color: white;
-  padding: 8px 16px;
+  padding: 4px 8px;
   /* 버튼 크기 조정 */
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -216,7 +217,6 @@
   /* 버튼이 내용에 맞게 조절됨 */
   height: auto;
   /* 기본값 유지 */
-  white-space: nowrap;
   /* 텍스트 줄바꿈 방지 */
 }
 

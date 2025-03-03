@@ -95,7 +95,7 @@ const Chat = () => {
             body { padding: 20px; font-family: Arial, sans-serif; }
             .message { margin-bottom: 15px; padding: 10px; border-radius: 5px; }
             .question { background: #007bff; color: white; padding: 10px; }
-            .ai-response { background: #d1fae5; padding: 10px; color: var(--Gray-80, #1E293B); font-family: "Plus Jakarta Sans"; font-size: 14px; font-style: normal;}
+            .ai-response { background: #d1fae5; padding: 10px; color: var(--Gray-80, #1E293B); font-family: "Plus Jakarta Sans"; font-size: 14px; font-style:normal;}
             .user { text-align: right; background: #28a745; color: white; padding: 10px; border-radius: 8px; }
           </style>
         </head>
