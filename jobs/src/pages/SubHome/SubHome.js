@@ -2,6 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../component/Header";
 import "./SubHome.css";
+import anlyzeImg from "../../assets/anlyze.png";
+import feedbackImg from "../../assets/feedback.png"
+import interviewImg from "../../assets/interview.png" 
 
 const SubHome = () => {
   const navigate = useNavigate();
@@ -61,17 +64,70 @@ const SubHome = () => {
       <section className="process-section">
         <h2>자비스 과정 설명</h2>
         <div className="process-steps">
-          <div className="step">
-            <img
-              src="/assets/analyze.png"
+          <div style={{
+            width: "384px",
+            height: "240px",
+            position: "relative",
+            boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.25)",
+            borderRadius: "20px",
+            overflow: "hidden",
+            border: "1px solid #E7E8EA",
+            backgroundColor: "white"
+          }}>
+
+          {/* 번호 */}
+          <div style={{
+              position: "absolute",
+              left: "25px",
+              top: "25px",
+              fontSize: "13.12px",
+              fontWeight: "700",
+              fontFamily: "Inter",
+              color: "#333436"
+          }}>1.</div>
+
+          {/* 제목 */}
+          <div style={{
+              width: 115.31,
+              height: 40,
+              left: "25px",
+              top: "65px",
+              fontSize: "13.12px",
+              fontWeight: "700",
+              fontFamily: "Inter",
+              lineHeight: 20,
+              color: "#333436"
+          }}>자비스가 당신을 <br /> 분석해요.</div>
+
+          {/* 설명 */}
+          <div style={{
+              position: "absolute",
+              left: "25px",
+              top: "119px",
+              fontSize: "10px",
+              fontWeight: "700",
+              fontFamily: "Inter",
+              color: "#656A71"
+          }}>이력서를 토대로 보다 정확한 <br /> 분석을 진행해요.</div>
+
+          {/* 이미지 */}
+          <img 
+              src={anlyzeImg} 
               alt="분석 아이콘"
-              className="step-icon"
-            />
-            <p>자비스가 당신을 분석해요.</p>
-          </div>
+              style={{
+                  width: "250px",
+                  height: "250px",
+                  position: "absolute",
+                  left: "194px",
+                  top: "1px",
+                  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.25)"
+              }}
+          />
+</div>
+
           <div className="step">
             <img
-              src="/assets/feedback.png"
+              src={feedbackImg}
               alt="이력서 피드백 아이콘"
               className="step-icon"
             />
@@ -79,7 +135,7 @@ const SubHome = () => {
           </div>
           <div className="step">
             <img
-              src="/assets/interview.png"
+              src={interviewImg}
               alt="면접 준비 아이콘"
               className="step-icon"
             />
