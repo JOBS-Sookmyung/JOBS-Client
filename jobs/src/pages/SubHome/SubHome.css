@@ -1,0 +1,123 @@
+.subhome-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    padding-bottom: 50px;
+}
+
+/* 메인 컨텐츠 배치 */
+.subhome-main {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-top: 20px;
+}
+
+/* 사용자 프로필 */
+.user-profile {
+    flex: 1;
+    max-width: 280px;
+}
+
+.profile-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    background-color: #ccc;
+    border-radius: 50%;
+    margin: 0 auto 10px;
+}
+
+/* 설명 영역 */
+.description-section {
+    flex: 2;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.description-text {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* 버튼 스타일 */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.start-button, .history-button {
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.start-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.history-button {
+    background-color: #28a745;
+    color: white;
+}
+
+/* 피드백 영역 */
+.feedback-section {
+    width: 80%;
+    margin-top: 30px;
+    background: #eeeeee;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* 과정 설명 */
+.process-section {
+    width: 80%;
+    margin-top: 30px;
+}
+
+.process-section h2 {
+    text-align: center;
+}
+
+.process-steps {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.step {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 200px;
+    text-align: center;
+}
+
+.step-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
