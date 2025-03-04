@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../component/Header";
 import "./SubHome.css";
-import anlyzeImg from "../../assets/anlyze.png";
+import analyseImg from "../../assets/analyse.png";
 import feedbackImg from "../../assets/feedback.png";
 import interviewImg from "../../assets/interview.png";
 import profileAvatar from "../../assets/profileAvatar.png"; // 새로운 프로필 이미지 추가
@@ -80,7 +80,7 @@ const SubHome = () => {
               이력서를 토대로 보다 정확한
               <br /> 분석을 진행해요.
             </p>
-            <img src={anlyzeImg} alt="분석 아이콘" className="process-icon" />
+            <img src={analyseImg} alt="분석 아이콘" className="process-icon" />
           </div>
 
           <div className="process-card">
