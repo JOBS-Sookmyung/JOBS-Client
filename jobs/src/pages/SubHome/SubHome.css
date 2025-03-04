@@ -13,7 +13,7 @@
 .subhome-main {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start; /* 상단 정렬 */
     width: 80%;
     margin-top: 20px;
 }
@@ -21,58 +21,67 @@
 /* 사용자 프로필 */
 .user-profile {
     flex: 1;
-    max-width: 280px;
+    max-width: 300px;
 }
 
 .profile-card {
     background: white;
-    padding: 20px;
-    border-radius: 10px;
+    padding: 25px;
+    border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    text-align: left; /* 텍스트 왼쪽 정렬 */
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 15px;
+    width: 100%;
 }
 
 .profile-image {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
+    margin-bottom: 15px;
 }
 
 /* 설명 영역 */
 .description-section {
-    flex: 2;
     background: white;
-    padding: 30px;
-    border-radius: 10px;
+    padding: 25px;
+    border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 65%;
+    position: relative;
 }
 
 .interview-icon {
-    width: 60px;
-    height: 60px;
+    width: 300px;
+    height: 258px;
 }
 
 .description-text {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: bold;
-    margin-bottom: 15px;
     flex-grow: 1;
+    text-align: left;
+    padding-left: 15px;
 }
 
 /* 버튼 스타일 */
 .button-group {
     display: flex;
-    justify-content: center;
     gap: 10px;
+    align-items: center; /* 버튼을 세로 중앙 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    position: absolute;
+    top: 70%;
+    left: 60%; /* 왼쪽에서 50% 위치로 이동 */
+    transform: translateX(-50%); /* 정확한 중앙 정렬 */
 }
+
 
 .start-button, .history-button {
     padding: 12px 20px;

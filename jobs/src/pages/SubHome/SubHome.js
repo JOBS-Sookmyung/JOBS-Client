@@ -95,7 +95,10 @@ const SubHome = () => {
 
           <div className="process-card">
             <span className="process-number">3.</span>
-            <p className="process-title">자비스와 함께 진짜 면접을 준비해요.</p>
+            <p className="process-title">
+              자비스와 함께
+              <br /> 진짜 면접을 준비해요.
+            </p>
             <img
               src={interviewImg}
               alt="면접 준비 아이콘"
