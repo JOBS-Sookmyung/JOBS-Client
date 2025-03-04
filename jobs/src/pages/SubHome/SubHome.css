@@ -1,3 +1,4 @@
+/* 전체 컨테이너 */
 .subhome-container {
     display: flex;
     flex-direction: column;
@@ -12,6 +13,7 @@
 .subhome-main {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 80%;
     margin-top: 20px;
 }
@@ -28,14 +30,16 @@
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 .profile-image {
-    width: 100px;
-    height: 100px;
-    background-color: #ccc;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    margin: 0 auto 10px;
+    object-fit: cover;
 }
 
 /* 설명 영역 */
@@ -46,12 +50,21 @@
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.interview-icon {
+    width: 60px;
+    height: 60px;
 }
 
 .description-text {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 15px;
+    flex-grow: 1;
 }
 
 /* 버튼 스타일 */
@@ -80,7 +93,7 @@
     color: white;
 }
 
-/* 피드백 영역 */
+/* 이력서 피드백 영역 */
 .feedback-section {
     width: 80%;
     margin-top: 30px;
@@ -89,6 +102,21 @@
     border-radius: 10px;
     font-size: 14px;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.feedback-text {
+    font-weight: bold;
+    color: #333;
+}
+
+.feedback-more {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
 }
 
 /* 과정 설명 */
@@ -107,27 +135,44 @@
     margin-top: 20px;
 }
 
-.step {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    width: 200px;
-    text-align: center;
-}
-
-.step1 {
-    width: 384px;
-    height: 240px;
+/* 개별 카드 */
+.process-card {
+    width: 320px;
+    height: 200px;
     background: white;
     flex-shrink: 0;
     border-radius: 20px;
-    border: var(--stroke-weight-1, 1px) solid var(--color-grey-91, #E7E8EA);
-    box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.25);
+    border: 1px solid #E7E8EA;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    position: relative;
 }
 
-.step-icon {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 10px;
+.process-number {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+}
+
+.process-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 50px;
+}
+
+.process-description {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
+}
+
+.process-icon {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    bottom: 10px;
+    right: 0px;
 }

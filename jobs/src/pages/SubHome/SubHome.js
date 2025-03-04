@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../component/Header";
 import "./SubHome.css";
 import anlyzeImg from "../../assets/anlyze.png";
-import feedbackImg from "../../assets/feedback.png"
-import interviewImg from "../../assets/interview.png" 
+import feedbackImg from "../../assets/feedback.png";
+import interviewImg from "../../assets/interview.png";
+import profileAvatar from "../../assets/profileAvatar.png"; // 새로운 프로필 이미지 추가
+import interviewIcon from "../../assets/interviewIcon.png"; // 인터뷰 아이콘 추가
 
 const SubHome = () => {
   const navigate = useNavigate();
@@ -17,7 +19,7 @@ const SubHome = () => {
         {/* 왼쪽: 사용자 프로필 영역 */}
         <section className="user-profile">
           <div className="profile-card">
-            <div className="profile-image"></div>
+            <img src={profileAvatar} alt="프로필" className="profile-image" />
             <div className="profile-info">
               <p>
                 <strong>이름:</strong> 김숙명
@@ -34,6 +36,11 @@ const SubHome = () => {
 
         {/* 오른쪽: 설명 및 버튼 */}
         <section className="description-section">
+          <img
+            src={interviewIcon}
+            alt="인터뷰 아이콘"
+            className="interview-icon"
+          />
           <p className="description-text">
             이제, 자비스와 함께 모의 면접을 시작하세요.
           </p>
@@ -54,92 +61,46 @@ const SubHome = () => {
       {/* 이력서 피드백 안내 */}
       <section className="feedback-section">
         <p className="feedback-text">
-          <strong>김숙명님 이력서 합격 피드백 :</strong> 이력서의 경험과 역량을
-          더욱 명확하게 드러내기 위해 구체적인 수치와 직무 관련 키워드를
-          활용하면 좋겠습니다.
+          <strong>김숙명님 이력서 합격 피드백 :</strong>
+          이력서의 경험과 역량을 더욱 명확하게 드러내기 위해 구체적인 수치와
+          직무 관련 키워드를 활용하면 좋겠습니다.
         </p>
+        <button className="feedback-more">➡</button>{" "}
+        {/* 오른쪽 화살표 버튼 추가 */}
       </section>
 
       {/* 자비스 과정 설명 */}
       <section className="process-section">
         <h2>자비스 과정 설명</h2>
         <div className="process-steps">
-          <div style={{
-            width: "384px",
-            height: "240px",
-            position: "relative",
-            boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.25)",
-            borderRadius: "20px",
-            overflow: "hidden",
-            border: "1px solid #E7E8EA",
-            backgroundColor: "white"
-          }}>
+          <div className="process-card">
+            <span className="process-number">1.</span>
+            <p className="process-title">자비스가 당신을 분석해요.</p>
+            <p className="process-description">
+              이력서를 토대로 보다 정확한
+              <br /> 분석을 진행해요.
+            </p>
+            <img src={anlyzeImg} alt="분석 아이콘" className="process-icon" />
+          </div>
 
-          {/* 번호 */}
-          <div style={{
-              position: "absolute",
-              left: "25px",
-              top: "25px",
-              fontSize: "13.12px",
-              fontWeight: "700",
-              fontFamily: "Inter",
-              color: "#333436"
-          }}>1.</div>
-
-          {/* 제목 */}
-          <div style={{
-              width: 115.31,
-              height: 40,
-              left: "25px",
-              top: "65px",
-              fontSize: "13.12px",
-              fontWeight: "700",
-              fontFamily: "Inter",
-              lineHeight: 20,
-              color: "#333436"
-          }}>자비스가 당신을 <br /> 분석해요.</div>
-
-          {/* 설명 */}
-          <div style={{
-              position: "absolute",
-              left: "25px",
-              top: "119px",
-              fontSize: "10px",
-              fontWeight: "700",
-              fontFamily: "Inter",
-              color: "#656A71"
-          }}>이력서를 토대로 보다 정확한 <br /> 분석을 진행해요.</div>
-
-          {/* 이미지 */}
-          <img 
-              src={anlyzeImg} 
-              alt="분석 아이콘"
-              style={{
-                  width: "250px",
-                  height: "250px",
-                  position: "absolute",
-                  left: "194px",
-                  top: "1px",
-                  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.25)"
-              }}
-          />
-</div>
-
-          <div className="step">
+          <div className="process-card">
+            <span className="process-number">2.</span>
+            <p className="process-title">이력서 피드백</p>
             <img
               src={feedbackImg}
               alt="이력서 피드백 아이콘"
-              className="step-icon"
+              className="process-icon"
             />
-            <p>이력서 피드백</p>
           </div>
-          <div className="step">
+
+          <div className="process-card">
+            <span className="process-number">3.</span>
+            <p className="process-title">자비스와 함께 진짜 면접을 준비해요.</p>
             <img
               src={interviewImg}
               alt="면접 준비 아이콘"
-              className="step-icon"
+              className="process-icon"
             />
-            <p>자비스와 함께 면접을 준비하세요.</p>
           </div>
         </div>
       </section>
