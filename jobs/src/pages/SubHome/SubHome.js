@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../component/Header";
+import InputModal from "../../component/InputModal";  // Import the modal
 import "./SubHome.css";
 import analyseImg from "../../assets/analyse.png";
 import feedbackImg from "../../assets/feedback.png";
@@ -10,6 +11,10 @@ import interviewIcon from "../../assets/interviewIcon.png"; // 인터뷰 아이�
 
 const SubHome = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
+
+  const openModal = () => setIsModalOpen(true); // Open modal
+  const closeModal = () => setIsModalOpen(false); // Close modal
 
   return (
     <div className="subhome-container">
@@ -45,7 +50,7 @@ const SubHome = () => {
             이제, 자비스와 함께 모의 면접을 시작하세요.
           </p>
           <div className="button-group">
-            <button className="start-button" onClick={() => navigate("/input")}>
+            <button className="start-button" onClick={openModal}>
               모의면접 시작하기
             </button>
             <button
@@ -107,6 +112,9 @@ const SubHome = () => {
           </div>
         </div>
       </section>
+
+      {/* 모달 컴포넌트 */}
+      {isModalOpen && <InputModal closeModal={closeModal} />}
     </div>
   );
 };
