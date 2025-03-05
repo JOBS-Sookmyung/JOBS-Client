@@ -29,7 +29,7 @@
 
 .profile-card {
     background: white;
-    padding: 12px;
+    padding: 11px;
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: left;
@@ -42,11 +42,17 @@
     width: 100%;
 }
 
+/* 프로필 정보 텍스트 스타일 */
+.profile-info p {
+    line-height: 1.0; /* 줄 간격을 줄여 더 컴팩트하게 */
+}
+
 .profile-image {
     width: 120px;
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
+    margin-top: 10px;
     margin-bottom: 15px;
 }
 

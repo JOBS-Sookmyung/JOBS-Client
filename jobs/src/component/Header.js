@@ -39,7 +39,12 @@ const Header = () => {
     <>
       <AppBar
         position="sticky"
-        style={{ backgroundColor: "#fff", height: "88px", padding: "0 20px" }}
+        style={{
+          backgroundColor: "#fff",
+          height: "88px",
+          padding: "0 20px",
+          boxShadow: "0px 2px 8px rgba(0, 0, 50, 0.1)",
+        }}
       >
         <Toolbar
           style={{
@@ -77,7 +82,7 @@ const Header = () => {
                   variant="contained"
                   style={{ backgroundColor: "#020202", color: "#fff" }}
                   onClick={() => setSignupOpen(true)}
-                > 
+                >
                   회원가입
                 </Button>
               </>
@@ -85,17 +90,19 @@ const Header = () => {
               <div
                 style={{ display: "flex", alignItems: "center", gap: "30px" }}
               >
-                <span style={{ fontWeight: "bold", color: "#020202" }}> {/* 김숙명 있는 위치*/}
+                <span style={{ fontWeight: "bold", color: "#020202" }}>
+                  {" "}
+                  {/* 김숙명 있는 위치*/}
                   {user.name}
                 </span>
 
                 {/* 채워진 버튼 스타일 --> contained*/}
                 <Button
-                  variant="contained"             
+                  variant="contained"
                   onClick={handleLogout}
                   style={{
                     backgroundColor: "#020202",
-                    color: "#fff"
+                    color: "#fff",
                   }}
                 >
                   로그아웃
