@@ -98,7 +98,7 @@ const Input = () => {
   const handleGenerateQuestions = async () => {
     if (!file || !recruitUrl) {
       alert("이력서 파일과 공고 URL을 모두 입력해 주세요.");
-      return;
+      return; 
     }
 
     setIsLoadingQuestions(true);

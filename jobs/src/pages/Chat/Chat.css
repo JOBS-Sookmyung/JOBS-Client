@@ -147,7 +147,7 @@
   border-radius: 16px;
   border: 1px solid #E2E8F0;
   background: var(--white, #FFF);
-  align-self: flex-start;
+  align-self: flex-;
 }
 
 /* AI 응답 스타일 */
