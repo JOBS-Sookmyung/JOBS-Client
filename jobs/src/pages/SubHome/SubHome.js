@@ -85,33 +85,51 @@ const SubHome = () => {
       <section className="process-section">
         <h2>자비스 과정 설명</h2>
         <div className="process-steps">
-          <div className="process-card">
-            <span className="process-number">1.</span>
-            <p className="process-title">자비스가 당신을 분석해요.</p>
-            <p className="process-description">
-              이력서를 토대로 보다 정확한 <br /> 분석을 진행해요.
-            </p>
-            <img src={analyseImg} alt="분석 아이콘" className="process-icon" />
+          <div className="process-card process-card-1">
+            <div className="process-card-content">
+              <div className="process-text">
+                <span className="process-number">1.</span>
+                <p className="process-title">자비스가 당신을 분석해요.</p>
+                <p className="process-description">
+                  이력서를 토대로 보다 정확한 <br /> 분석을 진행해요.
+                </p>
+              </div>
+              <img
+                src={analyseImg}
+                alt="분석 아이콘"
+                className="process-icon"
+              />
+            </div>
           </div>
-          <div className="process-card">
-            <span className="process-number">2.</span>
-            <p className="process-title">이력서 피드백</p>
-            <img
-              src={feedbackImg}
-              alt="이력서 피드백 아이콘"
-              className="process-icon"
-            />
+
+          <div className="process-card process-card-2">
+            <div className="process-card-content">
+              <div className="process-text">
+                <span className="process-number">2.</span>
+                <p className="process-title">이력서 피드백</p>
+              </div>
+              <img
+                src={feedbackImg}
+                alt="이력서 피드백 아이콘"
+                className="process-icon"
+              />
+            </div>
           </div>
-          <div className="process-card">
-            <span className="process-number">3.</span>
-            <p className="process-title">
-              자비스와 함께 <br /> 진짜 면접을 준비해요.
-            </p>
-            <img
-              src={interviewImg}
-              alt="면접 준비 아이콘"
-              className="process-icon"
-            />
+
+          <div className="process-card process-card-3">
+            <div className="process-card-content">
+              <div className="process-text">
+                <span className="process-number">3.</span>
+                <p className="process-title">
+                  자비스와 함께 <br /> 진짜 면접을 준비해요.
+                </p>
+              </div>
+              <img
+                src={interviewImg}
+                alt="면접 준비 아이콘"
+                className="process-icon"
+              />
+            </div>
           </div>
         </div>
       </section>
