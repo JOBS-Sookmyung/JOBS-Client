@@ -43,12 +43,12 @@
 }
 
 .profile-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+    width: 130px;
+    height: 130px;
+    border-radius: 0%;
     object-fit: cover;
-    margin-top: 10px;
-    margin-bottom: 15px;
+    margin-top: 8px;
+    margin-bottom: 10px;
 }
 
 /* 설명 영역 */
