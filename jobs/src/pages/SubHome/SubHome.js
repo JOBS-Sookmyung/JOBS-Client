@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../component/Header";
-import InputModal from "../../component/InputModal"; // Import the modal
+import InputModal from "../../component/InputModal";
 import "./SubHome.css";
 import analyseImg from "../../assets/analyse.png";
 import feedbackImg from "../../assets/feedback.png";
@@ -12,26 +12,25 @@ import interviewIcon from "../../assets/interviewIcon.png";
 const SubHome = () => {
   const navigate = useNavigate();
   const [videos, setVideos] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // JSON 데이터 가져오기
   useEffect(() => {
-    fetch("/data/youtube_data.json") // 경로 확인 필요
+    fetch("/data/youtube_data.json")
       .then((response) => response.json())
       .then((data) => setVideos(data))
       .catch((error) => console.error("Error fetching YouTube data:", error));
   }, []);
 
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
-
-  const openModal = () => setIsModalOpen(true); // Open modal
-  const closeModal = () => setIsModalOpen(false); // Close modal
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className="subhome-container">
       <Header />
 
       <div className="subhome-main">
-        {/* 왼쪽: 사용자 프로필 영역 */}
+        {/* 사용자 프로필 영역 */}
         <section className="user-profile">
           <div className="profile-card">
             <img src={profileAvatar} alt="프로필" className="profile-image" />
@@ -49,7 +48,7 @@ const SubHome = () => {
           </div>
         </section>
 
-        {/* 오른쪽: 설명 및 버튼 */}
+        {/* 설명 및 버튼 */}
         <section className="description-section">
           <img
             src={interviewIcon}
@@ -80,7 +79,6 @@ const SubHome = () => {
           이력서의 경험과 역량을 더욱 명확하게 드러내기 위해 구체적인 수치와
           직무 관련 키워드를 활용하면 좋겠습니다.
         </p>
-        <button className="feedback-more">➡</button>
       </section>
 
       {/* 자비스 과정 설명 */}
@@ -91,12 +89,10 @@ const SubHome = () => {
             <span className="process-number">1.</span>
             <p className="process-title">자비스가 당신을 분석해요.</p>
             <p className="process-description">
-              이력서를 토대로 보다 정확한
-              <br /> 분석을 진행해요.
+              이력서를 토대로 보다 정확한 <br /> 분석을 진행해요.
             </p>
             <img src={analyseImg} alt="분석 아이콘" className="process-icon" />
           </div>
-
           <div className="process-card">
             <span className="process-number">2.</span>
             <p className="process-title">이력서 피드백</p>
@@ -106,12 +102,10 @@ const SubHome = () => {
               className="process-icon"
             />
           </div>
-
           <div className="process-card">
             <span className="process-number">3.</span>
             <p className="process-title">
-              자비스와 함께
-              <br /> 진짜 면접을 준비해요.
+              자비스와 함께 <br /> 진짜 면접을 준비해요.
             </p>
             <img
               src={interviewImg}
@@ -122,7 +116,7 @@ const SubHome = () => {
         </div>
       </section>
 
-      {/* 🔹 추천 영상 섹션 추가 */}
+      {/* 추천 영상 섹션 */}
       <section className="recommendation-section">
         <h2>📺 김숙명님을 위한 추천 영상 ✨</h2>
         <div className="video-list">
@@ -144,6 +138,7 @@ const SubHome = () => {
           ))}
         </div>
       </section>
+
       {/* 모달 컴포넌트 */}
       {isModalOpen && <InputModal closeModal={closeModal} />}
     </div>
