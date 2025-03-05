@@ -89,7 +89,9 @@ const SubHome = () => {
             <div className="process-card-content">
               <div className="process-text">
                 <span className="process-number">1.</span>
-                <p className="process-title">자비스가 당신을 분석해요.</p>
+                <p className="process-title">
+                  자비스가 당신을 <br /> 분석해요.
+                </p>
                 <p className="process-description">
                   이력서를 토대로 보다 정확한 <br /> 분석을 진행해요.
                 </p>

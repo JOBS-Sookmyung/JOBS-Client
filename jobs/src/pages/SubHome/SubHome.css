@@ -15,8 +15,6 @@
     justify-content: space-between;
     align-items: flex-start;
     /* 상단 정렬 */
-    align-items: flex-start;
-    /* 상단 정렬 */
     width: 80%;
     margin-top: 20px;
 }
@@ -33,9 +31,6 @@
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: left;
-    /* 텍스트 왼쪽 정렬 */
-    text-align: left;
-    /* 텍스트 왼쪽 정렬 */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,8 +39,7 @@
 
 /* 프로필 정보 텍스트 스타일 */
 .profile-info p {
-    line-height: 1.0;
-    /* 줄 간격을 줄여 더 컴팩트하게 */
+    line-height: 1.0; /* 줄 간격을 줄여 더 컴팩트하게 */
 }
 
 .profile-image {
@@ -78,7 +72,6 @@
     width: 290px;
     height: 258px;
     margin-top: 20px;
-    /* 원하는 만큼 조절 */
 }
 
 .description-text {
@@ -93,15 +86,12 @@
 .button-group {
     display: flex;
     gap: 10px;
-    align-items: center;
-    /* 세로 중앙 정렬 */
-    justify-content: center;
-    /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    justify-content: center; /* 가로 중앙 정렬 */
     position: absolute;
     top: 70%;
     left: 60%;
-    transform: translateX(-50%);
-    /* 정확한 중앙 정렬 */
+    transform: translateX(-50%); /* 정확한 중앙 정렬 */
 }
 
 /* 모의면접 시작하기 버튼 */
@@ -157,9 +147,7 @@
 .process-section h2 {
     font-size: 28px;
     text-align: left;
-    /* 왼쪽 정렬 */
     margin-left: 40px;
-    /* 카드 왼쪽 정렬과 맞춤 */
 }
 
 .process-steps {
@@ -179,9 +167,34 @@
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     padding: 20px;
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* 배경이 넘치지 않도록 */
 }
 
+/* 오른쪽 절반 배경색 추가 (아이콘/텍스트 영향 X) */
+.process-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    z-index: 0; /* 배경이 가장 아래 위치 */
+}
+
+/* 개별 카드 배경색 지정 */
+.process-card:nth-child(1)::after {
+    background: #FEF6E8;
+}
+
+.process-card:nth-child(2)::after {
+    background: #F5ECF6;
+}
+
+.process-card:nth-child(3)::after {
+    background: #F4F8FD;
+}
 
 .process-number {
     position: absolute;
@@ -205,11 +218,12 @@
 }
 
 .process-icon {
-    width: 190px;
-    height: 190px;
+    width: 200px;
+    height: 200px;
     position: absolute;
     bottom: 0px;
     right: 0px;
+    z-index: 2; /* 배경보다 위로 배치 */
 }
 
 .recommendation-section {
@@ -225,8 +239,7 @@
 
 .video-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    /* 3개씩 한 줄 */
+    grid-template-columns: repeat(3, 1fr); /* 3개씩 한 줄 */
     gap: 20px;
     justify-content: center;
     margin-top: 20px;
@@ -253,3 +266,4 @@
     margin-left: 40px;
     margin-top: 10px;
 }
+
