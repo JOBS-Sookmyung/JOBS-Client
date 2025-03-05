@@ -96,7 +96,7 @@
 
 /* 모의면접 시작하기 버튼 */
 .start-button {
-    background-color: #007bff;
+    background-color: #AA2217;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -108,7 +108,7 @@
 
 /* 지난 기록 버튼 */
 .history-button {
-    background-color: #28a745;
+    background-color: #084032;
     color: white;
     padding: 12px 20px;
     border: none;
