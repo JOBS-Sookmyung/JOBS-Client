@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../component/Header";
 import "./SubHome.css";
 import analyseImg from "../../assets/analyse.png";
 import feedbackImg from "../../assets/feedback.png";
 import interviewImg from "../../assets/interview.png";
-import profileAvatar from "../../assets/profileAvatar.png"; // 새로운 프로필 이미지 추가
-import interviewIcon from "../../assets/interviewIcon.png"; // 인터뷰 아이콘 추가
+import profileAvatar from "../../assets/profileAvatar.png";
+import interviewIcon from "../../assets/interviewIcon.png";
 
 const SubHome = () => {
   const navigate = useNavigate();
+  const [videos, setVideos] = useState([]);
+
+  // JSON 데이터 가져오기
+  useEffect(() => {
+    fetch("/data/youtube_data.json") // 경로 확인 필요
+      .then((response) => response.json())
+      .then((data) => setVideos(data))
+      .catch((error) => console.error("Error fetching YouTube data:", error));
+  }, []);
 
   return (
     <div className="subhome-container">
@@ -65,8 +74,7 @@ const SubHome = () => {
           이력서의 경험과 역량을 더욱 명확하게 드러내기 위해 구체적인 수치와
           직무 관련 키워드를 활용하면 좋겠습니다.
         </p>
-        <button className="feedback-more">➡</button>{" "}
-        {/* 오른쪽 화살표 버튼 추가 */}
+        <button className="feedback-more">➡</button>
       </section>
 
       {/* 자비스 과정 설명 */}
@@ -105,6 +113,29 @@ const SubHome = () => {
               className="process-icon"
             />
           </div>
+        </div>
+      </section>
+
+      {/* 🔹 추천 영상 섹션 추가 */}
+      <section className="recommendation-section">
+        <h2>📺 김숙명님을 위한 추천 영상 ✨</h2>
+        <div className="video-list">
+          {videos.slice(0, 6).map((video) => (
+            <a
+              key={video.id}
+              href={video.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="video-item"
+            >
+              <img
+                src={video.thumbnail}
+                alt={video.title}
+                className="video-thumbnail"
+              />
+              <p className="video-title">{video.title}</p>
+            </a>
+          ))}
         </div>
       </section>
     </div>

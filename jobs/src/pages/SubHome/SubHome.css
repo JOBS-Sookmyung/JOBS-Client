@@ -13,7 +13,8 @@
 .subhome-main {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; /* 상단 정렬 */
+    align-items: flex-start;
+    /* 상단 정렬 */
     width: 80%;
     margin-top: 20px;
 }
@@ -26,10 +27,11 @@
 
 .profile-card {
     background: white;
-    padding: 25px;
+    padding: 12px;
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: left; /* 텍스트 왼쪽 정렬 */
+    text-align: left;
+    /* 텍스트 왼쪽 정렬 */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,11 +57,16 @@
     justify-content: space-between;
     width: 65%;
     position: relative;
+    height: 230px;
+    /* interview-icon과 같은 높이 */
+    margin-bottom: 0px;
+    /* 아래 여백 제거 */
 }
 
 .interview-icon {
-    width: 300px;
+    width: 290px;
     height: 258px;
+    margin-top: 20px; /* 원하는 만큼 조절 */
 }
 
 .description-text {
@@ -74,16 +81,21 @@
 .button-group {
     display: flex;
     gap: 10px;
-    align-items: center; /* 버튼을 세로 중앙 정렬 */
-    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center;
+    /* 버튼을 세로 중앙 정렬 */
+    justify-content: center;
+    /* 가로 중앙 정렬 */
     position: absolute;
     top: 70%;
-    left: 60%; /* 왼쪽에서 50% 위치로 이동 */
-    transform: translateX(-50%); /* 정확한 중앙 정렬 */
+    left: 60%;
+    /* 왼쪽에서 50% 위치로 이동 */
+    transform: translateX(-50%);
+    /* 정확한 중앙 정렬 */
 }
 
 
-.start-button, .history-button {
+.start-button,
+.history-button {
     padding: 12px 20px;
     border: none;
     cursor: pointer;
@@ -104,8 +116,8 @@
 
 /* 이력서 피드백 영역 */
 .feedback-section {
-    width: 80%;
-    margin-top: 30px;
+    width: 78%;
+    margin-top: 25px;
     background: #eeeeee;
     padding: 15px;
     border-radius: 10px;
@@ -130,12 +142,16 @@
 
 /* 과정 설명 */
 .process-section {
-    width: 80%;
-    margin-top: 30px;
+    width: 84%;
+    margin-top: 15px;
 }
 
 .process-section h2 {
-    text-align: center;
+    font-size: 28px;
+    text-align: left;
+    /* 왼쪽 정렬 */
+    margin-left: 40px;
+    /* 카드 왼쪽 정렬과 맞춤 */
 }
 
 .process-steps {
@@ -147,7 +163,7 @@
 /* 개별 카드 */
 .process-card {
     width: 320px;
-    height: 200px;
+    height: 160px;
     background: white;
     flex-shrink: 0;
     border-radius: 20px;
@@ -179,9 +195,50 @@
 }
 
 .process-icon {
-    width: 200px;
-    height: 200px;
+    width: 190px;
+    height: 190px;
     position: absolute;
-    bottom: 10px;
+    bottom: 0px;
     right: 0px;
+}
+
+.recommendation-section {
+    width: 84%;
+    margin-top: 40px;
+}
+
+.recommendation-section h2 {
+    font-size: 28px;
+    text-align: left;
+    margin-left: 40px;
+}
+
+.video-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3개씩 한 줄 */
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.video-item {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: black;
+    width: 100%;
+}
+
+.video-thumbnail {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.video-title {
+    font-size: 28px;
+    text-align: left;
+    font-weight: bold;
+    margin-left: 40px;
+    margin-top: 10px;
 }
