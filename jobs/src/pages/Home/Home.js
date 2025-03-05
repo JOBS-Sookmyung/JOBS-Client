@@ -17,7 +17,7 @@ const Home = () => {
   return (
     <>
       {/* ✅ 헤더 추가 */}
-      <Header />
+      <Header />  
 
       {/* ✅ 메인 섹션 */}
       <Box
@@ -118,37 +118,37 @@ const Home = () => {
         {/* 상단 설명 (왼쪽 정렬) */}
         <Box sx={{ textAlign: "left", maxWidth: "600px" }}>
           <Typography
-  variant="h3"
-  fontWeight="bold"
-  sx={{
-    color: "var(--reflow-work-cod-gray, var(--color-grey-8, #151514))",
-    fontFamily: "var(--font-family-Font-1, Inter)",
-    fontSize: "var(--font-size-48, 48px)",
-    fontStyle: "normal",
-    fontWeight: "var(--font-weight-800, 800)",
-    lineHeight: "var(--line-height-66, 66px)", // 137.5%
-  }}
->
-  Job is <span style={{ color: "#AA2217" }}>...</span>
-</Typography>
+            variant="h3"
+            fontWeight="bold"
+            sx={{
+              color: "var(--reflow-work-cod-gray, var(--color-grey-8, #151514))",
+              fontFamily: "var(--font-family-Font-1, Inter)",
+              fontSize: "var(--font-size-48, 48px)",
+              fontStyle: "normal",
+              fontWeight: "var(--font-weight-800, 800)",
+              lineHeight: "var(--line-height-66, 66px)", // 137.5%
+            }}
+          >          
+            Job is <span style={{ color: "#AA2217" }}>...</span>
+          </Typography>
 
           <Typography
-  variant="h6"
-  color="textSecondary"
-  sx={{
-    color: "var(--www-figma-com-black, var(--color-black-solid, #000))",
-    textAlign: "center",
-    fontFamily: "var(--font-family-Font-1, Menlo)",
-    fontSize: "var(--font-size-18, 18px)",
-    fontStyle: "normal",
-    fontWeight: "var(--font-weight-400, 400)",
-    lineHeight: "var(--line-height-23_4, 23.4px)", // 130%
-    letterSpacing: "var(--letter-spacing-0_54, 0.54px)",
-    textTransform: "uppercase",
-  }}
->
-  JOBIS, 어떤 사람들에게 더 유용한가요?
-</Typography>
+            variant="h6"
+            color="textSecondary"
+            sx={{
+              color: "var(--www-figma-com-black, var(--color-black-solid, #000))",
+              textAlign: "center",
+              fontFamily: "var(--font-family-Font-1, Menlo)",
+              fontSize: "var(--font-size-18, 18px)",
+              fontStyle: "normal",
+              fontWeight: "var(--font-weight-400, 400)",
+              lineHeight: "var(--line-height-23_4, 23.4px)", // 130%
+              letterSpacing: "var(--letter-spacing-0_54, 0.54px)",
+              textTransform: "uppercase",
+            }}
+          >
+            JOBIS, 어떤 사람들에게 더 유용한가요?
+          </Typography>
 
         </Box>
 

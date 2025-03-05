@@ -65,7 +65,7 @@ const Header = () => {
                 <Button
                   variant="outlined"
                   style={{
-                    marginRight: "10px",
+                    marginRight: "15px",
                     borderColor: "#020202",
                     color: "#020202",
                   }}
@@ -77,30 +77,29 @@ const Header = () => {
                   variant="contained"
                   style={{ backgroundColor: "#020202", color: "#fff" }}
                   onClick={() => setSignupOpen(true)}
-                >
+                > 
                   회원가입
                 </Button>
               </>
             ) : user ? (
               <div
-                style={{ display: "flex", alignItems: "center", gap: "10px" }}
+                style={{ display: "flex", alignItems: "center", gap: "30px" }}
               >
-                <span style={{ fontWeight: "bold", color: "#020202" }}>
+                <span style={{ fontWeight: "bold", color: "#020202" }}> {/* 김숙명 있는 위치*/}
                   {user.name}
                 </span>
-                <button
+
+                {/* 채워진 버튼 스타일 --> contained*/}
+                <Button
+                  variant="contained"             
                   onClick={handleLogout}
                   style={{
-                    background: "none",
-                    border: "none",
-                    color: "gray",
-                    textDecoration: "underline",
-                    cursor: "pointer",
-                    fontSize: "14px",
+                    backgroundColor: "#020202",
+                    color: "#fff"
                   }}
                 >
                   로그아웃
-                </button>
+                </Button>
               </div>
             ) : null}
           </div>

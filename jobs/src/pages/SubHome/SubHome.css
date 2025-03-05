@@ -15,6 +15,8 @@
     justify-content: space-between;
     align-items: flex-start;
     /* 상단 정렬 */
+    align-items: flex-start;
+    /* 상단 정렬 */
     width: 80%;
     margin-top: 20px;
 }
@@ -30,6 +32,8 @@
     padding: 12px;
     border-radius: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    /* 텍스트 왼쪽 정렬 */
     text-align: left;
     /* 텍스트 왼쪽 정렬 */
     display: flex;
@@ -85,8 +89,16 @@
     /* 버튼을 세로 중앙 정렬 */
     justify-content: center;
     /* 가로 중앙 정렬 */
+    align-items: center;
+    /* 버튼을 세로 중앙 정렬 */
+    justify-content: center;
+    /* 가로 중앙 정렬 */
     position: absolute;
     top: 70%;
+    left: 60%;
+    /* 왼쪽에서 50% 위치로 이동 */
+    transform: translateX(-50%);
+    /* 정확한 중앙 정렬 */
     left: 60%;
     /* 왼쪽에서 50% 위치로 이동 */
     transform: translateX(-50%);
@@ -94,6 +106,8 @@
 }
 
 
+.start-button,
+.history-button {
 .start-button,
 .history-button {
     padding: 12px 20px;
