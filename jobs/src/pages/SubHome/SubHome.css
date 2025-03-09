@@ -43,12 +43,12 @@
 }
 
 .profile-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+    width: 130px;
+    height: 130px;
+    border-radius: 0%;
     object-fit: cover;
-    margin-top: 10px;
-    margin-bottom: 15px;
+    margin-top: 8px;
+    margin-bottom: 10px;
 }
 
 /* 설명 영역 */
@@ -71,7 +71,7 @@
 .interview-icon {
     width: 290px;
     height: 258px;
-    margin-top: 20px;
+    margin-top: 21px;
 }
 
 .description-text {
@@ -79,7 +79,7 @@
     font-weight: bold;
     flex-grow: 1;
     text-align: left;
-    padding-left: 15px;
+    padding-left: 40px;
 }
 
 /* 버튼 스타일 */
@@ -90,7 +90,7 @@
     justify-content: center; /* 가로 중앙 정렬 */
     position: absolute;
     top: 70%;
-    left: 60%;
+    left: 63%;
     transform: translateX(-50%); /* 정확한 중앙 정렬 */
 }
 
