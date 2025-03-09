@@ -32,7 +32,7 @@ const Input = () => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("recruitUrl", recruitUrl);
-    formData.append("recentDate", new Date().toISOString());
+    //formData.append("recentDate", new Date().toISOString());
 
     try {
       const response = await fetch("http://localhost:8000/input/uploadfile/", {

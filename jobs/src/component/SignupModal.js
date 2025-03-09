@@ -1,3 +1,4 @@
+// signup.js
 import React, { useState } from "react";
 import {
   Dialog,
@@ -15,11 +16,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import logo from "../assets/logo.svg";
 
 const SignupModal = ({ open, handleClose }) => {
+  // 회원가입 입력값 상태
+  const [userId, setUserId] = useState("");
+  const [pw, setPw] = useState("");
+  const [userName, setUserName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [school, setSchool] = useState("");
+
   const [languageTests, setLanguageTests] = useState([
     { id: Date.now(), type: "", score: "" },
   ]);
 
-  // 어학 추가 필드 함수
   const addLanguageTest = () => {
     setLanguageTests([
       ...languageTests,
@@ -27,18 +34,14 @@ const SignupModal = ({ open, handleClose }) => {
     ]);
   };
 
-  // 어학 삭제 필드 함수
   const removeLanguageTest = (id) => {
     if (languageTests.length === 1) {
-      // 필드가 하나만 남아있다면 입력 내용만 초기화
       setLanguageTests([{ id: Date.now(), type: "", score: "" }]);
     } else {
-      // 필드가 2개 이상이면 해당 항목 삭제
       setLanguageTests(languageTests.filter((test) => test.id !== id));
     }
   };
 
-  // 입력값 변경 핸들러
   const handleLanguageChange = (id, field, value) => {
     setLanguageTests(
       languageTests.map((test) =>
@@ -47,12 +50,39 @@ const SignupModal = ({ open, handleClose }) => {
     );
   };
 
+  // 회원가입 버튼 클릭 시 API 호출
+  const handleSignup = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: userId,
+          pw: pw,
+          name: userName,
+          school: school,
+          phone: phone,
+        }),
+      });
+      const data = await response.json();
+
+      if (data.message === "Signup success") {
+        alert("회원가입 성공!");
+        handleClose(); // 회원가입 모달 닫기
+      } else {
+        alert("이미 존재하는 아이디입니다.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("회원가입 중 오류가 발생했습니다.");
+    }
+  };
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
       <DialogContent
         sx={{ padding: "32px", textAlign: "center", position: "relative" }}
       >
-        {/* 닫기 버튼 */}
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -65,31 +95,53 @@ const SignupModal = ({ open, handleClose }) => {
           <CloseIcon />
         </IconButton>
 
-        {/* 로고 + 설명 */}
         <Box display="flex" flexDirection="column" alignItems="center">
           <img src={logo} alt="JOBIS 로고" style={{ height: "40px" }} />
         </Box>
 
-        {/* 입력 필드 */}
         <Box display="flex" flexDirection="column" gap={2} mt={4}>
-          <TextField fullWidth label="아이디" variant="outlined" />
+          <TextField
+            fullWidth
+            label="아이디"
+            variant="outlined"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+          />
           <TextField
             fullWidth
             label="비밀번호"
             type="password"
             variant="outlined"
+            value={pw}
+            onChange={(e) => setPw(e.target.value)}
           />
-          <TextField fullWidth label="이름" variant="outlined" />
-          <TextField fullWidth label="전화번호" variant="outlined" />
+          <TextField
+            fullWidth
+            label="이름"
+            variant="outlined"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <TextField
+            fullWidth
+            label="전화번호"
+            variant="outlined"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
 
-          {/* 학력 입력 (학교명 & 전공명) */}
           <Box display="flex" gap={2}>
-            <TextField fullWidth label="학교명" variant="outlined" />
+            <TextField
+              fullWidth
+              label="학교명"
+              variant="outlined"
+              value={school}
+              onChange={(e) => setSchool(e.target.value)}
+            />
             <TextField fullWidth label="전공명" variant="outlined" />
           </Box>
 
-          {/* 어학 (왼쪽: 선택 / 오른쪽: 점수 입력 + 삭제 버튼) */}
-          {languageTests.map((test, index) => (
+          {languageTests.map((test) => (
             <Box key={test.id} display="flex" gap={2} alignItems="center">
               <TextField
                 select
@@ -124,7 +176,7 @@ const SignupModal = ({ open, handleClose }) => {
                           languageTests.length === 1 &&
                           !test.type &&
                           !test.score
-                        } // 입력값이 없고 필드가 하나만 남았을 때만 비활성화
+                        }
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -135,7 +187,6 @@ const SignupModal = ({ open, handleClose }) => {
             </Box>
           ))}
 
-          {/* 어학 추가 버튼 */}
           <Box display="flex" justifyContent="flex-start" mt={1}>
             <Button
               startIcon={<AddCircleOutlineIcon />}
@@ -147,7 +198,6 @@ const SignupModal = ({ open, handleClose }) => {
           </Box>
         </Box>
 
-        {/* 회원가입 버튼 */}
         <Box mt={3} display="flex" flexDirection="column" gap={2}>
           <Button
             variant="contained"
@@ -158,6 +208,7 @@ const SignupModal = ({ open, handleClose }) => {
               fontWeight: "bold",
               height: "56px",
             }}
+            onClick={handleSignup}
           >
             회원가입
           </Button>
