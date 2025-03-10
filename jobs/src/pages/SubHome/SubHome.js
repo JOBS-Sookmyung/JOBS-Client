@@ -14,12 +14,23 @@ const SubHome = () => {
   const [videos, setVideos] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // 로그인한 사용자 정보를 담을 상태
+  const [user, setUser] = useState(null);
+
   // JSON 데이터 가져오기
   useEffect(() => {
     fetch("/data/youtube_data.json")
       .then((response) => response.json())
       .then((data) => setVideos(data))
       .catch((error) => console.error("Error fetching YouTube data:", error));
+  }, []);
+
+  // 컴포넌트 마운트 시 localStorage에서 user 데이터 가져오기 -> 사용자별로 정보가 달라질 것임
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
   }, []);
 
   const openModal = () => setIsModalOpen(true);
@@ -35,14 +46,18 @@ const SubHome = () => {
           <div className="profile-card">
             <img src={profileAvatar} alt="프로필" className="profile-image" />
             <div className="profile-info">
+              {/* (수정됨) user 값이 존재하면 그 정보를 표시, 없으면 기본값 */}
               <p>
-                <strong>이름:</strong> 김숙명
+                <strong>이름: </strong>
+                {user ? user.name : "로그인하세요"}
               </p>
               <p>
-                <strong>학교:</strong> 숙명여자대학교
+                <strong>학교: </strong>
+                {user ? user.school : "미입력"}
               </p>
               <p>
-                <strong>어학능력:</strong> TOEIC 900 / OPIc IH
+                <strong>전화번호: </strong>
+                {user ? user.phone : "미입력"}
               </p>
             </div>
           </div>
@@ -62,10 +77,7 @@ const SubHome = () => {
             <button className="start-button" onClick={openModal}>
               모의면접 시작하기
             </button>
-            <button
-              className="history-button"
-              onClick={() => navigate("/chat")}
-            >
+            <button className="history-button" onClick={() => navigate("/chat")}>
               지난 기록
             </button>
           </div>
@@ -75,7 +87,7 @@ const SubHome = () => {
       {/* 이력서 피드백 안내 */}
       <section className="feedback-section">
         <p className="feedback-text">
-          <strong>김숙명님 이력서 합격 피드백 :</strong>
+          <strong>{user ? user.name : "사용자"}님 이력서 합격 피드백 :</strong>
           이력서의 경험과 역량을 더욱 명확하게 드러내기 위해 구체적인 수치와
           직무 관련 키워드를 활용하면 좋겠습니다.
         </p>
@@ -138,7 +150,7 @@ const SubHome = () => {
 
       {/* 추천 영상 섹션 */}
       <section className="recommendation-section">
-        <h2>📺 김숙명님을 위한 추천 영상 ✨</h2>
+        <h2>📺 {user ? user.name : "사용자"}님을 위한 추천 영상 ✨</h2>
         <div className="video-list">
           {videos.slice(0, 6).map((video) => (
             <a
