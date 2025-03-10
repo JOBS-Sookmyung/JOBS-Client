@@ -1,3 +1,4 @@
+// loginmodal.js
 import React, { useState } from "react";
 import {
   Dialog,
@@ -9,18 +10,21 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import logo from "../assets/logo.svg";
-// 추가: useNavigate 임포트
 import { useNavigate } from "react-router-dom";
 
 const LoginModal = ({ open, handleClose, openSignup, setUser }) => {
+  // 로그인 시 입력받은 id와 비밀번호 (백엔드에 보낼 값)
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
 
-  // useNavigate 훅
+  // 로그인 성공 후 특정 페이지로 이동하기 위해 useNavigate 사용
   const navigate = useNavigate();
 
+  // 로그인 버튼 클릭 시 실행되는 함수
   const handleLogin = async () => {
     try {
+      // fetch로 백엔드( http://localhost:8000/login )에 POST 요청
+      // body: { id, pw } 형태로
       const response = await fetch("http://localhost:8000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -28,12 +32,16 @@ const LoginModal = ({ open, handleClose, openSignup, setUser }) => {
       });
       const data = await response.json();
 
+      // 백엔드에서 "Login success" 메시지가 오면 로그인 성공 처리
       if (data.message === "Login success") {
+        // 1) localStorage에 user 정보 저장
         localStorage.setItem("user", JSON.stringify(data.user));
+        // 2) setUser 함수를 이용해 상위 컴포넌트(예: Header)의 user 상태를 업데이트
         setUser(data.user);
+
         alert("로그인 성공");
 
-        // 로그인 모달 닫기
+        // 모달 닫기
         handleClose();
 
         // SubHome 페이지로 이동
@@ -52,6 +60,7 @@ const LoginModal = ({ open, handleClose, openSignup, setUser }) => {
       <DialogContent
         sx={{ padding: "32px", textAlign: "center", position: "relative" }}
       >
+        {/* 모달 오른쪽 상단 닫기 버튼 */}
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -64,17 +73,19 @@ const LoginModal = ({ open, handleClose, openSignup, setUser }) => {
           <CloseIcon />
         </IconButton>
 
+        {/* 로고 표시 */}
         <Box display="flex" flexDirection="column" alignItems="center">
           <img src={logo} alt="JOBIS 로고" style={{ height: "40px" }} />
         </Box>
 
+        {/* 아이디와 비밀번호 입력 필드 */}
         <Box display="flex" flexDirection="column" gap={2} mt={4}>
           <TextField
             fullWidth
             label="아이디"
             variant="outlined"
             value={id}
-            onChange={(e) => setId(e.target.value)}
+            onChange={(e) => setId(e.target.value)} // 입력 시 id 상태 업데이트
           />
           <TextField
             fullWidth
@@ -82,16 +93,18 @@ const LoginModal = ({ open, handleClose, openSignup, setUser }) => {
             type="password"
             variant="outlined"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)} // 입력 시 password 상태 업데이트
           />
         </Box>
 
+        {/* 아이디/비밀번호 찾기 버튼 (기능은 아직 미구현) */}
         <Box mt={1} textAlign="right">
           <Button variant="text" size="small" sx={{ color: "gray" }}>
             아이디·비밀번호 찾기
           </Button>
         </Box>
 
+        {/* 로그인/회원가입 버튼 */}
         <Box mt={3} display="flex" flexDirection="column" gap={2}>
           <Button
             variant="contained"
@@ -102,7 +115,7 @@ const LoginModal = ({ open, handleClose, openSignup, setUser }) => {
               fontWeight: "bold",
               height: "56px",
             }}
-            onClick={handleLogin}
+            onClick={handleLogin} // 로그인 버튼 클릭 시 handleLogin 실행
           >
             로그인
           </Button>
@@ -115,7 +128,7 @@ const LoginModal = ({ open, handleClose, openSignup, setUser }) => {
               fontWeight: "bold",
               height: "56px",
             }}
-            onClick={openSignup}
+            onClick={openSignup} // 회원가입 클릭 시 회원가입 모달 열기
           >
             회원가입
           </Button>
