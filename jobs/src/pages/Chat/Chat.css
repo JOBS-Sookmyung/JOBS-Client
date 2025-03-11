@@ -110,12 +110,11 @@
 /* 채팅 본문 */
 .chat-body {
   flex: 1;
-  align-items: center;
+  align-items: flex-start;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  flex: 1 0 0;
+  gap: 2px;
 }
 
 /* 질문이 없을 때 표시되는 문구 */
@@ -130,13 +129,12 @@
   font-style: normal;
   font-weight: 400;
   line-height: 20px;
-    /* 142.857% */
 }
 
 /* 메시지 스타일 */
 .message {
   max-width: 60%;
-  padding: 14px;
+  padding: 10px;
   border-radius: 12px;
   position: relative;
   font-size: 14px;
@@ -147,13 +145,13 @@
   border-radius: 16px;
   border: 1px solid #E2E8F0;
   background: var(--white, #FFF);
-  align-self: flex-;
+  align-self: flex-start;
 }
 
 /* AI 응답 스타일 */
 .ai-response {
   display: flex;
-  padding: 12px;
+  padding: 10px;
   justify-content: center;
   align-self: flex-start;
   gap: 10px;
@@ -164,12 +162,13 @@
 
 /* 내가 입력한 사용자 메시지 */
 .user {
-  padding: 12px;
+  padding: 10px;
   justify-content: center;
   align-self: flex-end;
   color: white;
   border-radius: 16px;
   background: #084032;
+  margin-bottom: 2px;
 }
 
 /* 힌트 버튼 */
@@ -177,7 +176,6 @@
   position: absolute;
   top: 70%;
   right: -45px;
-  /* 박스 바깥으로 밀어냄 */
   transform: translateY(-50%);
   border: none;
   background: transparent;
@@ -189,39 +187,6 @@
   font-size: 12px;
   color: gray;
   margin-top: 5px;
-}
-
-/* 사용자 액션 버튼 (꼬리 질문, 피드백) */
-.user-actions {
-  display: flex;
-  justify-content: center;
-  /* 가운데 정렬 */
-  gap: 8px;
-  /* 버튼 사이 간격 */
-  margin-top: 8px;
-  /* 초록색 박스와의 거리 조정 */
-}
-
-.action-button {
-  border: 1;
-  background: transparent;
-  color: white;
-  padding: 4px 8px;
-  /* 버튼 크기 조정 */
-  border-radius: 4px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: auto;
-  /* 버튼이 내용에 맞게 조절됨 */
-  height: auto;
-  /* 기본값 유지 */
-  /* 텍스트 줄바꿈 방지 */
-}
-
-.action-button:hover {
-  background-color: #1f2937;
 }
 
 /* 입력창 */

@@ -93,7 +93,7 @@ const Header = () => {
                   회원가입
                 </Button>
               </>
-            ) : user ? ( 
+            ) : user ? (
               // user가 존재하면 user.name 표시
               <div
                 style={{ display: "flex", alignItems: "center", gap: "30px" }}
@@ -122,7 +122,7 @@ const Header = () => {
         open={loginOpen}
         handleClose={() => setLoginOpen(false)}
         openSignup={handleOpenSignup}
-        setUser={setUser} 
+        setUser={setUser}
       />
 
       {/* 회원가입 모달 */}
