@@ -9,13 +9,16 @@
 .sidebar {
   width: 25%;
   border-right: 1px solid #e5e7eb;
-  padding: 16px;
+  padding: 0;
   background-color: white;
+  display: flex;
+  flex-direction: column;
 }
 
 /* 예상 질문 및 기록 섹션 */
 .section {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
+  padding: 10px 16px;
 }
 
 /* 섹션 헤더 */
@@ -23,7 +26,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0px;
+  margin-bottom: 4px;
   cursor: pointer;
 }
 
@@ -42,7 +45,7 @@
 
 /* 개별 질문 항목 */
 .question-item {
-  padding: 15px;
+  padding: 10px;
   font-size: 16px;
   color: #374151;
   cursor: pointer;
@@ -72,7 +75,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding: 0px;
 }
 
 /* 채팅 헤더 */
@@ -80,9 +83,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 2px solid #e5e7eb;
-  padding-bottom: 8px;
-  margin-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  height: 80px;
+  padding: 0 16px;
+  background-color: white;
 }
 
 .chat-title {
@@ -110,11 +114,15 @@
 /* 채팅 본문 */
 .chat-body {
   flex: 1;
-  align-items: flex-start;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 8px;
+  padding: 20px;
+  padding-right: 30px;
+  max-width: 1100px; /* ✅ 채팅 너비 고정 */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* 질문이 없을 때 표시되는 문구 */
@@ -134,18 +142,25 @@
 /* 메시지 스타일 */
 .message {
   max-width: 60%;
-  padding: 10px;
+  padding: 12px 12px;
   border-radius: 12px;
   position: relative;
-  font-size: 14px;
+  font-size: 16px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 /* AI 질문 스타일 */
 .question {
+  max-width: 60%;
   border-radius: 16px;
   border: 1px solid #E2E8F0;
   background: var(--white, #FFF);
   align-self: flex-start;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 /* AI 응답 스타일 */
@@ -158,17 +173,20 @@
   border-radius: 16px;
   border: 1px solid #E2E8F0;
   background: var(--white, #FFF);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
 }
 
 /* 내가 입력한 사용자 메시지 */
 .user {
-  padding: 10px;
+  padding: 8px 12px;
   justify-content: center;
   align-self: flex-end;
   color: white;
   border-radius: 16px;
   background: #084032;
-  margin-bottom: 2px;
+  margin-bottom: 8px;
 }
 
 /* 힌트 버튼 */
@@ -192,38 +210,47 @@
 /* 입력창 */
 .chat-input {
   display: flex;
-  padding: 12px;
-  align-items: flex-start;
-  gap: 16px;
-  align-self: stretch;
-  border-radius: var(--border-radius-radius-full, 9999px);
-  border: 1px solid var(--30, #B5C6C1);
-  background: var(--gray-0-white, #FFF);
-  
-  /* Shadow/md */
-  box-shadow: 0px 4px 8px -2px rgba(23, 23, 23, 0.10), 0px 2px 4px -2px rgba(23, 23, 23, 0.06);
-}
+  padding: 8px 12px;
+  align-items: center;
+  gap: 12px;
+  border-radius: 999px;
+  border: 1px solid var(--30, #b5c6c1);
+  background: var(--gray-0-white, #fff);
+  box-shadow: 0px 4px 8px -2px rgba(23, 23, 23, 0.10),
+    0px 2px 4px -2px rgba(23, 23, 23, 0.06);
+  max-width: 1070px;
+  width: 100%;
+  min-height: 24px; /* ✅ 기본 높이 */
+  margin: 20px auto; /* ✅ 채팅 영역과 간격 추가 */
+  }
 
 /* 입력 필드 */
 .input-field {
   flex: 1;
-  padding: 12px;
+  padding: 8px 12px;
   border: none;
   outline: none;
   background: transparent;
+  font-size: 14px;
+  resize: none;
+  min-height: 24px;
+  max-height: 100px;
+  overflow-y: auto;
+  line-height: 1.5;
+  transition: height 0.1s ease-in-out;
+  white-space: pre-wrap; /* ✅ 입력 줄바꿈 유지 */
 }
 
 /* 전송 버튼 */
 .send-button {
   display: flex;
-  width: 40px;
-  height: 40px;
-  padding: 16px;
+  width: 32px;
+  height: 32px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  border-radius: 123px;
+  border-radius: 50%;
   background: var(--main, #084032);
+  padding: 8px;
 }
 
 .send-button:hover {

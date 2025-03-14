@@ -9,9 +9,9 @@ const ChatHeader = () => {
       position="sticky"
       style={{
         backgroundColor: "#fff",
-        height: "88px",
+        height: "80px",
         padding: "0 20px",
-        boxShadow: "0px 2px 8px rgba(0, 0, 50, 0.1)",
+        boxShadow: "0px 1px 0px rgba(0, 0, 50, 0.1)",
       }}
     >
       <Toolbar

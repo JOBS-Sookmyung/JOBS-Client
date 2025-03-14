@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ChatHeader from "../../component/ChatHeader";
 import "./Chat.css";
@@ -25,6 +25,7 @@ const Chat = () => {
   const [userInput, setUserInput] = useState("");
   const [hints, setHints] = useState({});
   const [loadingHints, setLoadingHints] = useState({}); // 힌트 로딩 상태
+  const textAreaRef = useRef(null);
 
   // 질문 선택 처리 (기본 질문 5가지)
   const handleSelectQuestion = async (index) => {
@@ -251,6 +252,31 @@ const Chat = () => {
     printWindow.close();
   };
 
+  // 입력창 자동 높이 조절 함수
+  const handleInputChange = (e) => {
+    setUserInput(e.target.value);
+
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = "24px"; // ✅ 최소 높이 초기화
+      if (e.target.value.trim() === "") {
+        textAreaRef.current.style.height = "24px"; // ✅ 입력이 없으면 최소 높이 유지
+      } else {
+        textAreaRef.current.style.height = "auto";
+        textAreaRef.current.style.height = `${Math.max(
+          24,
+          Math.min(textAreaRef.current.scrollHeight, 100)
+        )}px`;
+      }
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault(); // ✅ 기본 Enter 동작(줄바꿈) 방지
+      handleSendMessage(); // ✅ 메시지 전송
+    }
+  };
+
   return (
     <div className="chat-container">
       {/* 왼쪽 사이드바 */}
@@ -260,12 +286,6 @@ const Chat = () => {
         <div className="section">
           <div
             className="section-header"
-            style={{
-              cursor: "pointer",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
             onClick={() => setShowQuestions(!showQuestions)}
           >
             <h5 className="section-title">예상 질문</h5>
@@ -414,21 +434,20 @@ const Chat = () => {
 
             {/* 입력창 */}
             <div className="chat-input">
-              <input
-                type="text"
+              <textarea
+                ref={textAreaRef}
                 className="input-field"
                 placeholder="🧠   당황하지 말고, 침착하게 답해주세요."
                 value={userInput}
-                onChange={(e) => setUserInput(e.target.value)}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter") handleSendMessage();
-                }}
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown} // ✅ Enter와 Shift+Enter 동작 추가
               />
+
               <button className="send-button" onClick={handleSendMessage}>
                 <div data-svg-wrapper>
                   <svg
-                    width="40"
-                    height="40"
+                    width="32"
+                    height="32"
                     viewBox="0 0 40 40"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
