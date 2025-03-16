@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const InputModal = ({ closeModal, onRecommendationsReceived }) => {
   const [resume, setResume] = useState(null); // 이력서 파일 저장
   const [jobPostUrl, setJobPostUrl] = useState(""); // 공고 URL 저장
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     setResume(e.target.files[0]); // 파일 변경 시 state 업데이트
@@ -54,9 +56,10 @@ const InputModal = ({ closeModal, onRecommendationsReceived }) => {
 
       const recommendData = await recommendResponse.json();
       
-      // 3. 모달 닫고 추천 결과 전달
+      console.log("백엔드 응답:", recommendData);
+      alert("파일 업로드 성공!");
       closeModal();
-      onRecommendationsReceived(recommendData);
+      navigate('/chat');
 
     } catch (error) {
       console.error('Error:', error);
