@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import ChatSidebar from "./ChatSidebar"; // <-- 같은 폴더이므로 "./"
+import ChatSidebar from "./ChatSidebar";
 import ChatBody from "./ChatBody";
 import ChatInput from "./ChatInput";
 import { handleExportPDF } from "./pdfExport";
