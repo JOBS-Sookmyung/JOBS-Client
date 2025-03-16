@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../component/Header";
-import InputModal from "../../component/InputModal";
+import VideoInputModal from "../../component/videoinputModal";
 import "./SubHome.css";
 import analyseImg from "../../assets/analyse.png";
 import feedbackImg from "../../assets/feedback.png";
@@ -18,6 +18,8 @@ const SubHome = () => {
   const [user, setUser] = useState(null);
 
   const [recommendedVideos, setRecommendedVideos] = useState([]);
+  const [isRecommendModalOpen, setIsRecommendModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // JSON 데이터 가져오기
   useEffect(() => {
@@ -38,8 +40,13 @@ const SubHome = () => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const openRecommendModal = () => setIsRecommendModalOpen(true);
+  const closeRecommendModal = () => setIsRecommendModalOpen(false);
+
   const handleRecommendationsReceived = (data) => {
+    setIsLoading(false);
     setRecommendedVideos(data);
+    console.log("✅ 추천 영상 업데이트:", data);
   };
 
   return (
@@ -156,31 +163,48 @@ const SubHome = () => {
 
       {/* 추천 영상 섹션 */}
       <section className="recommendation-section">
-        <h2>📺 {user ? user.name : "사용자"}님을 위한 추천 영상 ✨</h2>
+        <div className="recommendation-header">
+          <h2>📺 {user ? user.name : "사용자"}님을 위한 추천 영상 ✨</h2>
+          <button 
+            className="recommend-button"
+            onClick={openRecommendModal}
+            disabled={isLoading}
+          >
+            {isLoading ? "추천 중..." : "맞춤 영상 추천받기"}
+          </button>
+        </div>
         <div className="video-list">
-          {recommendedVideos.map((video, index) => (
-            <a
-              key={index}
-              href={`https://www.youtube.com/watch?v=${video.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="video-item"
-            >
-              <img
-                src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`}
-                alt={video.title}
-                className="video-thumbnail"
-              />
-              <p className="video-title">{video.title}</p>
-            </a>
-          ))}
+          {isLoading ? (
+            <div className="loading-message">영상을 추천하고 있습니다...</div>
+          ) : recommendedVideos.length > 0 ? (
+            recommendedVideos.map((video, index) => (
+              <a
+                key={index}
+                href={video.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="video-item"
+              >
+                <img
+                  src={video.thumbnail}
+                  alt={video.title}
+                  className="video-thumbnail"
+                />
+                <p className="video-title">{video.title}</p>
+              </a>
+            ))
+          ) : (
+            <div className="no-videos-message">
+              이력서를 업로드하여 맞춤 영상을 추천받아보세요!
+            </div>
+          )}
         </div>
       </section>
 
-      {/* 모달 컴포넌트 */}
-      {isModalOpen && (
-        <InputModal
-          closeModal={closeModal}
+      {/* InputModal을 VideoInputModal로 변경 */}
+      {isRecommendModalOpen && (
+        <VideoInputModal
+          closeModal={closeRecommendModal}
           onRecommendationsReceived={handleRecommendationsReceived}
         />
       )}
