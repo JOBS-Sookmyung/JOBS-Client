@@ -2,15 +2,15 @@
 .chat-container {
   display: flex;
   height: 100vh;
-  background-color: #f9fafb;
+  background-color: white;
 }
 
 /* 왼쪽 사이드바 (질문 리스트 영역) */
 .sidebar {
-  width: 25%;
+  width: 22%;
   border-right: 1px solid #e5e7eb;
   padding: 0;
-  background-color: white;
+  background-color: #F9F9F9;
   display: flex;
   flex-direction: column;
 }
@@ -18,7 +18,7 @@
 /* 예상 질문 및 기록 섹션 */
 .section {
   margin-bottom: 12px;
-  padding: 10px 16px;
+  padding: 8px 16px;
 }
 
 /* 섹션 헤더 */
@@ -31,9 +31,10 @@
 }
 
 .section-title {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
   color: #1f2937;
+  margin: 10px;
 }
 
 /* 질문 리스트 */
@@ -219,8 +220,8 @@
   box-shadow: 0px 4px 8px -2px rgba(23, 23, 23, 0.10),
     0px 2px 4px -2px rgba(23, 23, 23, 0.06);
 
-  max-width: 1070px;
-  width: 100%;
+  /* max-width: 1120px; */
+  width: 95%;
   margin: 0 20px 20px 20px;
   min-height: 24px;
 }

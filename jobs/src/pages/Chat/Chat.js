@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import ChatHeader from "../../component/ChatHeader";
+import ChatSidebar from "./ChatSidebar"; // <-- 같은 폴더이므로 "./"
 import ChatBody from "./ChatBody";
 import ChatInput from "./ChatInput";
 import { handleExportPDF } from "./pdfExport";
@@ -140,58 +140,15 @@ const Chat = () => {
 
   return (
     <div className="chat-container">
-      <div className="sidebar">
-        <ChatHeader />
-        <div className="section">
-          <div
-            className="section-header"
-            onClick={() => setShowQuestions(!showQuestions)}
-          >
-            <h5 className="section-title">예상 질문</h5>
-            <span className="toggle-button">{showQuestions ? "▼" : "▶"}</span>
-          </div>
-
-          {showQuestions && (
-            <ul className="question-list">
-              {questions.map((q, index) => (
-                <li
-                  key={index}
-                  className={`question-item ${
-                    selectedQuestionIndex === index ? "selected" : ""
-                  }`}
-                  onClick={() => handleSelectQuestion(index)}
-                >
-                  {q}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        {/* 이전 기록 영역 */}
-        <div className="section">
-          <div
-            className="section-header"
-            style={{ cursor: "pointer" }}
-            onClick={() => setShowHistory(!showHistory)}
-          >
-            <h5 className="section-title">이전 기록</h5>
-            <span className="toggle-button">{showHistory ? "▼" : "▶"}</span>
-          </div>
-          {showHistory && (
-            <ul className="history-list">
-              <li className="history-item">현대 모비스 모의 면접 기록</li>
-              <li className="history-item">네이버 클라우드 모의 면접 기록</li>
-              <li className="history-item">넥슨 모의 면접 기록</li>
-              <li className="history-item">구글 코리아 모의 면접 기록</li>
-              <li className="history-item">애플 코리아 모의 면접 기록</li>
-              <li className="history-item">마이크로소프트 모의 면접 기록</li>
-              <li className="history-item">하나은행 모의 면접 기록</li>
-              <li className="history-item">실리콘밸리 모의 면접 기록</li>
-            </ul>
-          )}
-        </div>
-      </div>
+      <ChatSidebar
+        questions={questions}
+        selectedQuestionIndex={selectedQuestionIndex}
+        handleSelectQuestion={handleSelectQuestion}
+        showQuestions={showQuestions}
+        setShowQuestions={setShowQuestions}
+        showHistory={showHistory}
+        setShowHistory={setShowHistory}
+      />
 
       <div className="chat-section">
         <div className="chat-header">
