@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ChatHeader from "../../component/ChatHeader";
 import ChatBody from "./ChatBody";
@@ -22,7 +22,6 @@ const Chat = () => {
   const [hints, setHints] = useState({});
   const [loadingHints, setLoadingHints] = useState({});
   const [loading, setLoading] = useState(false);
-  const textAreaRef = useRef(null);
 
   useEffect(() => {
     const fetchQuestions = async () => {

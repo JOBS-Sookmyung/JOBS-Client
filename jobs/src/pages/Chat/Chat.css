@@ -118,7 +118,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 20px;
+  padding: 28px;
   padding-right: 30px;
   max-width: 1100px; /* ✅ 채팅 너비 고정 */
   word-wrap: break-word;
@@ -207,38 +207,41 @@
   margin-top: 5px;
 }
 
-/* 입력창 */
+/* 입력창 컨테이너 */
 .chat-input {
   display: flex;
   padding: 8px 8px;
   align-items: center;
-  /* gap: 12px; */
-  border-radius: 999px;
+  gap: 12px;
+  border-radius: 24px;
   border: 1px solid var(--30, #b5c6c1);
   background: var(--gray-0-white, #fff);
   box-shadow: 0px 4px 8px -2px rgba(23, 23, 23, 0.10),
     0px 2px 4px -2px rgba(23, 23, 23, 0.06);
+
   max-width: 1070px;
   width: 100%;
-  min-height: 24px; /* ✅ 기본 높이 */
-  margin: 20px auto; /* ✅ 채팅 영역과 간격 추가 */
+  margin: 0 20px 20px 20px;
+  min-height: 24px;
 }
 
-/* 입력 필드 */
+/* 실제 텍스트 입력 필드 */
 .input-field {
   flex: 1;
-  padding: 8px 12px;
+  padding: 12px 12px 12px 24px;
   border: none;
   outline: none;
   background: transparent;
-  font-size: 14px;
+  font-size: 16px;
   resize: none;
+
   min-height: 24px;
   max-height: 100px;
   overflow-y: auto;
-  line-height: 1.5;
+
+  line-height: 1.4;
   transition: height 0.1s ease-in-out;
-  white-space: pre-wrap; /* ✅ 입력 줄바꿈 유지 */
+  white-space: pre-wrap;
 }
 
 /* 전송 버튼 */
@@ -257,7 +260,7 @@
   background-color: #747575;
 }
 
-/* 인라인 스타일로 작성되었던 에러 메시지 관련 CSS 분리 */
+/* 에러 메시지 */
 .message.error {
   color: #ef4444;
   background-color: #fee2e2;
