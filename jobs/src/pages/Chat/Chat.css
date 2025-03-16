@@ -64,6 +64,31 @@
   background-color: #dbe3e5;
 }
 
+/* history-list 스타일 (질문 리스트와 동일하게) */
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* history-item 스타일: question-item과 동일하게 */
+.history-item {
+  padding: 10px;
+  font-size: 16px;
+  color: #374151;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 4px;
+}
+
+.history-item:hover {
+  background-color: #eef2ff;
+}
+
+.history-item.selected {
+  background-color: #dbe3e5;
+}
+
 /* 토글 버튼 스타일 */
 .toggle-button {
   font-size: 14px;

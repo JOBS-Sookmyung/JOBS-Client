@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import ChatHeader from "../../component/ChatHeader"; // component 폴더가 src/component 에 있다면 이렇게
+import ChatHeader from "../../component/ChatHeader";
 
 const ChatSidebar = ({
   questions,
   selectedQuestionIndex,
   handleSelectQuestion,
+  handleSelectHistory,
   showQuestions,
   setShowQuestions,
   showHistory,
@@ -52,14 +52,20 @@ const ChatSidebar = ({
 
         {showHistory && (
           <div className="history-list">
-            {/* history-item을 div로 감싸서 각각의 페이지로 이동하도록 수정 */}
-            <div className="history-item">
-              <Link to="/chat/1/1">현대 모비스 모의 면접 기록</Link>
+            {/* 오래된 기록이 위쪽, 최신 기록이 아래쪽 */}
+            <div
+              className="question-item history-item"
+              onClick={() => handleSelectHistory("1")}
+            >
+              <span>현대 모비스 모의 면접 기록</span>
             </div>
-            <div className="history-item">
-              <Link to="/chat/2/1">네이버 클라우드 모의 면접 기록</Link>
+            <div
+              className="question-item history-item"
+              onClick={() => handleSelectHistory("2")}
+            >
+              <span>네이버 클라우드 모의 면접 기록</span>
             </div>
-            {/* 새로 만들어지는 페이지는 예시로 /chat/3/(questions) 로 연결될 예정 */}
+            {/* 추후 신규 이력서 등록 시, 예: /chat/3/1 형태의 새 history-item이 추가됩니다. */}
           </div>
         )}
       </div>

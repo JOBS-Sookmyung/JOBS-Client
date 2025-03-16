@@ -8,7 +8,10 @@ import "./Chat.css";
 
 const Chat = () => {
   const navigate = useNavigate();
-  const { questionId } = useParams();
+  const { historyId, questionId } = useParams();
+  // historyId가 없으면 기본값으로 2(예시로 2개의 기존 기록이 있다고 가정)
+  const initialHistoryCount = historyId ? parseInt(historyId) : 2;
+  const [historyCount, setHistoryCount] = useState(initialHistoryCount);
   const selectedIndex = questionId ? parseInt(questionId) - 1 : null;
 
   // ✅ FastAPI에서 대표질문 가져오기
@@ -57,15 +60,17 @@ const Chat = () => {
   }, []);
 
   // ✅ 대표질문 선택 및 채팅 시작
+  // URL은 /chat/{historyCount}/{questionIndex} 형태로 이동
   const handleSelectQuestion = async (index) => {
     if (questions.length === 0) return;
     setSelectedQuestionIndex(index);
-    navigate(`/chat/1/${index + 1}`, { state: { questions } });
+    navigate(`/chat/${historyCount}/${index + 1}`, { state: { questions } });
     setMessages([{ type: "question", text: questions[index] }]);
   };
 
-  // ✅ 사용자 질문 전송
+  // 사용자 질문 전송 (loading 상태이면 중복 전송 방지)
   const handleSendMessage = async () => {
+    if (loading) return;
     if (userInput.trim() === "") return;
     setLoading(true);
 
@@ -138,12 +143,44 @@ const Chat = () => {
     }
   };
 
+  // ✅ history-item 선택 시 서버에서 해당 채팅방 데이터를 받아오는 함수
+  // 임의의 API 엔드포인트 형식: /chat/history/{newHistoryId}
+  const handleSelectHistory = async (newHistoryId) => {
+    console.log("History item clicked, newHistoryId:", newHistoryId);
+    // 임시로 서버 요청 코드를 주석 처리하고 바로 페이지 이동하도록 합니다.
+    // 추후 서버 연동 시 아래 fetch 코드를 활성화하고, 서버에서 historyCount, 채팅 데이터를 받아오도록 수정하세요.
+    /*
+    try {
+      const response = await fetch(`http://localhost:8000/chat/history/${newHistoryId}`, {
+        method: "GET",
+        credentials: "include",
+      });
+      if (!response.ok) throw new Error("채팅 이력 요청 실패");
+      const data = await response.json();
+      setQuestions(data.questions || []);
+      setMessages(data.messages || []);
+      setSelectedQuestionIndex(0);
+      if (data.historyCount) {
+        setHistoryCount(data.historyCount);
+      } else {
+        setHistoryCount(parseInt(newHistoryId));
+      }
+      navigate(`/chat/${newHistoryId}/1`, { state: { questions: data.questions } });
+    } catch (error) {
+      console.error("채팅 이력 불러오기 실패:", error);
+    }
+    */
+    // 임시: 바로 페이지 이동
+    navigate(`/chat/${newHistoryId}/1`);
+  };
+
   return (
     <div className="chat-container">
       <ChatSidebar
         questions={questions}
         selectedQuestionIndex={selectedQuestionIndex}
         handleSelectQuestion={handleSelectQuestion}
+        handleSelectHistory={handleSelectHistory}
         showQuestions={showQuestions}
         setShowQuestions={setShowQuestions}
         showHistory={showHistory}
