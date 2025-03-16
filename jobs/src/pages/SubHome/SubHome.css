@@ -237,6 +237,41 @@
     margin-left: 40px;
 }
 
+.recommendation-header {
+    display: flex;
+    justify-content: flex-start;  /* 왼쪽부터 시작 */
+    align-items: center;  /* 세로 중앙 정렬 */
+    padding: 20px;
+    gap: 20px;  /* 제목과 버튼 사이 간격 */
+}
+
+.recommendation-header h2 {
+    margin: 0;  /* 기본 마진 제거 */
+    flex-shrink: 0;  /* 제목 줄바꿈 방지 */
+}
+
+.recommend-button {
+    background-color: #000;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    white-space: nowrap;  /* 버튼 텍스트 줄바꿈 방지 */
+}
+
+.recommend-button:hover {
+    background-color: #333;
+    transform: translateY(-2px);
+}
+
+.recommend-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
 .video-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3개씩 한 줄 */
