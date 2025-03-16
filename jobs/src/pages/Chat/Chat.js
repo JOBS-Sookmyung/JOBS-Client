@@ -1,119 +1,107 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ChatHeader from "../../component/ChatHeader";
 import "./Chat.css";
 
 const Chat = () => {
   const navigate = useNavigate();
-  const { questionId } = useParams(); // ✅ URL에서 questionId 가져오기
-
-  // ✅ 실제 API 응답을 받아올 경우 (현재는 주석 처리)
-  // const questions = location.state?.questions || [];
-
-  // ✅ 임시 데이터로 설정 (테스트용)
-  const questions = ["질문1", "질문2", "질문3", "질문4", "질문5"];
-
-  // 선택한 질문의 인덱스 가져오기
+  const { questionId } = useParams();
   const selectedIndex = questionId ? parseInt(questionId) - 1 : null;
 
-  // ✅ 상태 설정
-  const [selectedQuestionIndex, setSelectedQuestionIndex] =
-    useState(selectedIndex);
+  // ✅ FastAPI에서 대표질문 가져오기
+  const [questions, setQuestions] = useState([]);
+  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(selectedIndex);
   const [showQuestions, setShowQuestions] = useState(true);
   const [showHistory, setShowHistory] = useState(true);
-  const [messages, setMessages] = useState([]); // 첫 화면에서는 빈 배열 유지
+  const [messages, setMessages] = useState([]);
   const [userInput, setUserInput] = useState("");
   const [hints, setHints] = useState({});
-  const [loadingHints, setLoadingHints] = useState({}); // 힌트 로딩 상태
+  const [loadingHints, setLoadingHints] = useState({});
+  const [loading, setLoading] = useState(false);
   const textAreaRef = useRef(null);
 
-  // 질문 선택 처리 (기본 질문 5가지)
-  const handleSelectQuestion = async (index) => {
-    setSelectedQuestionIndex(index);
-    navigate(`/chat/1/${index + 1}`, { state: { questions } });
-
-    // 질문만 먼저 추가 (AI 응답 없이)
-    setMessages([{ type: "question", text: questions[index] }]);
-
-    try {
-      const response = await fetch("http://localhost:8080/generate-response", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: questions[index] }),
-      });
-
-      if (!response.ok) throw new Error("서버 응답 오류");
-
-      const data = await response.json();
-
-      // AI 응답을 따로 추가
-      setMessages((prevMessages) => [
-        ...prevMessages, // 기존 메시지 유지 (질문만 있는 상태)
-        { type: "ai-response", text: data.answer }, // AI 응답 추가
-      ]);
-    } catch (error) {
-      console.error("AI 응답 오류:", error);
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { type: "ai-response", text: "AI 응답을 가져오는 데 실패했습니다." },
-      ]);
-    }
-  };
-
-  // 꼬리질문 전송
-  const handleSendMessage = async () => {
-    if (userInput.trim() === "") return;
-
-    const userMessage = { type: "user", text: userInput };
-    const aiLoadingMessage = {
-      type: "ai-response",
-      text: "AI가 답변을 생성 중입니다...",
-    };
-
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      userMessage,
-      aiLoadingMessage,
-    ]);
-    setUserInput("");
-
-    // 2초 후 AI 응답 추가
-    setTimeout(async () => {
+  useEffect(() => {
+    const fetchQuestions = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:8080/generate-response",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ question: userInput }),
-          }
-        );
+        console.log("📡 대표질문 요청 중...");
+        const response = await fetch("http://localhost:8000/chat", {
+          method: "GET",
+          credentials: "include",
+        });
 
         if (!response.ok) throw new Error("서버 응답 오류");
 
         const data = await response.json();
-        setMessages((prevMessages) => [
-          ...prevMessages.slice(0, -1), // 마지막 "AI가 답변을 생성 중입니다..." 제거
-          { type: "ai-response", text: data.answer },
-        ]);
+        console.log("✅ 대표질문 수신:", data.question);
+        setQuestions([data.question]);
+
+        // ✅ 대표질문이 설정되면 자동으로 첫 질문 추가
+        setMessages([{ type: "question", text: data.question }]);
+        setSelectedQuestionIndex(0);
       } catch (error) {
-        console.error("AI 응답 오류:", error);
-        setMessages((prevMessages) => [
-          ...prevMessages.slice(0, -1),
-          { type: "ai-response", text: "AI 응답을 가져오는 데 실패했습니다." },
-        ]);
+        console.error("🚨 대표질문 가져오기 실패:", error);
+        // ✅ 서버 연결 실패 시 테스트 데이터 사용
+        const testQuestion = "React의 가상 DOM(Virtual DOM)에 대해 설명해주세요.";
+        console.log("✅ 테스트 데이터 사용:", testQuestion);
+        setQuestions([testQuestion]);
+        setMessages([{ type: "question", text: testQuestion }]);
+        setSelectedQuestionIndex(0);
       }
-    }, 2000);
+    };
+
+    setTimeout(fetchQuestions, 500);
+  }, []);
+
+  // ✅ 대표질문 선택 및 채팅 시작
+  const handleSelectQuestion = async (index) => {
+    if (questions.length === 0) return;
+
+    setSelectedQuestionIndex(index);
+    navigate(`/chat/1/${index + 1}`, { state: { questions } });
+    setMessages([{ type: "question", text: questions[index] }]);
+  };
+
+  // ✅ 사용자 질문 전송
+  const handleSendMessage = async () => {
+    if (userInput.trim() === "") return;
+    setLoading(true);
+
+    const userMessage = { type: "user", text: userInput };
+    const aiLoadingMessage = { type: "ai-response", text: "AI가 답변을 생성 중입니다..." };
+
+    setMessages((prevMessages) => [...prevMessages, userMessage, aiLoadingMessage]);
+
+    try {
+      console.log("📡 사용자 질문 전송:", userInput);
+      const response = await fetch("http://localhost:8000/chat/q", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        credentials: "include",
+        body: new URLSearchParams({ answer: userInput }),
+      });
+
+      if (!response.ok) throw new Error("서버 응답 오류");
+
+      const data = await response.json();
+      console.log("✅ AI 응답 수신:", data.answer);
+      setMessages((prevMessages) => [...prevMessages.slice(0, -1), { type: "ai-response", text: data.answer }]);
+    } catch (error) {
+      console.error("🚨 AI 응답 오류:", error);
+      setMessages((prevMessages) => [...prevMessages.slice(0, -1), { type: "error", text: "❌ AI 응답을 가져오는 데 실패했습니다." }]);
+    } finally {
+      setUserInput("");
+      setLoading(false);
+    }
   };
 
   // ✅ 힌트 요청 (AI에 질문 전달 후 가이드 받기)
   const handleHint = async (index) => {
-    if (hints[index]) return; // 이미 힌트가 있다면 중복 요청 방지
+    if (hints[index]) return;
 
-    setLoadingHints((prev) => ({ ...prev, [index]: true })); // 로딩 상태 업데이트
+    setLoadingHints((prev) => ({ ...prev, [index]: true }));
 
     try {
-      const response = await fetch("http://localhost:8080/generate-hint", {
+      const response = await fetch("http://localhost:8000/generate-hint", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: questions[index] }),
@@ -122,15 +110,15 @@ const Chat = () => {
       if (!response.ok) throw new Error("서버 응답 오류");
 
       const data = await response.json();
-      setHints((prev) => ({ ...prev, [index]: data.hint })); // AI가 반환한 힌트 저장
+      setHints((prev) => ({ ...prev, [index]: data.hint }));
     } catch (error) {
       console.error("힌트 요청 실패:", error);
       setHints((prev) => ({
         ...prev,
         [index]: "힌트를 가져오는 데 실패했습니다.",
-      })); // 에러 처리
+      }));
     } finally {
-      setLoadingHints((prev) => ({ ...prev, [index]: false })); // 로딩 종료
+      setLoadingHints((prev) => ({ ...prev, [index]: false }));
     }
   };
 
@@ -279,10 +267,8 @@ const Chat = () => {
 
   return (
     <div className="chat-container">
-      {/* 왼쪽 사이드바 */}
       <div className="sidebar">
         <ChatHeader />
-        {/* 예상 질문 영역 */}
         <div className="section">
           <div
             className="section-header"
@@ -332,7 +318,6 @@ const Chat = () => {
         </div>
       </div>
 
-      {/* 오른쪽 채팅 영역 */}
       <div className="chat-section">
         {/* 상단 내보내기 버튼 */}
         <div className="chat-header">
@@ -443,7 +428,12 @@ const Chat = () => {
                 onKeyDown={handleKeyDown} // ✅ Enter와 Shift+Enter 동작 추가
               />
 
-              <button className="send-button" onClick={handleSendMessage}>
+              <button 
+                className="send-button" 
+                onClick={handleSendMessage} 
+                disabled={loading}
+                style={{ opacity: loading ? 0.5 : 1 }}
+              >
                 <div data-svg-wrapper>
                   <svg
                     width="32"
@@ -466,6 +456,18 @@ const Chat = () => {
           </>
         )}
       </div>
+      <style>
+        {`
+          .message.error {
+            color: #ef4444;
+            background-color: #fee2e2;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 8px 0;
+            font-weight: 500;
+          }
+        `}
+      </style>
     </div>
   );
 };

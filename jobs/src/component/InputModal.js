@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const InputModal = ({ closeModal }) => {
+  const navigate = useNavigate();
   const [resume, setResume] = useState(null); // 이력서 파일 저장
   const [jobPostUrl, setJobPostUrl] = useState(""); // 공고 URL 저장
 
@@ -38,8 +40,8 @@ const InputModal = ({ closeModal }) => {
 
       console.log("백엔드 응답:", response.data);
       alert("파일 업로드 성공!");
-
-      closeModal(); 
+      closeModal();
+      navigate('/chat'); // Chat 페이지로 이동
     } catch (error) {
       console.error("파일 업로드 오류:", error);
       alert("파일 업로드 중 오류가 발생했습니다.");
