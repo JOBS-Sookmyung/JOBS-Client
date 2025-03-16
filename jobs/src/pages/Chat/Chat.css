@@ -2,15 +2,15 @@
 .chat-container {
   display: flex;
   height: 100vh;
-  background-color: #f9fafb;
+  background-color: white;
 }
 
 /* 왼쪽 사이드바 (질문 리스트 영역) */
 .sidebar {
-  width: 25%;
+  width: 22%;
   border-right: 1px solid #e5e7eb;
   padding: 0;
-  background-color: white;
+  background-color: #F9F9F9;
   display: flex;
   flex-direction: column;
 }
@@ -18,7 +18,7 @@
 /* 예상 질문 및 기록 섹션 */
 .section {
   margin-bottom: 12px;
-  padding: 10px 16px;
+  padding: 8px 16px;
 }
 
 /* 섹션 헤더 */
@@ -31,9 +31,10 @@
 }
 
 .section-title {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
   color: #1f2937;
+  margin: 10px;
 }
 
 /* 질문 리스트 */
@@ -60,6 +61,31 @@
 
 /* 선택된 질문 스타일 */
 .question-item.selected {
+  background-color: #dbe3e5;
+}
+
+/* history-list 스타일 (질문 리스트와 동일하게) */
+.history-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* history-item 스타일: question-item과 동일하게 */
+.history-item {
+  padding: 10px;
+  font-size: 16px;
+  color: #374151;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  border-radius: 4px;
+}
+
+.history-item:hover {
+  background-color: #eef2ff;
+}
+
+.history-item.selected {
   background-color: #dbe3e5;
 }
 
@@ -118,7 +144,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 20px;
+  padding: 28px;
   padding-right: 30px;
   max-width: 1100px; /* ✅ 채팅 너비 고정 */
   word-wrap: break-word;
@@ -207,38 +233,41 @@
   margin-top: 5px;
 }
 
-/* 입력창 */
+/* 입력창 컨테이너 */
 .chat-input {
   display: flex;
-  padding: 8px 12px;
+  padding: 8px 8px;
   align-items: center;
   gap: 12px;
-  border-radius: 999px;
+  border-radius: 24px;
   border: 1px solid var(--30, #b5c6c1);
   background: var(--gray-0-white, #fff);
   box-shadow: 0px 4px 8px -2px rgba(23, 23, 23, 0.10),
     0px 2px 4px -2px rgba(23, 23, 23, 0.06);
-  max-width: 1070px;
-  width: 100%;
-  min-height: 24px; /* ✅ 기본 높이 */
-  margin: 20px auto; /* ✅ 채팅 영역과 간격 추가 */
-  }
 
-/* 입력 필드 */
+  /* max-width: 1120px; */
+  width: 95%;
+  margin: 0 20px 20px 20px;
+  min-height: 24px;
+}
+
+/* 실제 텍스트 입력 필드 */
 .input-field {
   flex: 1;
-  padding: 8px 12px;
+  padding: 12px 12px 12px 24px;
   border: none;
   outline: none;
   background: transparent;
-  font-size: 14px;
+  font-size: 16px;
   resize: none;
+
   min-height: 24px;
   max-height: 100px;
   overflow-y: auto;
-  line-height: 1.5;
+
+  line-height: 1.4;
   transition: height 0.1s ease-in-out;
-  white-space: pre-wrap; /* ✅ 입력 줄바꿈 유지 */
+  white-space: pre-wrap;
 }
 
 /* 전송 버튼 */
@@ -255,4 +284,14 @@
 
 .send-button:hover {
   background-color: #747575;
+}
+
+/* 에러 메시지 */
+.message.error {
+  color: #ef4444;
+  background-color: #fee2e2;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 8px 0;
+  font-weight: 500;
 }
