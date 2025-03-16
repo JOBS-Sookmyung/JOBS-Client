@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../component/Header";
 import VideoInputModal from "../../component/videoinputModal";
+import InputModal from "../../component/InputModal";
 import "./SubHome.css";
 import analyseImg from "../../assets/analyse.png";
 import feedbackImg from "../../assets/feedback.png";
@@ -201,7 +202,14 @@ const SubHome = () => {
         </div>
       </section>
 
-      {/* InputModal을 VideoInputModal로 변경 */}
+      {/* InputModal 추가 */}
+      {isModalOpen && (
+        <InputModal
+          closeModal={closeModal}
+        />
+      )}
+
+      {/* VideoInputModal */}
       {isRecommendModalOpen && (
         <VideoInputModal
           closeModal={closeRecommendModal}
