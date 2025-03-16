@@ -1,6 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ChatHeader from "../../component/ChatHeader";
+import ChatBody from "./ChatBody";
+import ChatInput from "./ChatInput";
+import { handleExportPDF } from "./pdfExport";
 import "./Chat.css";
 
 const Chat = () => {
@@ -10,7 +13,8 @@ const Chat = () => {
 
   // ✅ FastAPI에서 대표질문 가져오기
   const [questions, setQuestions] = useState([]);
-  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(selectedIndex);
+  const [selectedQuestionIndex, setSelectedQuestionIndex] =
+    useState(selectedIndex);
   const [showQuestions, setShowQuestions] = useState(true);
   const [showHistory, setShowHistory] = useState(true);
   const [messages, setMessages] = useState([]);
@@ -41,7 +45,8 @@ const Chat = () => {
       } catch (error) {
         console.error("🚨 대표질문 가져오기 실패:", error);
         // ✅ 서버 연결 실패 시 테스트 데이터 사용
-        const testQuestion = "React의 가상 DOM(Virtual DOM)에 대해 설명해주세요.";
+        const testQuestion =
+          "React의 가상 DOM(Virtual DOM)에 대해 설명해주세요.";
         console.log("✅ 테스트 데이터 사용:", testQuestion);
         setQuestions([testQuestion]);
         setMessages([{ type: "question", text: testQuestion }]);
@@ -55,7 +60,6 @@ const Chat = () => {
   // ✅ 대표질문 선택 및 채팅 시작
   const handleSelectQuestion = async (index) => {
     if (questions.length === 0) return;
-
     setSelectedQuestionIndex(index);
     navigate(`/chat/1/${index + 1}`, { state: { questions } });
     setMessages([{ type: "question", text: questions[index] }]);
@@ -67,9 +71,16 @@ const Chat = () => {
     setLoading(true);
 
     const userMessage = { type: "user", text: userInput };
-    const aiLoadingMessage = { type: "ai-response", text: "AI가 답변을 생성 중입니다..." };
+    const aiLoadingMessage = {
+      type: "ai-response",
+      text: "AI가 답변을 생성 중입니다...",
+    };
 
-    setMessages((prevMessages) => [...prevMessages, userMessage, aiLoadingMessage]);
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      userMessage,
+      aiLoadingMessage,
+    ]);
 
     try {
       console.log("📡 사용자 질문 전송:", userInput);
@@ -84,10 +95,16 @@ const Chat = () => {
 
       const data = await response.json();
       console.log("✅ AI 응답 수신:", data.answer);
-      setMessages((prevMessages) => [...prevMessages.slice(0, -1), { type: "ai-response", text: data.answer }]);
+      setMessages((prevMessages) => [
+        ...prevMessages.slice(0, -1),
+        { type: "ai-response", text: data.answer },
+      ]);
     } catch (error) {
       console.error("🚨 AI 응답 오류:", error);
-      setMessages((prevMessages) => [...prevMessages.slice(0, -1), { type: "error", text: "❌ AI 응답을 가져오는 데 실패했습니다." }]);
+      setMessages((prevMessages) => [
+        ...prevMessages.slice(0, -1),
+        { type: "error", text: "❌ AI 응답을 가져오는 데 실패했습니다." },
+      ]);
     } finally {
       setUserInput("");
       setLoading(false);
@@ -122,149 +139,6 @@ const Chat = () => {
     }
   };
 
-  // PDF 내보내기 함수
-  const handleExportPDF = () => {
-    const content = document.querySelector(".chat-body");
-    const chatTitle = document.querySelector(".chat-title")?.innerText.trim();
-
-    if (!content) {
-      alert("내보낼 콘텐츠를 찾을 수 없습니다."); // 요소가 없으면 경고창 표시
-      return;
-    }
-
-    // 대표질문을 chat-title에서 가져오기
-    const filteredContent = Array.from(content.children)
-      .filter(
-        (message) =>
-          !message.classList.contains("hint-text") && // 힌트 제거
-          !message.classList.contains("hint-button") // 힌트 버튼 제거
-      )
-      .map((message, index, arr) => {
-        const text = message.innerText.trim();
-        let result = "";
-
-        // 대표질문
-        if (message.classList.contains("question")) {
-          return ""; // 기존 question은 출력 안 함
-        }
-
-        // 사용자 답변 (B2 크기) + 구분선 추가
-        if (message.classList.contains("user")) {
-          result += `<p class="user">${text}</p>`;
-          result += `<div class="divider"></div>`; // 구분선 추가
-        }
-
-        // 꼬리질문 (H5 크기)
-        if (
-          message.classList.contains("ai-response") &&
-          text.startsWith("꼬리질문:")
-        ) {
-          result += `<h5 class="follow-up-question">${text.replace(
-            "꼬리질문:",
-            ""
-          )}</h5>`;
-        }
-
-        // 일반 AI 응답 (기본 스타일)
-        if (message.classList.contains("ai-response")) {
-          result += `<p class="ai-response">${text}</p>`;
-        }
-
-        return result;
-      })
-      .join("");
-
-    const printWindow = window.open("", "", "width=800,height=600");
-    printWindow.document.write(`
-      <html>
-        <head>
-          <title>면접 기록</title>
-          <style>
-            @import url('https://cdn.jsdelivr.net/npm/pretendard/dist/web/static/pretendard.css');
-            
-            body { 
-              padding: 20px; 
-              font-family: 'Pretendard', sans-serif;
-              text-align: left; /* ✅ 전체 텍스트 왼쪽 정렬 */
-            }
-            h2 { text-align: center; }
-            .message { 
-              margin-bottom: 15px; 
-              padding: 10px; 
-              border-radius: 5px; 
-            }
-            .question { 
-              font-size: 18px; /* ✅ H4 크기 */
-              font-weight: bold;
-              color: #1E293B;
-            }
-            .follow-up-question { 
-              font-size: 16px; /* ✅ H5 크기 */
-              font-weight: bold;
-              color: #374151;
-            }
-            .user { 
-              font-size: 14px; /* ✅ B2 크기 */
-              font-weight: 500;
-              color: #084032;
-              margin-bottom: 20px; /* ✅ 구분선과 간격 */
-            }
-            .ai-response { 
-              background: #d1fae5; 
-              padding: 10px; 
-              color: var(--Gray-80, #1E293B); 
-              font-family: "Pretendard", sans-serif;
-              font-size: 14px; 
-              font-style: normal;
-            }
-            /* ✅ 사용자 답변 후 구분선 추가 */
-            .divider {
-              width: 80%;
-              height: 1px;
-              background-color: #E5E7EB; /* 연한 회색 */
-              margin: 20px 0; /* ✅ 위아래 간격 20px */
-            }
-          </style>
-        </head>
-        <body>
-          <h2>면접 기록</h2>
-          <h4 class="question">${chatTitle}</h4>
-          ${filteredContent}
-        </body>
-      </html>
-    `);
-
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-    printWindow.close();
-  };
-
-  // 입력창 자동 높이 조절 함수
-  const handleInputChange = (e) => {
-    setUserInput(e.target.value);
-
-    if (textAreaRef.current) {
-      textAreaRef.current.style.height = "24px"; // ✅ 최소 높이 초기화
-      if (e.target.value.trim() === "") {
-        textAreaRef.current.style.height = "24px"; // ✅ 입력이 없으면 최소 높이 유지
-      } else {
-        textAreaRef.current.style.height = "auto";
-        textAreaRef.current.style.height = `${Math.max(
-          24,
-          Math.min(textAreaRef.current.scrollHeight, 100)
-        )}px`;
-      }
-    }
-  };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault(); // ✅ 기본 Enter 동작(줄바꿈) 방지
-      handleSendMessage(); // ✅ 메시지 전송
-    }
-  };
-
   return (
     <div className="chat-container">
       <div className="sidebar">
@@ -283,7 +157,9 @@ const Chat = () => {
               {questions.map((q, index) => (
                 <li
                   key={index}
-                  className={`question-item ${selectedQuestionIndex === index ? "selected" : ""}`}
+                  className={`question-item ${
+                    selectedQuestionIndex === index ? "selected" : ""
+                  }`}
                   onClick={() => handleSelectQuestion(index)}
                 >
                   {q}
@@ -319,7 +195,6 @@ const Chat = () => {
       </div>
 
       <div className="chat-section">
-        {/* 상단 내보내기 버튼 */}
         <div className="chat-header">
           <h5 className="chat-title">
             {selectedQuestionIndex !== null
@@ -346,128 +221,30 @@ const Chat = () => {
           </button>
         </div>
 
-        {/* 질문이 선택되지 않은 경우 */}
         {selectedQuestionIndex === null && (
           <div className="chat-placeholder">
             <h3>예상 질문을 통해 면접 준비를 시작해보세요!</h3>
           </div>
         )}
 
-        {/* 질문이 선택된 경우 채팅 진행 */}
         {selectedQuestionIndex !== null && (
           <>
-            <div className="chat-body">
-              {messages.map((message, index) => (
-                <div key={index} className={`message ${message.type}`}>
-                  {message.type === "question" && (
-                    <button
-                      className="hint-button"
-                      onClick={() => handleHint(index)}
-                      disabled={loadingHints[index]}
-                      style={{
-                        background: "transparent",
-                        border: "none",
-                        padding: 0,
-                        display: "inline-flex",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div
-                        style={{
-                          width: 39,
-                          height: 16,
-                          justifyContent: "flex-start",
-                          alignItems: "center",
-                          gap: 4,
-                          display: "inline-flex",
-                        }}
-                      >
-                        <div
-                          style={{
-                            color: "#475569",
-                            fontSize: 12,
-                            fontFamily: "Plus Jakarta Sans",
-                            fontWeight: "500",
-                            lineHeight: 16,
-                            wordWrap: "break-word",
-                          }}
-                        >
-                          힌트
-                        </div>
-                        <div data-svg-wrapper style={{ position: "relative" }}>
-                          <svg
-                            width="12"
-                            height="12"
-                            viewBox="0 0 12 12"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M7.14439 4.15141L2.94439 8.27641C2.8392 8.37976 2.69763 8.43767 2.55017 8.43767C2.40271 8.43767 2.26114 8.37976 2.15595 8.27641L0.355952 6.50876C0.303228 6.45699 0.261217 6.39534 0.232318 6.32733C0.20342 6.25933 0.188198 6.1863 0.187523 6.11241C0.186161 5.96319 0.244133 5.81953 0.348686 5.71305C0.400456 5.66033 0.462103 5.61832 0.530108 5.58942C0.598114 5.56052 0.671145 5.5453 0.745033 5.54462C0.894256 5.54326 1.03791 5.60123 1.14439 5.70579L2.55064 7.08672L6.35642 3.34891C6.46284 3.24436 6.60643 3.18636 6.75561 3.18768C6.90479 3.189 7.04734 3.24952 7.15189 3.35594C7.25644 3.46236 7.31444 3.60595 7.31312 3.75513C7.3118 3.90431 7.25128 4.04686 7.14486 4.15141H7.14439ZM11.6514 3.35454C11.5996 3.30163 11.5379 3.25947 11.4698 3.23048C11.4017 3.20148 11.3285 3.18622 11.2544 3.18557C11.1804 3.18492 11.107 3.19888 11.0384 3.22667C10.9697 3.25446 10.9073 3.29552 10.8545 3.34751L7.05017 7.08672L6.6808 6.72391C6.57438 6.61936 6.43078 6.56136 6.2816 6.56268C6.13243 6.564 5.98988 6.62453 5.88533 6.73094C5.78077 6.83736 5.72278 6.98095 5.7241 7.13013C5.72541 7.27931 5.78594 7.42186 5.89236 7.52641L6.65595 8.27641C6.76114 8.37976 6.90271 8.43767 7.05017 8.43767C7.19763 8.43767 7.3392 8.37976 7.44439 8.27641L11.6444 4.15141C11.6971 4.09964 11.7391 4.038 11.7679 3.97001C11.7968 3.90201 11.812 3.829 11.8127 3.75513C11.8133 3.68127 11.7994 3.608 11.7717 3.5395C11.7441 3.47101 11.7032 3.40864 11.6514 3.35594V3.35454Z"
-                              fill="#475569"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                    </button>
-                  )}
-                  <p>{message.text}</p>
-                  {hints[index] && <p className="hint-text">{hints[index]}</p>}
-                </div>
-              ))}
-            </div>
+            <ChatBody
+              messages={messages}
+              hints={hints}
+              loadingHints={loadingHints}
+              handleHint={handleHint}
+            />
 
-            {/* 입력창 */}
-            <div className="chat-input">
-              <textarea
-                ref={textAreaRef}
-                className="input-field"
-                placeholder="🧠   당황하지 말고, 침착하게 답해주세요."
-                value={userInput}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown} // ✅ Enter와 Shift+Enter 동작 추가
-              />
-
-              <button 
-                className="send-button" 
-                onClick={handleSendMessage} 
-                disabled={loading}
-                style={{ opacity: loading ? 0.5 : 1 }}
-              >
-                <div data-svg-wrapper>
-                  <svg
-                    width="32"
-                    height="32"
-                    viewBox="0 0 40 40"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect width="40" height="40" rx="20" fill="#084032" />
-                    <path
-                      d="M25.9853 19.2626L25.9853 19.2626L21.1581 14.4354L21.0781 14.3554V14.4685V28.2498C21.0781 28.5357 20.9645 28.81 20.7623 29.0121C20.5601 29.2143 20.2859 29.3279 20 29.3279C19.714 29.3279 19.4398 29.2143 19.2376 29.0121C19.0354 28.81 18.9218 28.5357 18.9218 28.2498V14.4685V14.3554L18.8418 14.4354L14.0128 19.2626L14.0128 19.2626C13.8102 19.4651 13.5355 19.5789 13.249 19.5789C12.9626 19.5789 12.6878 19.4651 12.4853 19.2626C12.2827 19.06 12.1689 18.7853 12.1689 18.4989C12.1689 18.2124 12.2827 17.9377 12.4853 17.7351L19.2353 10.9851L19.2353 10.9851C19.3355 10.8846 19.4545 10.8048 19.5856 10.7504C19.7166 10.696 19.8571 10.668 19.999 10.668C20.1409 10.668 20.2814 10.696 20.4125 10.7504C20.5435 10.8048 20.6625 10.8846 20.7627 10.9851L20.7628 10.9851L27.5128 17.7351L27.5128 17.7352C27.6133 17.8353 27.6931 17.9544 27.7475 18.0854C27.8019 18.2165 27.8299 18.357 27.8299 18.4989C27.8299 18.6408 27.8019 18.7813 27.7475 18.9123C27.6931 19.0433 27.6133 19.1624 27.5128 19.2625L27.5127 19.2626C27.4125 19.3632 27.2935 19.4429 27.1625 19.4973C27.0314 19.5517 26.8909 19.5797 26.749 19.5797C26.6071 19.5797 26.4666 19.5517 26.3356 19.4973C26.2045 19.4429 26.0855 19.3632 25.9853 19.2626Z"
-                      fill="white"
-                      stroke="white"
-                      stroke-width="0.09375"
-                    />
-                  </svg>
-                </div>
-              </button>
-            </div>
+            <ChatInput
+              userInput={userInput}
+              setUserInput={setUserInput}
+              loading={loading}
+              handleSendMessage={handleSendMessage}
+            />
           </>
         )}
       </div>
-      <style>
-        {`
-          .message.error {
-            color: #ef4444;
-            background-color: #fee2e2;
-            padding: 12px;
-            border-radius: 8px;
-            margin: 8px 0;
-            font-weight: 500;
-          }
-        `}
-      </style>
     </div>
   );
 };

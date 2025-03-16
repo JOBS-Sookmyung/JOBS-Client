@@ -210,9 +210,9 @@
 /* 입력창 */
 .chat-input {
   display: flex;
-  padding: 8px 12px;
+  padding: 8px 8px;
   align-items: center;
-  gap: 12px;
+  /* gap: 12px; */
   border-radius: 999px;
   border: 1px solid var(--30, #b5c6c1);
   background: var(--gray-0-white, #fff);
@@ -222,7 +222,7 @@
   width: 100%;
   min-height: 24px; /* ✅ 기본 높이 */
   margin: 20px auto; /* ✅ 채팅 영역과 간격 추가 */
-  }
+}
 
 /* 입력 필드 */
 .input-field {
@@ -255,4 +255,14 @@
 
 .send-button:hover {
   background-color: #747575;
+}
+
+/* 인라인 스타일로 작성되었던 에러 메시지 관련 CSS 분리 */
+.message.error {
+  color: #ef4444;
+  background-color: #fee2e2;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 8px 0;
+  font-weight: 500;
 }
