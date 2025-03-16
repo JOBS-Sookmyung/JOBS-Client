@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 
-const InputModal = ({ closeModal }) => {
+const InputModal = ({ closeModal, onRecommendationsReceived }) => {
   const [resume, setResume] = useState(null); // 이력서 파일 저장
   const [jobPostUrl, setJobPostUrl] = useState(""); // 공고 URL 저장
 
@@ -21,28 +21,46 @@ const InputModal = ({ closeModal }) => {
     }
 
     const formData = new FormData();
-    formData.append("file", resume); // PDF 파일 추가
-    formData.append("recruitUrl", jobPostUrl); // URL 추가
+    formData.append("file", resume);
+    formData.append("recruitUrl", jobPostUrl);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/input/uploadfile/", // fastapi 서버랑 연동하는 endpoint
-        formData,
+      // 1. 파일 업로드
+      const uploadResponse = await fetch('http://localhost:8000/input/uploadfile/', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include'
+      });
+
+      if (!uploadResponse.ok) {
+        const errorData = await uploadResponse.json();
+        throw new Error(errorData.detail || '파일 업로드 실패');
+      }
+
+      const uploadData = await uploadResponse.json();
+      
+      // 2. 추천 시스템 호출
+      const recommendResponse = await fetch(
+        `http://localhost:8000/recommend/${uploadData.token}`,
         {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true, 
+          credentials: 'include'
         }
       );
 
-      console.log("백엔드 응답:", response.data);
-      alert("파일 업로드 성공!");
+      if (!recommendResponse.ok) {
+        const errorData = await recommendResponse.json();
+        throw new Error(errorData.detail || '추천 시스템 요청 실패');
+      }
 
-      closeModal(); 
+      const recommendData = await recommendResponse.json();
+      
+      // 3. 모달 닫고 추천 결과 전달
+      closeModal();
+      onRecommendationsReceived(recommendData);
+
     } catch (error) {
-      console.error("파일 업로드 오류:", error);
-      alert("파일 업로드 중 오류가 발생했습니다.");
+      console.error('Error:', error);
+      alert(error.message || '처리 중 오류가 발생했습니다.');
     }
   };
 

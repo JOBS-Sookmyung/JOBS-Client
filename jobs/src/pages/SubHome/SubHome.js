@@ -17,6 +17,8 @@ const SubHome = () => {
   // 로그인한 사용자 정보를 담을 상태
   const [user, setUser] = useState(null);
 
+  const [recommendedVideos, setRecommendedVideos] = useState([]);
+
   // JSON 데이터 가져오기
   useEffect(() => {
     fetch("/data/youtube_data.json")
@@ -35,6 +37,10 @@ const SubHome = () => {
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const handleRecommendationsReceived = (data) => {
+    setRecommendedVideos(data);
+  };
 
   return (
     <div className="subhome-container">
@@ -75,7 +81,7 @@ const SubHome = () => {
           </p>
           <div className="button-group">
             <button className="start-button" onClick={openModal}>
-              모의면접 시작하기
+              자비스 시작하기
             </button>
             <button className="history-button" onClick={() => navigate("/chat")}>
               지난 기록
@@ -152,16 +158,16 @@ const SubHome = () => {
       <section className="recommendation-section">
         <h2>📺 {user ? user.name : "사용자"}님을 위한 추천 영상 ✨</h2>
         <div className="video-list">
-          {videos.slice(0, 6).map((video) => (
+          {recommendedVideos.map((video, index) => (
             <a
-              key={video.id}
-              href={video.url}
+              key={index}
+              href={`https://www.youtube.com/watch?v=${video.id}`}
               target="_blank"
               rel="noopener noreferrer"
               className="video-item"
             >
               <img
-                src={video.thumbnail}
+                src={`https://img.youtube.com/vi/${video.id}/maxresdefault.jpg`}
                 alt={video.title}
                 className="video-thumbnail"
               />
@@ -172,7 +178,12 @@ const SubHome = () => {
       </section>
 
       {/* 모달 컴포넌트 */}
-      {isModalOpen && <InputModal closeModal={closeModal} />}
+      {isModalOpen && (
+        <InputModal
+          closeModal={closeModal}
+          onRecommendationsReceived={handleRecommendationsReceived}
+        />
+      )}
     </div>
   );
 };
