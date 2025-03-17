@@ -21,6 +21,7 @@ const SubHome = () => {
   const [recommendedVideos, setRecommendedVideos] = useState([]);
   const [isRecommendModalOpen, setIsRecommendModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [resumeFeedback, setResumeFeedback] = useState("");
 
   // JSON 데이터 가져오기
   useEffect(() => {
@@ -47,6 +48,20 @@ const SubHome = () => {
   const handleRecommendationsReceived = (data) => {
     setIsLoading(false);
     setRecommendedVideos(data);
+    
+    // 이력서 피드백 설정 (예시 피드백 메시지들) -> 한줄 피드백 생성 함수 백엔드에서 짜야함
+    const feedbacks = [
+      "구체적인 수치와 성과를 언급하여 신뢰성을 주는 방향으로 더 자세히 기술하면 좋겠습니다.",
+      "직무와 연관된 경험을 구제적으로 예시를 들어 더 강조해보세요.",
+      "프로젝트 성과를 구체적으로 어떤 목표를 이루어냈는지에 대해 자세히 기술하면 좋겠습니다.",
+      "핵심 역량을 더 명확하게 표현해보세요.",
+      "모든 경험이 면접에 도움이 될 수 있으니 더  자세히 기술해보세요."
+    ];
+    
+    // 랜덤하게 피드백 선택
+    const randomFeedback = feedbacks[Math.floor(Math.random() * feedbacks.length)];
+    setResumeFeedback(randomFeedback);
+    
     console.log("✅ 추천 영상 업데이트:", data);
   };
 
@@ -98,14 +113,15 @@ const SubHome = () => {
         </section>
       </div>
 
-      {/* 이력서 피드백 안내 */}
-      <section className="feedback-section">
-        <p className="feedback-text">
-          <strong>{user ? user.name : "사용자"}님 이력서 합격 피드백 :</strong>
-          이력서의 경험과 역량을 더욱 명확하게 드러내기 위해 구체적인 수치와
-          직무 관련 키워드를 활용하면 좋겠습니다.
-        </p>
-      </section>
+      {/* 이력서 피드백 안내 수정 */}
+      {resumeFeedback ? (
+        <section className="feedback-section">
+          <p className="feedback-text">
+            <strong>{user ? user.name : "사용자"}님 이력서 합격 피드백 : </strong>
+            {resumeFeedback}
+          </p>
+        </section>
+      ) : null}
 
       {/* 자비스 과정 설명 */}
       <section className="process-section">
@@ -155,7 +171,7 @@ const SubHome = () => {
                   자비스와 함께 <br /> 진짜 면접을 준비해요.
                 </p>
                 <p className="process-description">
-                  자비스와 함께 <br /> 진짜같은 면접을 준비해요.
+                  당신을 위한 <br /> 실전같은 면접을 대비해요.
                 </p>
               </div>
               <img

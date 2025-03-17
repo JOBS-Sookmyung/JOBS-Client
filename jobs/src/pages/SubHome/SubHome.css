@@ -272,6 +272,15 @@
     cursor: not-allowed;
 }
 
+.no-videos-message {
+    font-size: 20px;
+    color: #666;
+    text-align: left;
+    margin-top: 10px;
+    width: 100%;
+    white-space: nowrap;
+}
+
 .video-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3개씩 한 줄 */
@@ -295,7 +304,7 @@
 }
 
 .video-title {
-    font-size: 28px;
+    font-size: 25px;
     text-align: left;
     font-weight: bold;
     margin-left: 40px;
