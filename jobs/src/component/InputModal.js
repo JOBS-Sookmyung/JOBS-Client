@@ -3,7 +3,7 @@ import axios from "axios";
 import { Modal, Box, Typography, Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const InputModal = ({ closeModal, onRecommendationsReceived }) => {
+const InputModal = ({ closeModal }) => {
   const [resume, setResume] = useState(null); // 이력서 파일 저장
   const [jobPostUrl, setJobPostUrl] = useState(""); // 공고 URL 저장
   const navigate = useNavigate();
@@ -23,47 +23,29 @@ const InputModal = ({ closeModal, onRecommendationsReceived }) => {
     }
 
     const formData = new FormData();
-    formData.append("file", resume);
-    formData.append("recruitUrl", jobPostUrl);
+    formData.append("file", resume); // PDF 파일 추가
+    formData.append("recruitUrl", jobPostUrl); // URL 추가
 
     try {
-      // 1. 파일 업로드
-      const uploadResponse = await fetch('http://localhost:8000/input/uploadfile/', {
-        method: 'POST',
-        body: formData,
-        credentials: 'include'
-      });
-
-      if (!uploadResponse.ok) {
-        const errorData = await uploadResponse.json();
-        throw new Error(errorData.detail || '파일 업로드 실패');
-      }
-
-      const uploadData = await uploadResponse.json();
-      
-      // 2. 추천 시스템 호출
-      const recommendResponse = await fetch(
-        `http://localhost:8000/recommend/${uploadData.token}`,
+      const response = await axios.post(
+        "http://localhost:8000/input/uploadfile/", // fastapi 서버랑 연동하는 endpoint
+        formData,
         {
-          credentials: 'include'
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          withCredentials: true, 
         }
       );
 
-      if (!recommendResponse.ok) {
-        const errorData = await recommendResponse.json();
-        throw new Error(errorData.detail || '추천 시스템 요청 실패');
-      }
-
-      const recommendData = await recommendResponse.json();
-      
-      console.log("백엔드 응답:", recommendData);
+      console.log("백엔드 응답:", response.data);
       alert("파일 업로드 성공!");
-      closeModal();
-      navigate('/chat');
 
+      closeModal(); 
+      navigate(`/chat?token=${response.data.token}`); // 세션 토큰을 URL 파라미터로 전달
     } catch (error) {
-      console.error('Error:', error);
-      alert(error.message || '처리 중 오류가 발생했습니다.');
+      console.error("파일 업로드 오류:", error);
+      alert("파일 업로드 중 오류가 발생했습니다.");
     }
   };
 

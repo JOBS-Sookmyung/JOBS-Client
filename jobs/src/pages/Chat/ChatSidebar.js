@@ -33,7 +33,8 @@ const ChatSidebar = ({
                 }`}
                 onClick={() => handleSelectQuestion(index)}
               >
-                {q}
+                <span className="question-number">{index + 1}.</span>
+                <span className="question-text">{q}</span>
               </li>
             ))}
           </ul>

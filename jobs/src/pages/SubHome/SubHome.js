@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../component/Header";
 import VideoInputModal from "../../component/videoinputModal";
 import InputModal from "../../component/InputModal";
+import RecommendationSection from "../../component/RecommendationSection";
 import "./SubHome.css";
 import analyseImg from "../../assets/analyse.png";
 import feedbackImg from "../../assets/feedback.png";
@@ -14,10 +15,7 @@ const SubHome = () => {
   const navigate = useNavigate();
   const [videos, setVideos] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // 로그인한 사용자 정보를 담을 상태
   const [user, setUser] = useState(null);
-
   const [recommendedVideos, setRecommendedVideos] = useState([]);
   const [isRecommendModalOpen, setIsRecommendModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +29,7 @@ const SubHome = () => {
       .catch((error) => console.error("Error fetching YouTube data:", error));
   }, []);
 
-  // 컴포넌트 마운트 시 localStorage에서 user 데이터 가져오기 -> 사용자별로 정보가 달라질 것임
+  // 컴포넌트 마운트 시 localStorage에서 user 데이터 가져오기
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -49,7 +47,7 @@ const SubHome = () => {
     setIsLoading(false);
     setRecommendedVideos(data);
     
-    // 이력서 피드백 설정 (예시 피드백 메시지들) 
+    // 이력서 피드백 설정
     const feedbacks = [
       "구체적인 수치와 성과를 언급하여 신뢰성을 주는 방향으로 더 자세히 기술하면 좋겠습니다.",
       "직무와 연관된 경험을 구제적으로 예시를 들어 더 강조해보세요.",
@@ -63,7 +61,7 @@ const SubHome = () => {
       "업무와 관련된 도전 과제와 해결 과정을 상세히 적어보세요.",
       "기술 스택을 좀 더 구체적으로 나열하면 경쟁력이 높아집니다.",
       "팀 프로젝트에서의 협업 경험을 강조하면 더욱 효과적입니다.",
-      "성과를 강조할 때 단순히 ‘기여했다’보다는 ‘어떤 방식으로’ 기여했는지 설명해보세요.",
+      "성과를 강조할 때 단순히 '기여했다'보다는 '어떤 방식으로' 기여했는지 설명해보세요.",
       "자신의 강점을 더욱 돋보이게 하도록 차별화된 경험을 추가해보세요.",
       "기술을 활용한 문제 해결 사례를 포함하면 더욱 강한 인상을 줄 수 있습니다.",
       "면접관이 궁금해할 만한 요소를 미리 고려하여 서술하면 좋습니다.",
@@ -76,7 +74,6 @@ const SubHome = () => {
       "학교에서 배운 내용도 포함하면 기술적 역량을 더욱 잘 보여줄 수 있습니다."
     ];
     
-    // 랜덤하게 피드백 선택
     const randomFeedback = feedbacks[Math.floor(Math.random() * feedbacks.length)];
     setResumeFeedback(randomFeedback);
     
@@ -93,7 +90,6 @@ const SubHome = () => {
           <div className="profile-card">
             <img src={profileAvatar} alt="프로필" className="profile-image" />
             <div className="profile-info">
-              {/* (수정됨) user 값이 존재하면 그 정보를 표시, 없으면 기본값 */}
               <p>
                 <strong>이름: </strong>
                 {user ? user.name : "로그인하세요"}
@@ -131,15 +127,15 @@ const SubHome = () => {
         </section>
       </div>
 
-      {/* 이력서 피드백 안내 수정 */}
-      {resumeFeedback ? (
+      {/* 이력서 피드백 안내 */}
+      {resumeFeedback && (
         <section className="feedback-section">
           <p className="feedback-text">
             <strong>{user ? user.name : "사용자"}님 이력서 합격 피드백 : </strong>
             {resumeFeedback}
           </p>
         </section>
-      ) : null}
+      )}
 
       {/* 자비스 과정 설명 */}
       <section className="process-section">
@@ -203,49 +199,19 @@ const SubHome = () => {
       </section>
 
       {/* 추천 영상 섹션 */}
-      <section className="recommendation-section">
-        <div className="recommendation-header">
-          <h2> {user ? user.name : "사용자"}님을 위한 추천 영상</h2>
-          <button 
-            className="recommend-button"
-            onClick={openRecommendModal}
-            disabled={isLoading}
-          >
-            {isLoading ? "추천 중..." : "맞춤 영상 추천받기"}
-          </button>
-        </div>
-        <div className="video-list">
-          {isLoading ? (
-            <div className="loading-message">영상을 추천하고 있습니다...</div>
-          ) : recommendedVideos.length > 0 ? (
-            recommendedVideos.map((video, index) => (
-              <a
-                key={index}
-                href={video.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="video-item"
-              >
-                <img
-                  src={video.thumbnail}
-                  alt={video.title}
-                  className="video-thumbnail"
-                />
-                <p className="video-title">{video.title}</p>
-              </a>
-            ))
-          ) : (
-            <div className="no-videos-message">
-              이력서를 업로드하여 맞춤 영상을 추천받아보세요!
-            </div>
-          )}
-        </div>
-      </section>
+      <RecommendationSection
+        user={user}
+        recommendedVideos={recommendedVideos}
+        isLoading={isLoading}
+        onRecommendModalOpen={openRecommendModal}
+        onRecommendationsReceived={handleRecommendationsReceived}
+      />
 
-      {/* InputModal 추가 */}
+      {/* InputModal */}
       {isModalOpen && (
         <InputModal
           closeModal={closeModal}
+          onRecommendationsReceived={handleRecommendationsReceived}
         />
       )}
 
