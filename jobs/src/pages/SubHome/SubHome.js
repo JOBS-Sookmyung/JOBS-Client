@@ -109,7 +109,7 @@ const SubHome = () => {
 
       {/* 자비스 과정 설명 */}
       <section className="process-section">
-        <h2>자비스 과정 설명</h2>
+        <h2>Jobis Guide</h2>
         <div className="process-steps">
           <div className="process-card process-card-1">
             <div className="process-card-content">
@@ -134,7 +134,10 @@ const SubHome = () => {
             <div className="process-card-content">
               <div className="process-text">
                 <span className="process-number">2.</span>
-                <p className="process-title">이력서 피드백</p>
+                <p className="process-title">자비스의 <br /> 맞춤 동영상 추천.</p>
+                <p className="process-description">
+                  당신에게 가장 필요한 <br /> 최적의 동영상을 추천해요.
+                </p>
               </div>
               <img
                 src={feedbackImg}
@@ -151,6 +154,9 @@ const SubHome = () => {
                 <p className="process-title">
                   자비스와 함께 <br /> 진짜 면접을 준비해요.
                 </p>
+                <p className="process-description">
+                  자비스와 함께 <br /> 진짜같은 면접을 준비해요.
+                </p>
               </div>
               <img
                 src={interviewImg}
@@ -165,7 +171,7 @@ const SubHome = () => {
       {/* 추천 영상 섹션 */}
       <section className="recommendation-section">
         <div className="recommendation-header">
-          <h2>📺 {user ? user.name : "사용자"}님을 위한 추천 영상 ✨</h2>
+          <h2> {user ? user.name : "사용자"}님을 위한 추천 영상</h2>
           <button 
             className="recommend-button"
             onClick={openRecommendModal}
