@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import ChatSidebar from "./ChatSidebar";
 import ChatBody from "./ChatBody";
@@ -38,6 +38,9 @@ const Chat = () => {
                 const response = await fetch(`http://localhost:8000/chat?session_token=${sessionToken}`, {
                     method: "GET",
                     credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
                 });
 
                 if (!response.ok) throw new Error("서버 응답 오류");
@@ -141,6 +144,39 @@ const Chat = () => {
         }
     };
 
+    const handleEndSession = useCallback(async () => {
+        if (!sessionToken) return;
+
+        try {
+            const response = await fetch(`http://localhost:8000/chat/end/${sessionToken}`, {
+                method: "POST",
+                credentials: "include",
+            });
+
+            if (!response.ok) throw new Error("서버 응답 오류");
+
+            const data = await response.json();
+            
+            // 브라우저 콘솔에 세션 정보 출력
+            console.log("📊 세션 정보:");
+            console.log("   - 토큰:", data.session_info.token);
+            console.log("   - 시작 시간:", data.session_info.start_time);
+            console.log("   - 종료 시간:", data.session_info.end_time);
+            
+            // 세션 종료 후 처리 (예: 홈으로 이동)
+            navigate("/");
+        } catch (error) {
+            console.error("세션 종료 중 오류 발생:", error);
+        }
+    }, [sessionToken, navigate]);
+
+    // 컴포넌트 언마운트 시 세션 종료
+    useEffect(() => {
+        return () => {
+            handleEndSession();
+        };
+    }, [sessionToken, handleEndSession]);
+
     return (
         <div className="chat-container">
             <ChatSidebar
@@ -159,7 +195,10 @@ const Chat = () => {
                     <h5 className="chat-title">
                         {selectedQuestionIndex !== null ? questions[selectedQuestionIndex] : "예상 질문을 선택해주세요!"}
                     </h5>
-                    <button className="export-button" onClick={handleExportPDF}>내보내기</button>
+                    <div className="header-buttons">
+                        <button className="export-button" onClick={handleExportPDF}>내보내기</button>
+                        <button className="end-session-button" onClick={handleEndSession}>세션 종료</button>
+                    </div>
                 </div>
 
                 {selectedQuestionIndex === null ? (
