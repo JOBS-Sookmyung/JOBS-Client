@@ -26,49 +26,55 @@ const Chat = () => {
     const [loadingHints, setLoadingHints] = useState({});
     const [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-        const fetchQuestions = async () => {
-            if (!sessionToken) {
-                console.error("🚨 세션 토큰이 없습니다.");
-                return;
+    // fetchMainQuestions를 useCallback으로 감싸서 메모이제이션
+    const fetchMainQuestions = useCallback(async () => {
+        try {
+            setLoading(true);
+            const response = await fetch(`http://localhost:8000/chat?session_token=${sessionToken}`);
+            
+            if (!response.ok) {
+                throw new Error('대표질문을 가져오는데 실패했습니다.');
             }
 
-            try {
-                console.log("📡 대표질문 요청 중...");
-                const response = await fetch(`http://localhost:8000/chat?session_token=${sessionToken}`, {
-                    method: "GET",
-                    credentials: "include",
-                    headers: {
-                        "Content-Type": "application/json"
-                    }
-                });
+            const data = await response.json();
+            console.log("서버에서 받은 질문들:", data.questions); // 디버깅용 로그
+            
+            // questions 상태 업데이트
+            setQuestions(data.questions);
+            
+            // messages 상태 업데이트
+            const questionMessages = data.questions.map(question => ({
+                type: 'bot',
+                text: question,
+                isFollowUp: false
+            }));
 
-                if (!response.ok) throw new Error("서버 응답 오류");
-
-                const data = await response.json();
-                console.log("✅ 대표질문 수신:", data.questions);
-                setQuestions(data.questions);
-
-                // 첫 번째 질문이 있으면 자동으로 선택
-                if (data.questions.length > 0) {
-                    setMessages([{ type: "question", text: data.questions[0] }]);
-                    setSelectedQuestionIndex(0);
-                }
-            } catch (error) {
-                console.error("🚨 대표질문 가져오기 실패:", error);
-            }
-        };
-
-        fetchQuestions();
+            setMessages(questionMessages);
+        } catch (error) {
+            console.error('대표질문 로딩 오류:', error);
+        } finally {
+            setLoading(false);
+        }
     }, [sessionToken]);
 
+    // 의존성 배열에 fetchMainQuestions와 sessionToken 추가
+    useEffect(() => {
+        if (sessionToken) {
+            fetchMainQuestions();
+        }
+    }, [fetchMainQuestions, sessionToken]);
+
     const handleSelectQuestion = async (index) => {
-        if (questions.length === 0) return;
+        if (questions.length === 0) {
+            console.log("질문이 없습니다:", questions); // 디버깅용 로그
+            return;
+        }
+        console.log("선택된 질문:", questions[index]); // 디버깅용 로그
         setSelectedQuestionIndex(index);
         navigate(`/chat/${historyCount}/${index + 1}?token=${sessionToken}`, { 
             state: { questions } 
         });
-        setMessages([{ type: "question", text: questions[index] }]);
+        setMessages([{ type: "bot", text: questions[index] }]);
     };
 
     const handleSelectHistory = (historyId) => {
@@ -89,7 +95,7 @@ const Chat = () => {
         setMessages((prevMessages) => [...prevMessages, userMessage, aiLoadingMessage]);
 
         try {
-            console.log("📡 사용자 질문 전송:", userInput);
+            console.log("📡 사용자 답변 전송:", userInput);
             const response = await fetch(`http://localhost:8000/chat/answer/${sessionToken}`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -100,11 +106,17 @@ const Chat = () => {
             if (!response.ok) throw new Error("서버 응답 오류");
 
             const data = await response.json();
-            console.log("✅ AI 응답 수신:", data.answer);
-            setMessages((prevMessages) => [
-                ...prevMessages.slice(0, -1),
-                { type: "ai-response", text: data.answer },
-            ]);
+            console.log("✅ AI 응답 수신:", data);
+            
+            // 피드백과 꼬리질문을 포함한 메시지 배열 생성
+            const newMessages = [
+                ...messages.slice(0, -1), // 이전 메시지들
+                userMessage, // 사용자 답변
+                { type: "feedback", text: data.feedback }, // 피드백
+                { type: "follow-up", text: data.follow_up } // 꼬리질문
+            ];
+            
+            setMessages(newMessages);
         } catch (error) {
             console.error("🚨 AI 응답 오류:", error);
             setMessages((prevMessages) => [
@@ -117,30 +129,32 @@ const Chat = () => {
         }
     };
 
-    const handleHint = async (index) => {
-        if (hints[index] || !sessionToken) return;
-
-        setLoadingHints((prev) => ({ ...prev, [index]: true }));
-
+    // 힌트 요청 핸들러
+    const handleHint = async (questionIndex, isFollowUp) => {
         try {
-            const response = await fetch(`http://localhost:8000/chat/hint/${sessionToken}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-            });
+            console.log(`힌트 요청 - 질문 인덱스: ${questionIndex + 1}, 히스토리: ${historyId}, 추가질문 여부: ${isFollowUp}`);
+            
+            const response = await fetch(
+                `http://localhost:8000/chat/hint/${historyId}/${questionIndex + 1}?is_follow_up=${isFollowUp}&session_token=${sessionToken}`
+            );
 
-            if (!response.ok) throw new Error("서버 응답 오류");
+            if (!response.ok) {
+                throw new Error(`힌트 생성 실패: ${response.status}`);
+            }
 
             const data = await response.json();
-            setHints((prev) => ({ ...prev, [index]: data.hint }));
-        } catch (error) {
-            console.error("힌트 요청 실패:", error);
-            setHints((prev) => ({
+            console.log(`힌트 생성 성공:`, data.hint);
+            
+            // 힌트 상태 업데이트
+            setHints(prev => ({
                 ...prev,
-                [index]: "힌트를 가져오는 데 실패했습니다.",
+                [`${historyId}-${questionIndex}`]: data.hint // 각 질문에 대한 힌트를 독립적으로 저장
             }));
-        } finally {
-            setLoadingHints((prev) => ({ ...prev, [index]: false }));
+            
+            return data.hint;
+        } catch (error) {
+            console.error('힌트 생성 오류:', error);
+            return null;
         }
     };
 
@@ -169,13 +183,6 @@ const Chat = () => {
             console.error("세션 종료 중 오류 발생:", error);
         }
     }, [sessionToken, navigate]);
-
-    // 컴포넌트 언마운트 시 세션 종료
-    useEffect(() => {
-        return () => {
-            handleEndSession();
-        };
-    }, [sessionToken, handleEndSession]);
 
     return (
         <div className="chat-container">
@@ -207,7 +214,12 @@ const Chat = () => {
                     </div>
                 ) : (
                     <>
-                        <ChatBody messages={messages} hints={hints} loadingHints={loadingHints} handleHint={handleHint} />
+                        <ChatBody 
+                            messages={messages} 
+                            handleHint={handleHint} 
+                            hints={hints}
+                            historyId={historyId}
+                        />
                         <ChatInput userInput={userInput} setUserInput={setUserInput} loading={loading} handleSendMessage={handleSendMessage} />
                     </>
                 )}
