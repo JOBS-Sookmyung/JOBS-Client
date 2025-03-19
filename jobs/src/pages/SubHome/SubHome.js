@@ -77,7 +77,10 @@ const SubHome = () => {
             <button className="start-button" onClick={openModal}>
               모의면접 시작하기
             </button>
-            <button className="history-button" onClick={() => navigate("/chat")}>
+            <button
+              className="history-button"
+              onClick={() => navigate("/chat")}
+            >
               지난 기록
             </button>
           </div>
@@ -105,7 +108,7 @@ const SubHome = () => {
                   자비스가 당신을 <br /> 분석해요.
                 </p>
                 <p className="process-description">
-                  이력서를 토대로 보다 정확한 <br /> 분석을 진행해요.
+                  이력서를 토대로 보다 <br /> 정확한 분석을 진행해요.
                 </p>
               </div>
               <img

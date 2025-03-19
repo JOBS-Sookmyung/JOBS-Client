@@ -4,7 +4,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    font-family: 'Arial', sans-serif;
+    font-family: 'Pretendard', sans-serif;
     background-color: #f8f9fa;
     padding-bottom: 50px;
 }
@@ -14,7 +14,6 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    /* 상단 정렬 */
     width: 80%;
     margin-top: 20px;
 }
@@ -39,7 +38,7 @@
 
 /* 프로필 정보 텍스트 스타일 */
 .profile-info p {
-    line-height: 1.0; /* 줄 간격을 줄여 더 컴팩트하게 */
+    line-height: 1.0;
 }
 
 .profile-image {
@@ -63,9 +62,7 @@
     width: 65%;
     position: relative;
     height: 230px;
-    /* interview-icon과 같은 높이 */
     margin-bottom: 0px;
-    /* 아래 여백 제거 */
 }
 
 .interview-icon {
@@ -86,12 +83,12 @@
 .button-group {
     display: flex;
     gap: 10px;
-    align-items: center; /* 세로 중앙 정렬 */
-    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center;
+    justify-content: center;
     position: absolute;
     top: 70%;
     left: 63%;
-    transform: translateX(-50%); /* 정확한 중앙 정렬 */
+    transform: translateX(-50%);
 }
 
 /* 모의면접 시작하기 버튼 */
@@ -126,19 +123,21 @@
     background: #eeeeee;
     padding: 15px;
     border-radius: 10px;
-    font-size: 14px;
+    font-size: 20px;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: fadeInScale 0.5s ease-in-out;
 }
 
 .feedback-text {
     font-weight: bold;
     color: #333;
+    font-size: 20px;
 }
 
-/* 과정 설명 */
+/* 자비스 과정 설명 */
 .process-section {
     width: 84%;
     margin-top: 15px;
@@ -167,10 +166,10 @@
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     padding: 20px;
     position: relative;
-    overflow: hidden; /* 배경이 넘치지 않도록 */
+    overflow: hidden;
 }
 
-/* 오른쪽 절반 배경색 추가 (아이콘/텍스트 영향 X) */
+/* 오른쪽 절반 배경색 추가 */
 .process-card::after {
     content: "";
     position: absolute;
@@ -180,7 +179,7 @@
     height: 100%;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
-    z-index: 0; /* 배경이 가장 아래 위치 */
+    z-index: 0;
 }
 
 /* 개별 카드 배경색 지정 */
@@ -205,7 +204,7 @@
     color: #555;
 }
 
-.process-title {
+/* .process-title {
     font-size: 16px;
     font-weight: bold;
     margin-top: 50px;
@@ -223,9 +222,32 @@
     position: absolute;
     bottom: 0px;
     right: 0px;
-    z-index: 2; /* 배경보다 위로 배치 */
+    z-index: 2;
+} */
+
+/* 강제로 텍스트 크기를 16px로 지정 */
+.process-card .process-title {
+    font-size: 16px !important;
+    font-weight: bold;
+    margin-top: 50px;
 }
 
+.process-card .process-description {
+    font-size: 14px !important;
+    color: #666;
+    margin-top: 10px;
+}
+
+.process-icon {
+    width: 200px;
+    height: 205px;
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    z-index: 2;
+}
+
+/* 추천 영상 섹션 */
 .recommendation-section {
     width: 84%;
     margin-top: 40px;
@@ -239,7 +261,7 @@
 
 .video-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3개씩 한 줄 */
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     justify-content: center;
     margin-top: 20px;
@@ -267,3 +289,42 @@
     margin-top: 10px;
 }
 
+/* InputModal, Process 및 Feedback 섹션 애니메이션 */
+@keyframes fadeInScale {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* 반응형 미디어 쿼리 */
+  @media (max-width: 768px) {
+    .subhome-main {
+      width: 95%;
+      flex-direction: column;
+      align-items: center;
+    }
+    .description-section {
+      height: auto;
+      padding: 20px;
+    }
+    .process-section {
+      width: 95%;
+    }
+    .process-card {
+      width: 100%;
+      height: auto;
+      margin-bottom: 20px;
+    }
+    .feedback-section {
+      width: 95%;
+      font-size: 18px;
+    }
+    .recommendation-section {
+      width: 95%;
+    }
+  }
