@@ -39,7 +39,7 @@ const InputModal = ({ closeModal }) => {
       );
 
       console.log("백엔드 응답:", response.data);
-      alert("파일 업로드 성공!");
+      //alert("파일 업로드 성공!");
 
       closeModal(); 
       navigate(`/chat?token=${response.data.token}`); // 세션 토큰을 URL 파라미터로 전달

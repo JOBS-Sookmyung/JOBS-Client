@@ -1,9 +1,10 @@
-import React, { useState, useRef, useEffect } from 'react';
-import './Chat.css'; // CSS 파일을 chat.css로 변경
+import React, { useRef, useEffect } from "react";
+import { handleExportPDF } from "./pdfExport";
+import ChatInput from "./ChatInput";
+import "./Chat.css";
 
-const ChatBody = ({ messages, handleHint, hints, historyId }) => {
+const ChatBody = ({ messages = [], loading, userInput, onInputChange, onSendMessage }) => {
   const messagesEndRef = useRef(null);
-  const [loadingHints, setLoadingHints] = useState({});
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -13,17 +14,17 @@ const ChatBody = ({ messages, handleHint, hints, historyId }) => {
     scrollToBottom();
   }, [messages]);
 
-  const handleHintClick = async (index) => {
-    setLoadingHints(prev => ({ ...prev, [index]: true }));
-    await handleHint(index, false);
-    setLoadingHints(prev => ({ ...prev, [index]: false }));
-  };
-
   const renderMessage = (message, index) => {
     switch (message.type) {
-      case "user":
+      case "user_answer":
         return (
           <div key={index} className="message user-message">
+            <div className="message-content">{message.text}</div>
+          </div>
+        );
+      case "main_question":
+        return (
+          <div key={index} className="message bot-message">
             <div className="message-content">{message.text}</div>
           </div>
         );
@@ -31,43 +32,14 @@ const ChatBody = ({ messages, handleHint, hints, historyId }) => {
         return (
           <div key={index} className="message feedback-message">
             <div className="message-content">
-              <h4>📝 피드백</h4>
-              <p>{message.text}</p>
+              <div className="feedback-label">[Feedback]</div>
+              <div className="feedback-text">{message.text}</div>
             </div>
           </div>
         );
-      case "follow-up":
+      case "follow_up":
         return (
           <div key={index} className="message follow-up-message">
-            <div className="message-content">
-              <h4>💭 꼬리질문</h4>
-              <p>{message.text}</p>
-            </div>
-          </div>
-        );
-      case "bot":
-        return (
-          <div key={index} className="message bot-message">
-            <div className="message-content">
-              <p>{message.text}</p>
-              <button 
-                className="hint-button"
-                onClick={() => handleHintClick(index)}
-                disabled={loadingHints[index]}
-              >
-                {loadingHints[index] ? '로딩 중...' : '힌트 요청'}
-              </button>
-            </div>
-            {hints[`${historyId}-${index}`] && (
-              <div className="hint">
-                <p>{hints[`${historyId}-${index}`]}</p>
-              </div>
-            )}
-          </div>
-        );
-      case "error":
-        return (
-          <div key={index} className="message error-message">
             <div className="message-content">{message.text}</div>
           </div>
         );
@@ -77,12 +49,27 @@ const ChatBody = ({ messages, handleHint, hints, historyId }) => {
   };
 
   return (
-    <div className="chat-body">
-      {messages.map((message, index) => renderMessage(message, index))}
-      <div ref={messagesEndRef} />
+    <div className="chat-section">
+      <div className="chat-header">
+        <h2>같이 면접을 준비해요 !</h2>
+        <button onClick={handleExportPDF} className="export-button">
+          내보내기
+        </button>
+      </div>
+      <div className="chat-messages">
+        {messages.map((message, index) => renderMessage(message, index))}
+        <div ref={messagesEndRef} />
+      </div>
+      <div className="chat-input-container">
+        <ChatInput
+          userInput={userInput}
+          setUserInput={onInputChange}
+          loading={loading}
+          handleSendMessage={onSendMessage}
+        />
+      </div>
     </div>
   );
 };
 
 export default ChatBody;
-
