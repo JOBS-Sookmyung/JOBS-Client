@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ChatSidebar from "./ChatSidebar";
 import ChatBody from "./ChatBody";
@@ -8,7 +8,7 @@ import "./Chat.css";
 const Chat = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const searchParams = new URLSearchParams(location.search);
+    const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search]);
     const sessionToken = searchParams.get("session_token");
 
     const [messages, setMessages] = useState([]);
@@ -61,15 +61,28 @@ const Chat = () => {
     const startChat = useCallback(async () => {
         if (!sessionToken) {
             try {
-                const response = await fetch("http://localhost:8000/chat/start", {
+                const pdfToken = searchParams.get("token");
+                console.log("PDF Token:", pdfToken);
+
+                if (!pdfToken) {
+                    console.error("PDF 토큰이 없습니다.");
+                    return;
+                }
+
+                const response = await fetch(`http://localhost:8000/chat/start/${pdfToken}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
                     }
                 });
                 
-                if (!response.ok) throw new Error("채팅 시작에 실패했습니다.");
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || "채팅 시작에 실패했습니다.");
+                }
+                
                 const data = await response.json();
+                console.log("Chat Start Response:", data);
                 navigate(`/chat?session_token=${data.session_token}`);
             } catch (error) {
                 console.error("채팅 시작 오류:", error);
@@ -77,7 +90,7 @@ const Chat = () => {
         } else {
             await fetchChatData();
         }
-    }, [sessionToken, navigate, fetchChatData]);
+    }, [sessionToken, navigate, fetchChatData, searchParams]);
 
     useEffect(() => {
         startChat();
