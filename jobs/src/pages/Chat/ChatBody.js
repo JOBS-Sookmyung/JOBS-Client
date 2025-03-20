@@ -1,6 +1,4 @@
 import React, { useRef, useEffect } from "react";
-import ChatInput from "./ChatInput";
-import { handleExportPDF } from "./pdfExport";
 
 const ChatBody = ({
   messages = [],
@@ -23,7 +21,7 @@ const ChatBody = ({
     switch (message.type) {
       case "main_question":
         return (
-          <div key={index} className="message question">
+          <div key={index} className="message main_question">
             <div className="message-content">{message.text}</div>
           </div>
         );
@@ -35,17 +33,20 @@ const ChatBody = ({
         );
       case "feedback":
         return (
-          <div key={index} className="message ai-response">
+          <div key={index} className="message feedback-message">
             <div className="message-content">
               <div className="feedback-label">[Feedback]</div>
-              <div className="feedback-text">{message.text}</div>
+              <div className="feedback-message">{message.text}</div>
             </div>
           </div>
         );
       case "follow_up":
         return (
-          <div key={index} className="message ai-response">
-            <div className="message-content">꼬리질문: {message.text}</div>
+          <div key={index} className="message follow-up-message">
+            <div className="message-content">
+              꼬리질문: <br />
+              {message.text}
+            </div>
           </div>
         );
       default:

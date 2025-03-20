@@ -3,6 +3,8 @@ import React, { useRef, useEffect } from "react";
 const ChatInput = ({ userInput, setUserInput, loading, handleSendMessage }) => {
   const textAreaRef = useRef(null);
 
+  // 중복 전송 방지를 위한 ref
+  const sendingRef = useRef(false);
   // 원하는 최소/최대 높이
   const MIN_HEIGHT = 24;
   const MAX_HEIGHT = 100;
@@ -16,6 +18,8 @@ const ChatInput = ({ userInput, setUserInput, loading, handleSendMessage }) => {
 
   // 입력 변화 시 자동 리사이즈
   const handleInputChange = (e) => {
+    if (sendingRef.current) return;
+
     setUserInput(e.target.value);
 
     if (textAreaRef.current) {
@@ -47,10 +51,17 @@ const ChatInput = ({ userInput, setUserInput, loading, handleSendMessage }) => {
 
   // 전송 후 textarea 높이를 다시 최소로 복구
   const handleSendMessageWrapper = () => {
-    handleSendMessage();
-    if (textAreaRef.current) {
-      textAreaRef.current.style.height = `${MIN_HEIGHT}px`;
-    }
+    // 중복 전송 방지: 이미 전송 중이면 return
+    if (sendingRef.current) return;
+    sendingRef.current = true;
+
+    // handleSendMessage는 Promise를 반환한다고 가정 (비동기 함수)
+    Promise.resolve(handleSendMessage()).finally(() => {
+      sendingRef.current = false;
+      if (textAreaRef.current) {
+        textAreaRef.current.style.height = `${MIN_HEIGHT}px`;
+      }
+    });
   };
 
   return (

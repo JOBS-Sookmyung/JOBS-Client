@@ -180,6 +180,7 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
+  margin-bottom: 12px;
 }
 
 /* AI 질문 스타일 */
@@ -192,6 +193,7 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
+  font-size: 16px;
 }
 
 /* AI 응답 스타일 */
@@ -207,6 +209,40 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
+  font-size: 16px;
+}
+
+/* 대표 질문 스타일 (main_question) */
+.main_question {
+  background: #FFF;
+  padding: 10px;
+  border: 2px solid #A92419;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+/* 피드백 메시지 스타일 */
+.feedback-message {
+  background: #f0f0f0;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-size: 14px;           /* 작은 글씨: 14px */
+  color: #333;
+  margin-bottom: 12px;
+}
+
+/* 꼬리질문 스타일 */
+.follow-up-message {
+  background: #FFF;
+  padding: 10px;
+  border: 1.5px solid #084032;      /* 진한 초록색 테두리 (두꺼운) */
+  border-radius: 16px;
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 12px;
 }
 
 /* 내가 입력한 사용자 메시지 */
@@ -217,7 +253,8 @@
   color: white;
   border-radius: 16px;
   background: #084032;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  font-size: 16px;
 }
 
 /* 힌트 버튼 */
