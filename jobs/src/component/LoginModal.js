@@ -39,7 +39,7 @@ const LoginModal = ({ open, handleClose, openSignup, setUser }) => {
         // 2) setUser 함수를 이용해 상위 컴포넌트(예: Header)의 user 상태를 업데이트
         setUser(data.user);
 
-        alert("로그인 성공");
+        //alert("로그인 성공");
 
         // 모달 닫기
         handleClose();

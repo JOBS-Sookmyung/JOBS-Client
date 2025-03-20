@@ -2,72 +2,44 @@ import React from "react";
 import ChatHeader from "../../component/ChatHeader";
 
 const ChatSidebar = ({
-  questions,
+  questions = [],
   selectedQuestionIndex,
-  handleSelectQuestion,
-  handleSelectHistory,
+  handleSelectMainQuestion,
   showQuestions,
   setShowQuestions,
-  showHistory,
-  setShowHistory,
+  sessionToken,
 }) => {
+  // 현재 시간을 "오후 2:30" 형식으로 변환
+  const formatTime = () => {
+    const now = new Date();
+    return now.toLocaleTimeString('ko-KR', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true
+    });
+  };
+
   return (
     <div className="sidebar">
       <ChatHeader />
+      
+      {/* 채팅방 정보 */}
       <div className="section">
-        <div
-          className="section-header"
-          onClick={() => setShowQuestions(!showQuestions)}
-        >
-          <h5 className="section-title">예상 질문</h5>
-          <span className="toggle-button">{showQuestions ? "▼" : "▶"}</span>
+        <div className="section-header">
+          <h5 className="section-title">채팅방</h5>
         </div>
-
-        {showQuestions && (
-          <ul className="question-list">
-            {questions.map((q, index) => (
-              <li
-                key={index}
-                className={`question-item ${
-                  selectedQuestionIndex === index ? "selected" : ""
-                }`}
-                onClick={() => handleSelectQuestion(index)}
-              >
-                <span className="question-number">{index + 1}.</span>
-                <span className="question-text">{q}</span>
-              </li>
-            ))}
+        {sessionToken && (
+          <ul className="chat-room-list">
+            <li className="chat-room-item active">
+              <div className="chat-room-info">
+                <div className="chat-room-name">면접 준비</div>
+                <div className="chat-room-time">{formatTime()}</div>
+              </div>
+              <div className="chat-room-preview">
+                {questions[selectedQuestionIndex] || "새로운 면접을 시작해보세요"}
+              </div>
+            </li>
           </ul>
-        )}
-      </div>
-
-      <div className="section">
-        <div
-          className="section-header"
-          style={{ cursor: "pointer" }}
-          onClick={() => setShowHistory(!showHistory)}
-        >
-          <h5 className="section-title">이전 기록</h5>
-          <span className="toggle-button">{showHistory ? "▼" : "▶"}</span>
-        </div>
-
-        {showHistory && (
-          <div className="history-list">
-            {/* 오래된 기록이 위쪽, 최신 기록이 아래쪽 */}
-            <div
-              className="question-item history-item"
-              onClick={() => handleSelectHistory("1")}
-            >
-              <span>현대 모비스 모의 면접 기록</span>
-            </div>
-            <div
-              className="question-item history-item"
-              onClick={() => handleSelectHistory("2")}
-            >
-              <span>네이버 클라우드 모의 면접 기록</span>
-            </div>
-            {/* 추후 신규 이력서 등록 시, 예: /chat/3/1 형태의 새 history-item이 추가됩니다. */}
-          </div>
         )}
       </div>
     </div>
