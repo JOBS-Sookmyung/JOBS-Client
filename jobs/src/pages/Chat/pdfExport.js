@@ -1,5 +1,5 @@
 export const handleExportPDF = () => {
-  const content = document.querySelector(".chat-body");
+  const content = document.querySelector(".chat-messages");
   const chatTitle = document.querySelector(".chat-title")?.innerText.trim();
 
   if (!content) {
@@ -24,8 +24,8 @@ export const handleExportPDF = () => {
       }
 
       // 사용자 답변 (B2 크기) + 구분선 추가
-      if (message.classList.contains("user")) {
-        result += `<p class="user">${text}</p>`;
+      if (message.classList.contains("user_answer")) {
+        result += `<p class="user_answer">${text}</p>`;
         result += `<div class="divider"></div>`;
       }
 
@@ -78,7 +78,7 @@ export const handleExportPDF = () => {
                 font-weight: bold;
                 color: #374151;
               }
-              .user { 
+              .user_answer { 
                 font-size: 14px;
                 font-weight: 500;
                 color: #084032;

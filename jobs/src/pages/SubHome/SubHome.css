@@ -204,27 +204,6 @@
     color: #555;
 }
 
-/* .process-title {
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 50px;
-}
-
-.process-description {
-    font-size: 12px;
-    color: #666;
-    margin-top: 10px;
-}
-
-.process-icon {
-    width: 200px;
-    height: 205px;
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
-    z-index: 2;
-} */
-
 /* 강제로 텍스트 크기를 16px로 지정 */
 .process-card .process-title {
     font-size: 16px !important;

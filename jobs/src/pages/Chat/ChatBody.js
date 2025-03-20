@@ -1,9 +1,12 @@
 import React, { useRef, useEffect } from "react";
-import { handleExportPDF } from "./pdfExport";
-import ChatInput from "./ChatInput";
-import "./Chat.css";
 
-const ChatBody = ({ messages = [], loading, userInput, onInputChange, onSendMessage }) => {
+const ChatBody = ({
+  messages = [],
+  loading,
+  userInput,
+  onInputChange,
+  onSendMessage,
+}) => {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -49,26 +52,37 @@ const ChatBody = ({ messages = [], loading, userInput, onInputChange, onSendMess
   };
 
   return (
-    <div className="chat-section">
-      <div className="chat-header">
-        <h2>같이 면접을 준비해요 !</h2>
-        <button onClick={handleExportPDF} className="export-button">
-          내보내기
-        </button>
-      </div>
+    <div className="chat-body">
       <div className="chat-messages">
-        {messages.map((message, index) => renderMessage(message, index))}
+        {messages.map((message, index) => (
+          <div key={index} className={`message ${message.type}`}>
+            <p>{message.text}</p>
+          </div>
+        ))}
         <div ref={messagesEndRef} />
       </div>
-      <div className="chat-input-container">
-        <ChatInput
-          userInput={userInput}
-          setUserInput={onInputChange}
-          loading={loading}
-          handleSendMessage={onSendMessage}
-        />
-      </div>
     </div>
+
+    // <div className="chat-section">
+    //   <div className="chat-header">
+    //     <h2>같이 면접을 준비해요 !</h2>
+    //     <button onClick={handleExportPDF} className="export-button">
+    //       내보내기
+    //     </button>
+    //   </div>
+    //   <div className="chat-messages">
+    //     {messages.map((message, index) => renderMessage(message, index))}
+    //     <div ref={messagesEndRef} />
+    //   </div>
+    //   <div className="chat-input-container">
+    //     <ChatInput
+    //       userInput={userInput}
+    //       setUserInput={onInputChange}
+    //       loading={loading}
+    //       handleSendMessage={onSendMessage}
+    //     />
+    //   </div>
+    // </div>
   );
 };
 
