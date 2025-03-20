@@ -1,4 +1,6 @@
 import React, { useRef, useEffect } from "react";
+import ChatInput from "./ChatInput";
+import { handleExportPDF } from "./pdfExport";
 
 const ChatBody = ({
   messages = [],
@@ -19,21 +21,21 @@ const ChatBody = ({
 
   const renderMessage = (message, index) => {
     switch (message.type) {
-      case "user_answer":
+      case "main_question":
         return (
-          <div key={index} className="message user-message">
+          <div key={index} className="message question">
             <div className="message-content">{message.text}</div>
           </div>
         );
-      case "main_question":
+      case "user_answer":
         return (
-          <div key={index} className="message bot-message">
+          <div key={index} className="message user_answer">
             <div className="message-content">{message.text}</div>
           </div>
         );
       case "feedback":
         return (
-          <div key={index} className="message feedback-message">
+          <div key={index} className="message ai-response">
             <div className="message-content">
               <div className="feedback-label">[Feedback]</div>
               <div className="feedback-text">{message.text}</div>
@@ -42,8 +44,8 @@ const ChatBody = ({
         );
       case "follow_up":
         return (
-          <div key={index} className="message follow-up-message">
-            <div className="message-content">{message.text}</div>
+          <div key={index} className="message ai-response">
+            <div className="message-content">꼬리질문: {message.text}</div>
           </div>
         );
       default:
@@ -54,35 +56,16 @@ const ChatBody = ({
   return (
     <div className="chat-body">
       <div className="chat-messages">
-        {messages.map((message, index) => (
-          <div key={index} className={`message ${message.type}`}>
-            <p>{message.text}</p>
-          </div>
-        ))}
+        {messages
+          .sort((a, b) => {
+            if (a.type === "user_answer" && b.type === "feedback") return -1;
+            if (a.type === "feedback" && b.type === "user_answer") return 1;
+            return 0;
+          })
+          .map((message, index) => renderMessage(message, index))}
         <div ref={messagesEndRef} />
       </div>
     </div>
-
-    // <div className="chat-section">
-    //   <div className="chat-header">
-    //     <h2>같이 면접을 준비해요 !</h2>
-    //     <button onClick={handleExportPDF} className="export-button">
-    //       내보내기
-    //     </button>
-    //   </div>
-    //   <div className="chat-messages">
-    //     {messages.map((message, index) => renderMessage(message, index))}
-    //     <div ref={messagesEndRef} />
-    //   </div>
-    //   <div className="chat-input-container">
-    //     <ChatInput
-    //       userInput={userInput}
-    //       setUserInput={onInputChange}
-    //       loading={loading}
-    //       handleSendMessage={onSendMessage}
-    //     />
-    //   </div>
-    // </div>
   );
 };
 
