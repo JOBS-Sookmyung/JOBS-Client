@@ -1,12 +1,6 @@
 import React, { useRef, useEffect } from "react";
 
-const ChatBody = ({
-  messages = [],
-  loading,
-  userInput,
-  onInputChange,
-  onSendMessage,
-}) => {
+const ChatBody = ({ messages = [] }) => {
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -49,6 +43,15 @@ const ChatBody = ({
             </div>
           </div>
         );
+      case "system": // 시스템 메시지 처리
+        return (
+          <div key={index} className="message system-message">
+            <div className="message-content">
+              <span className="system-label">[System]</span>
+              <span>{message.text}</span>
+            </div>
+          </div>
+        );
       default:
         return null;
     }
@@ -57,13 +60,7 @@ const ChatBody = ({
   return (
     <div className="chat-body">
       <div className="chat-messages">
-        {messages
-          .sort((a, b) => {
-            if (a.type === "user_answer" && b.type === "feedback") return -1;
-            if (a.type === "feedback" && b.type === "user_answer") return 1;
-            return 0;
-          })
-          .map((message, index) => renderMessage(message, index))}
+        {messages.map((message, index) => renderMessage(message, index))}
         <div ref={messagesEndRef} />
       </div>
     </div>
