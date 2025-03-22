@@ -73,7 +73,6 @@
 
 .description-text {
     font-size: 20px;
-    font-weight: bold;
     flex-grow: 1;
     text-align: left;
     padding-left: 40px;
@@ -99,8 +98,7 @@
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 16px;
 }
 
 /* 지난 기록 버튼 */
@@ -111,36 +109,49 @@
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 16px;
 }
-
 
 /* 이력서 피드백 영역 */
 .feedback-section {
-    width: 78%;
-    margin-top: 25px;
-    background: #eeeeee;
-    padding: 15px;
-    border-radius: 10px;
+    width: 84%;
+    margin-top: 16px;
     font-size: 20px;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: fadeInScale 0.5s ease-in-out;
+    display: block;
+    padding: 0;
+}
+
+.feedback-title {
+    font-weight: bold;
+    margin-left: 40px;
+    margin-bottom: 8px; /* 제목 아래 간격 */
 }
 
 .feedback-text {
+    color: #084032;
+    text-align: center;
+    font-size: 28px;
     font-weight: bold;
-    color: #333;
-    font-size: 20px;
+    margin-bottom: 8px;
+    transition: transform 0.3s ease;
+}
+
+.feedback-text:hover {
+    transform: scale(1.05);
+}
+
+/* 인용 부호 추가 */
+.feedback-quote::before {
+    content: '" ';
+}
+.feedback-quote::after {
+    content: ' "';
 }
 
 /* 자비스 과정 설명 */
 .process-section {
     width: 84%;
-    margin-top: 15px;
+    margin-top: 0px;
 }
 
 .process-section h2 {
@@ -161,7 +172,7 @@
     height: 160px;
     background: white;
     flex-shrink: 0;
-    border-radius: 20px;
+    border-radius: 16px;
     border: 1px solid #E7E8EA;
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
     padding: 20px;
@@ -175,10 +186,10 @@
     position: absolute;
     top: 0;
     right: 0;
-    width: 50%;
+    width: 47%;
     height: 100%;
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
     z-index: 0;
 }
 
@@ -199,20 +210,19 @@
     position: absolute;
     top: 15px;
     left: 20px;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
-    color: #555;
+    color: #282828;
 }
 
-/* 강제로 텍스트 크기를 16px로 지정 */
 .process-card .process-title {
-    font-size: 16px !important;
+    font-size: 18px !important;
     font-weight: bold;
     margin-top: 50px;
 }
 
 .process-card .process-description {
-    font-size: 14px !important;
+    font-size: 16px !important;
     color: #666;
     margin-top: 10px;
 }
@@ -228,14 +238,9 @@
 
 /* 추천 영상 섹션 */
 .recommendation-section {
-    width: 84%;
+    width: 80%;
     margin-top: 40px;
-}
-
-.recommendation-section h2 {
-    font-size: 28px;
-    text-align: left;
-    margin-left: 40px;
+    padding: 0 40px;
 }
 
 .recommendation-header {
@@ -243,7 +248,7 @@
     justify-content: flex-start;  /* 왼쪽부터 시작 */
     align-items: center;  /* 세로 중앙 정렬 */
     padding: 20px;
-    gap: 20px;  /* 제목과 버튼 사이 간격 */
+    gap: 30px;  /* 제목과 버튼 사이 간격 */
 }
 
 .recommendation-header h2 {
@@ -252,19 +257,19 @@
 }
 
 .recommend-button {
-    background-color: #000;
+    background-color: #084032;
     color: white;
     border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-weight: bold;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    white-space: nowrap;  /* 버튼 텍스트 줄바꿈 방지 */
+    white-space: nowrap;
 }
 
 .recommend-button:hover {
-    background-color: #333;
+    background-color: #3E2D2F;
     transform: translateY(-2px);
 }
 
@@ -287,7 +292,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .video-item {
@@ -300,29 +305,17 @@
 
 .video-thumbnail {
     width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .video-title {
-    font-size: 25px;
+    font-size: 16px;
     text-align: left;
-    font-weight: bold;
-    margin-left: 40px;
+    font-weight: normal;
+    margin-left: 10px;
     margin-top: 10px;
 }
-
-/* InputModal, Process 및 Feedback 섹션 애니메이션 */
-@keyframes fadeInScale {
-    0% {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
   
   /* 반응형 미디어 쿼리 */
   @media (max-width: 768px) {

@@ -46,7 +46,7 @@ const SubHome = () => {
   const handleRecommendationsReceived = (data) => {
     setIsLoading(false);
     setRecommendedVideos(data);
-    
+
     // 이력서 피드백 설정
     const feedbacks = [
       "구체적인 수치와 성과를 언급하여 신뢰성을 주는 방향으로 더 자세히 기술하면 좋겠습니다.",
@@ -71,12 +71,13 @@ const SubHome = () => {
       "모든 경험이 도움이 될 수 있으니 놓치지 말고 자세히 작성해보세요.",
       "단순한 나열이 아닌, 성과 중심의 서술 방식으로 변경해보세요.",
       "지원하는 직무와 연결될 수 있도록 경험을 재구성하면 좋습니다.",
-      "학교에서 배운 내용도 포함하면 기술적 역량을 더욱 잘 보여줄 수 있습니다."
+      "학교에서 배운 내용도 포함하면 기술적 역량을 더욱 잘 보여줄 수 있습니다.",
     ];
-    
-    const randomFeedback = feedbacks[Math.floor(Math.random() * feedbacks.length)];
+
+    const randomFeedback =
+      feedbacks[Math.floor(Math.random() * feedbacks.length)];
     setResumeFeedback(randomFeedback);
-    
+
     console.log("✅ 추천 영상 업데이트:", data);
   };
 
@@ -91,15 +92,21 @@ const SubHome = () => {
             <img src={profileAvatar} alt="프로필" className="profile-image" />
             <div className="profile-info">
               <p>
-                <strong>이름: </strong>
+                <strong>
+                  이름 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  |&nbsp;&nbsp;{" "}
+                </strong>
                 {user ? user.name : "로그인하세요"}
               </p>
               <p>
-                <strong>학교: </strong>
+                <strong>
+                  학교 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  |&nbsp;&nbsp;{" "}
+                </strong>
                 {user ? user.school : "미입력"}
               </p>
               <p>
-                <strong>전화번호: </strong>
+                <strong>전화번호 &nbsp; |&nbsp;&nbsp; </strong>
                 {user ? user.phone : "미입력"}
               </p>
             </div>
@@ -133,9 +140,11 @@ const SubHome = () => {
       {/* 이력서 피드백 안내 */}
       {resumeFeedback && (
         <section className="feedback-section">
+          <h3 className="feedback-title">
+            {user ? user.name : "사용자"}님 이력서 합격 피드백 :
+          </h3>
           <p className="feedback-text">
-            <strong>{user ? user.name : "사용자"}님 이력서 합격 피드백 : </strong>
-            {resumeFeedback}
+            <span className="feedback-quote">{resumeFeedback}</span>
           </p>
         </section>
       )}
@@ -167,7 +176,9 @@ const SubHome = () => {
             <div className="process-card-content">
               <div className="process-text">
                 <span className="process-number">2.</span>
-                <p className="process-title">자비스의 <br /> 맞춤 동영상 추천.</p>
+                <p className="process-title">
+                  자비스의 <br /> 맞춤 동영상 추천.
+                </p>
                 <p className="process-description">
                   당신에게 가장 필요한 <br /> 최적의 동영상을 추천해요.
                 </p>
