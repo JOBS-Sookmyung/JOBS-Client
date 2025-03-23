@@ -93,20 +93,23 @@ const SubHome = () => {
             <div className="profile-info">
               <p>
                 <strong>
-                  이름 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  |&nbsp;&nbsp;{" "}
+                  이름
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
                 </strong>
                 {user ? user.name : "로그인하세요"}
               </p>
               <p>
                 <strong>
-                  학교 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  |&nbsp;&nbsp;{" "}
+                  학교
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
                 </strong>
                 {user ? user.school : "미입력"}
               </p>
               <p>
-                <strong>전화번호 &nbsp; |&nbsp;&nbsp; </strong>
+                <strong>
+                  전화번호
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
+                </strong>
                 {user ? user.phone : "미입력"}
               </p>
             </div>
@@ -141,7 +144,7 @@ const SubHome = () => {
       {resumeFeedback && (
         <section className="feedback-section">
           <h3 className="feedback-title">
-            {user ? user.name : "사용자"}님 이력서 합격 피드백 :
+            {user ? user.name : "사용자"}님 이력서 합격 피드백 😎
           </h3>
           <p className="feedback-text">
             <span className="feedback-quote">{resumeFeedback}</span>
