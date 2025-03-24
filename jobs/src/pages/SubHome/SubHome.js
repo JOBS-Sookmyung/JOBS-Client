@@ -94,14 +94,14 @@ const SubHome = () => {
               <p>
                 <strong>
                   이름
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
                 </strong>
                 {user ? user.name : "로그인하세요"}
               </p>
               <p>
                 <strong>
                   학교
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
                 </strong>
                 {user ? user.school : "미입력"}
               </p>
@@ -180,7 +180,7 @@ const SubHome = () => {
               <div className="process-text">
                 <span className="process-number">2.</span>
                 <p className="process-title">
-                  자비스의 <br /> 맞춤 동영상 추천.
+                  맞춤 동영상을 <br /> 추천받아요.
                 </p>
                 <p className="process-description">
                   당신에게 가장 필요한 <br /> 최적의 동영상을 추천해요.
@@ -199,7 +199,7 @@ const SubHome = () => {
               <div className="process-text">
                 <span className="process-number">3.</span>
                 <p className="process-title">
-                  자비스와 함께 <br /> 진짜 면접을 준비해요.
+                  자비스와 함께 <br /> 면접을 준비해요.
                 </p>
                 <p className="process-description">
                   당신을 위한 <br /> 실전같은 면접을 대비해요.
