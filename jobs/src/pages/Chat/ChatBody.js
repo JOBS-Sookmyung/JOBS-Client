@@ -19,7 +19,9 @@ const ChatBody = ({ messages = [] }) => {
       case "main_question":
         return (
           <div key={index} className="message main_question">
-            <div className="message-content">{message.text}</div>
+            <div className="message-content">
+              {message.text}
+            </div>
           </div>
         );
       case "user_answer":

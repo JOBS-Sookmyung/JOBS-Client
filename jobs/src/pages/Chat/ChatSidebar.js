@@ -106,10 +106,12 @@ const ChatSidebar = ({ selectedSessionToken, handleSelectSession, shouldRefresh,
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toLocaleTimeString('ko-KR', {
+        const koreanDate = new Date(date.getTime() + (9 * 60 * 60 * 1000));
+        return koreanDate.toLocaleTimeString('ko-KR', {
             hour: '2-digit',
             minute: '2-digit',
-            hour12: false
+            hour12: false,
+            timeZone: 'Asia/Seoul'
         });
     };
 

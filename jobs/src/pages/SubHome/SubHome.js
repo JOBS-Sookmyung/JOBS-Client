@@ -129,13 +129,14 @@ const SubHome = () => {
           </div>
         </section>
       </div>
-
-      {/* 이력서 피드백 안내 */}
-      {resumeFeedback && (
+  {/* 이력서 피드백 안내 */}
+  {resumeFeedback && (
         <section className="feedback-section">
+          <h3 className="feedback-title">
+            {user ? user.name : "사용자"}님 이력서 합격 피드백 😎
+          </h3>
           <p className="feedback-text">
-            <strong>{user ? user.name : "사용자"}님 이력서 합격 피드백 : </strong>
-            {resumeFeedback}
+            <span className="feedback-quote">{resumeFeedback}</span>
           </p>
         </section>
       )}
