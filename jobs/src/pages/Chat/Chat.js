@@ -62,17 +62,17 @@ const Chat = () => {
             
             setMessages(uniqueMessages);
             
-            // 대표질문만 필터링 (중복 제거)
+            // 대표질문만 필터링하여 사이드바에 표시
             const mainQuestions = [
                 ...new Set(
-                uniqueMessages
+                    uniqueMessages
                         .filter((msg) => msg.type === "main_question")
                         .map((msg) => msg.text)
                 ),
             ];
             setQuestions(mainQuestions);
 
-            // 마지막 메시지 타입 설정
+            // 현재 질문 타입 설정 (대표질문/꼬리질문 구분)
             if (uniqueMessages.length > 0) {
                 const lastMessage = uniqueMessages[uniqueMessages.length - 1];
                 setCurrentQuestionType(lastMessage.type);
@@ -92,7 +92,7 @@ const Chat = () => {
         if (!sessionToken) {
             try {
                 const pdfToken = searchParams.get("token");
-                console.log("Starting chat with PDF Token:", pdfToken);  // 디버깅 로그
+                console.log("Starting chat with PDF Token:", pdfToken);
 
                 if (!pdfToken) {
                     console.error("PDF 토큰이 없습니다.");
@@ -102,9 +102,9 @@ const Chat = () => {
                 const response = await fetch(
                     `http://localhost:8000/chat/start/${pdfToken}`,
                     {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
                         },
                     }
                 );
@@ -115,7 +115,7 @@ const Chat = () => {
                 }
                 
                 const data = await response.json();
-                console.log("Chat Start Response:", data);  // 디버깅 로그
+                console.log("Chat Start Response:", data);
                 const newSessionToken = data.session_token;
                 setSelectedSessionToken(newSessionToken);
                 
@@ -126,7 +126,7 @@ const Chat = () => {
                 navigate(`/chat?session_token=${newSessionToken}`, { replace: true });
                 
                 // 사이드바 갱신
-                console.log("Triggering sidebar refresh");  // 디버깅 로그
+                console.log("Triggering sidebar refresh");
                 setShouldRefreshSidebar(true);
                 
             } catch (error) {
@@ -167,19 +167,19 @@ const Chat = () => {
             setIsLoading(true);
             setUserInput("");
 
-            // 사용자 메시지 즉시 표시
+            // 사용자 메시지 UI에 즉시 표시
             const userMessage = { type: "user_answer", text: currentInput };
             setMessages((prev) => [...prev, userMessage]);
 
-            // 답변 제출 및 피드백 받기
+            // chat.py의 submit_answer 함수 호출 - 답변 제출 및 피드백 요청
             const response = await fetch(
                 `http://localhost:8000/chat/answer/${selectedSessionToken}`,
                 {
                     method: "POST",
-                headers: {
+                    headers: {
                         "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ answer: currentInput }),
+                    },
+                    body: JSON.stringify({ answer: currentInput }),
                 }
             );
 
@@ -198,14 +198,14 @@ const Chat = () => {
                 ]);
             }
 
-            // 꼬리질문 요청
+            // chat.py의 get_follow_up_question 함수 호출 - 꼬리질문 요청
             const followUpResponse = await fetch(
                 `http://localhost:8000/chat/follow-up/${selectedSessionToken}`,
                 {
                     method: "POST",
-                headers: {
+                    headers: {
                         "Content-Type": "application/json",
-                },
+                    },
                     body: JSON.stringify({ previous_answer: currentInput }),
                 }
             );

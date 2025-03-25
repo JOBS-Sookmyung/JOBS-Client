@@ -106,11 +106,16 @@ const ChatSidebar = ({ selectedSessionToken, handleSelectSession, shouldRefresh,
 
     const formatDate = (dateString) => {
         const date = new Date(dateString);
-        return date.toLocaleTimeString('ko-KR', {
+        const koreanTime = new Date(date.getTime() + (9 * 60 * 60 * 1000)); // UTC+9 (한국 시간)
+        
+        return koreanTime.toLocaleString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
             hour: '2-digit',
             minute: '2-digit',
             hour12: false
-        });
+        }).replace(/\./g, '-').replace('- ', ' '); // 구분자를 '-'로 변경하고 마지막 점 제거
     };
 
     const getSessionTitle = (session) => {
