@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 const ChatBody = ({ messages = [] }) => {
   const messagesEndRef = useRef(null);
@@ -10,6 +10,7 @@ const ChatBody = ({ messages = [] }) => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+  // 컴포넌트 마운트 시 localStorage에서 user 데이터 가져오기
 
   const renderMessage = (message, index) => {
     switch (message.type) {
